@@ -32,6 +32,6 @@ public class ActionCreateRoom extends AbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		Windows.createWindow("WindowMaterialRoom",null);
+		Windows.createWindow("WindowMaterial",new Object[] {refs[0], new Integer(1)});
 	}
 }

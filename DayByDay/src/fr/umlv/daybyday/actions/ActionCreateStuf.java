@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import fr.umlv.daybyday.ejb.resource.equipment.Equipment;
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.Windows;
 
 /**
@@ -32,6 +34,8 @@ public class ActionCreateStuf extends AbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		Windows.createWindow("WindowMaterialMaterial",null);
+
+		Windows.createWindow("WindowMaterial",new Object[] {refs[0], new Integer(0)});
+		
 	}
 }

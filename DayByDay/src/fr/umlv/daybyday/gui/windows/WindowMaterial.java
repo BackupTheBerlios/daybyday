@@ -9,9 +9,13 @@ package fr.umlv.daybyday.gui.windows;
 import java.awt.Container;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -24,7 +28,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.umlv.daybyday.ejb.admin.user.UserDto;
+import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
+import fr.umlv.daybyday.ejb.resource.room.RoomDto;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.gui.DBDColor;
+import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
 /**
  * @author Marc
@@ -34,18 +44,16 @@ import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
  */
 public class WindowMaterial extends WindowAbstract {
 
-	/**
-	 * This method builds the window calendar.  
-	 * 
-	 * @param contentPane The container of the JFrame
-	 * @param obj the object 
-	 */
-	public static void createWindow(JFrame frame,Object [] obj){
-		createWindow(frame);
-	}
+	public final static int EQUIP = 0;
+	public final static int ROOM = 1;
 	
-	public static void createWindow(JFrame frame){
+	public static void createWindow(final JFrame frame,Object [] obj){
+		final MainFrame mainframe = (MainFrame) obj[0];
+		final Integer type = (Integer)obj[1]; 
+		if (type.intValue() == EQUIP)
 		initWindow(frame,"Nouveau matériel", 400, 250);
+		if (type.intValue() == ROOM)
+			initWindow(frame,"Nouvelle Salle", 400, 250);
 		
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
@@ -66,7 +74,7 @@ public class WindowMaterial extends WindowAbstract {
 		contentPane.add(idLabel);
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		JTextField idTextField = new JTextField();
+		final JTextField idTextField = new JTextField();
 		gridbag.setConstraints(idTextField, c);
 		contentPane.add(idTextField);;
 		
@@ -80,7 +88,7 @@ public class WindowMaterial extends WindowAbstract {
 	
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		JTextField batimentTextField = new JTextField();
+		final JTextField batimentTextField = new JTextField();
 		gridbag.setConstraints(batimentTextField, c);
 		contentPane.add(batimentTextField);
 		
@@ -94,7 +102,7 @@ public class WindowMaterial extends WindowAbstract {
 	
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		JTextField siteTextField = new JTextField();
+		final JTextField siteTextField = new JTextField();
 		gridbag.setConstraints(siteTextField, c);
 		contentPane.add(siteTextField);
 		
@@ -107,14 +115,90 @@ public class WindowMaterial extends WindowAbstract {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		JTextArea infoList= new JTextArea("\n\n");
+		final JTextArea infoList= new JTextArea("\n\n");
 		
 		JScrollPane infoScrollpane = new JScrollPane(infoList);
 		gridbag.setConstraints(infoScrollpane, c);
 		contentPane.add(infoScrollpane);
 	
-		// Add button OK and Annuler
-		addButtonValidation(contentPane, c, gridbag );
+//		Add button ok and annuler
+		JButton ok = new JButton("OK");
+		ok.setPreferredSize(new Dimension(100,20));
+		final JFrame framefinal = frame;
+		ok.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+			if (type.intValue() == ROOM){
+				//("1A001","copernic","mlv","description....", new Integer(50), new Boolean(true));
+					RoomDto newdto = new RoomDto(
+							idTextField.getText(),
+							batimentTextField.getText(),
+							siteTextField.getText(),
+							infoList.getText(),
+							new Integer(50),
+							new Boolean(true)	
+					);
+						
+					
+				
+					try{
+				
+						MainFrame.myDaybyday.createRoom(newdto);
+						mainframe.showError(frame,"Nouvelle salle créée : \n"+
+												"\tId : " + idTextField.getText());
+						framefinal.dispose();
+				
+					} catch (RemoteException e) {
+						mainframe.showError(frame,e.toString());
+					}
+			}
+			
+			if (type.intValue() == EQUIP){
+				//("1A001","copernic","mlv","description....", new Integer(50), new Boolean(true));
+					EquipmentDto newdto = new EquipmentDto(
+							idTextField.getText(),
+							batimentTextField.getText(),
+							siteTextField.getText(),
+							infoList.getText(),
+							new Boolean(true)	
+					);
+						
+					
+				
+					try{
+				
+						MainFrame.myDaybyday.createEquipment(newdto);
+						mainframe.showError(frame,"Nouvel equipement créée : \n"+
+												"\tId : " + idTextField.getText());
+						framefinal.dispose();
+				
+					} catch (RemoteException e) {
+						mainframe.showError(frame,e.toString());
+					} catch (ConstraintException e) {
+						mainframe.showError(frame,e.toString());
+					}		
+			}
+			}
+		});
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		gridbag.setConstraints(ok, c);
+		contentPane.add(ok);
+		JButton cancel = new JButton("Annuler");
+		cancel.setPreferredSize(new Dimension(100,20));
+		cancel.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent arg0) {
+				framefinal.dispose();
+				
+			}
+			
+		});
+		c.anchor = GridBagConstraints.WEST;
+		gridbag.setConstraints(cancel, c);
+		contentPane.add(cancel);
 	}
 
 	

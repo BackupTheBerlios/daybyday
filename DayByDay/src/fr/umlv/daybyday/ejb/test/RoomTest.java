@@ -19,8 +19,10 @@ public class RoomTest {
             Daybyday myDaybyday = DaybydayHome.create();
 
             //Création d'une salle
-            //RoomDto myRoomDto1 = new RoomDto("1A001","copernic","mlv","description....", new Integer(50), new Boolean(true));
-            //myDaybyday.createRoom(myRoomDto1);
+            //
+            
+            RoomDto myRoomDto1 = new RoomDto("1A001","copernic","mlv","description....", new Integer(50), new Boolean(true));
+            myDaybyday.createRoom(myRoomDto1);
 
             //Consultation d'un élément existant
             RoomDto myRoomDto = myDaybyday.getRoom(new RoomPK("1A001","copernic","mlv"));
