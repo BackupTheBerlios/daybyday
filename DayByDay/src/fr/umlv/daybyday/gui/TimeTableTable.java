@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import javax.jms.JMSException;
+import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
@@ -58,11 +60,15 @@ import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.model.Course;
 import fr.umlv.daybyday.model.CourseDetail;
+import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Grid;
+import fr.umlv.daybyday.model.Section;
 import fr.umlv.daybyday.test.jms.listeners.CourseFormationListener;
+import fr.umlv.daybyday.test.jms.listeners.CourseSectionListener;
 
 
 
@@ -99,7 +105,9 @@ public class TimeTableTable {
 	final static String []  daytitles = {"","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"};
 	final static String [] hourstitle = {"0h","1h","2h","3h","4h","5h","6h","7h", "8h","9h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h","20h","21h","22h","23h"};
 	
-	
+	MessageListener changerListerner;
+	 TopicSubscriber subscriber;
+	 
 	public TimeTableTable(
 			final int bghour,
 			final int endhour,
@@ -270,6 +278,13 @@ public class TimeTableTable {
 		 		timetable[i].setVisible(false); 		
 		 		}
 		 }
+		 
+         if (cours instanceof Formation){
+            changerListerner= new CourseFormationListener((FormationDto)cours.getDto(), this, MainFrame.myDaybyday);
+         }
+         else if (cours instanceof Section){
+            changerListerner = new CourseSectionListener((SectionDto)cours.getDto(), this, MainFrame.myDaybyday);
+         }
 		 listenToCourses();
 	}
 	
@@ -627,6 +642,7 @@ public class TimeTableTable {
 		 TableColumnModel tableColumnModelDetail = new DefaultTableColumnModel();
 		 this.cours = cours;
 		 
+		 cours.upDateDto(cours.getDto());
 //System.out.println(this.nbday +">"+  nbday);
 		 if (this.nbday >  nbday){
 		 	for (; this.nbday > nbday; --this.nbday){
@@ -640,7 +656,7 @@ public class TimeTableTable {
 		 		timetable[this.nbday+1].setVisible(true);
 		 		}
 		 }
-		 pane.repaint();
+		// pane.repaint();
 
 			final String []  daytitles = {"","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"};
 			//GregorianCalendar cal = new GregorianCalendar();
@@ -711,6 +727,18 @@ public class TimeTableTable {
 			System.out.println("c'est la");
 		}
 		pane.setPreferredSize(new Dimension(columsize*(nbhours + 1)*nbhoursslice + 50 ,tableheigth));
+        if (cours instanceof Formation){
+            changerListerner= new CourseFormationListener((FormationDto)cours.getDto(), this, MainFrame.myDaybyday);
+         }
+         else if (cours instanceof Section){
+            changerListerner = new CourseSectionListener((SectionDto)cours.getDto(), this, MainFrame.myDaybyday);
+         }
+        try {
+			subscriber.setMessageListener(changerListerner);
+		} catch (JMSException e1) {
+			// TODO Auto-generated catch block
+			//e1.printStackTrace();
+		}
 	}
 
 	public void changeSize(int size, int height){
@@ -806,7 +834,7 @@ public class TimeTableTable {
 	public class TimeTableCellRenderer implements TableCellRenderer{
 
 		public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
-			tag.removeAll();
+			try{tag.removeAll();
 			tag.setBackground(new Color(255, 255, 255));
 			//tag.setIcon(null);
 			tag.setText(null);
@@ -855,7 +883,9 @@ public class TimeTableTable {
 			// TODO Auto-generated method stub
 			tag.setFont(new Font(MainFrame.font, 0, MainFrame.fontsize));
 			
-			
+			}catch (Exception e){
+				System.err.println("c la que ca plante");
+			}
 			return tag;
 		}
 		
@@ -872,15 +902,15 @@ public class TimeTableTable {
             TopicConnection connect = factory.createTopicConnection();
             TopicSession session = connect.createTopicSession(false,
                     Session.AUTO_ACKNOWLEDGE);
-            TopicSubscriber subscriber = session.createSubscriber(topic);
-            subscriber.setMessageListener(new CourseFormationListener(
-                    (FormationDto)cours.getDto(), this, MainFrame.myDaybyday));
+            subscriber = session.createSubscriber(topic);
+
+            subscriber.setMessageListener(changerListerner);
             connect.start();
             System.out.println(
                     "Attend l'arrivee de messages sur topic/CourseTopic...");
         }
         catch(Exception ex){
-            ex.printStackTrace();
+            //ex.printStackTrace();
 
         }
     }

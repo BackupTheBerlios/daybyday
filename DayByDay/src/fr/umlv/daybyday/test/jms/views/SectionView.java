@@ -45,7 +45,7 @@ public class SectionView {
 
 
     public void listenToCourses(){
-        listenToTopic("topic/CourseTopic",new CourseSectionListener(sectionDto, this, daybyday));
+       // listenToTopic("topic/CourseTopic",new CourseSectionListener(sectionDto, this, daybyday));
     }
 
     private void listenToTopic(String topicName, MessageListener messageListener){

@@ -389,8 +389,23 @@ public class Formation implements FormationElement{
 		return null;
 	}
 	
-	public void upDateDto (SectionDto dto){
-		getElementNombre();
+	public void upDateDto (Object dto){
+		ArrayList courslisttmp = new ArrayList();;
+		
+		try {	
+		//	if (sectionDto.getVersion().intValue() != dto.getVersion().intValue()){
+				courslist =  new ArrayList();
+				//formationdto = (FormationDto)dto;
+				courslisttmp = MainFrame.myDaybyday.getCoursesOfSection(new SectionBusinessPK(sectionDto.getName(),sectionDto.getFormationId()));
+			for (int i = 0; i < courslisttmp.size(); ++i)
+				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
+		//	}
+		} catch (RemoteException e1) {
+
+		} catch (EntityNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	

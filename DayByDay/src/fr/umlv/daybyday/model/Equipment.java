@@ -15,6 +15,7 @@ import javax.swing.tree.TreeNode;
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 
@@ -240,4 +241,6 @@ public class Equipment implements FormationElement {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void upDateDto (Object dto){}
 }

@@ -11,6 +11,7 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 
 /**
@@ -205,4 +206,6 @@ public class Subject implements FormationElement{
 	public Object getDto() {
 			return dto;
 	}
+	
+	public void upDateDto (Object dto){}
 }

@@ -15,6 +15,7 @@ import javax.swing.tree.TreeNode;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
@@ -278,4 +279,6 @@ public class Teacher implements FormationElement {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void upDateDto (Object dto){}
 }

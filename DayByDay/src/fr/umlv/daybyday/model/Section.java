@@ -134,6 +134,8 @@ public class Section implements FormationElement{
 		
 		try {
 		SectionDto dto = MainFrame.myDaybyday.getSection(sectionDto.getSectionId());
+		
+//System.out.println(sectionDto.getVersion().intValue() + "!=" + dto.getVersion().intValue());
 		if (sectionDto.getVersion().intValue() != dto.getVersion().intValue()){
 			sectionDto = dto;
 			try {
@@ -171,17 +173,17 @@ public class Section implements FormationElement{
 
 	}
 	
-	public void upDateDto (SectionDto dto){
+	public void upDateDto (Object dto){
 		ArrayList courslisttmp = new ArrayList();;
 		
 		try {	
-			if (sectionDto.getVersion().intValue() != dto.getVersion().intValue()){
+		//	if (sectionDto.getVersion().intValue() != dto.getVersion().intValue()){
 				courslist =  new ArrayList();
-				sectionDto = dto;
+				sectionDto = (SectionDto)dto;
 				courslisttmp = MainFrame.myDaybyday.getCoursesOfSection(new SectionBusinessPK(sectionDto.getName(),sectionDto.getFormationId()));
 			for (int i = 0; i < courslisttmp.size(); ++i)
 				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
-			}
+		//	}
 		} catch (RemoteException e1) {
 
 		} catch (EntityNotFoundException e1) {
