@@ -132,6 +132,9 @@ public class Course {
 	public String getRepresentation(){
 		String tag = "";
 		
+			if (((CourseDto)((Course)this).getDto()).getDescription().indexOf("ANNULE") != -1){
+					tag += "ANNULE - ";
+			}
 		if (CourseDetail.subjectType)
 			tag += dto.getSubjectType();
 		
