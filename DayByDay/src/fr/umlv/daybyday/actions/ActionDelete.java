@@ -74,9 +74,6 @@ public class ActionDelete extends AbstractAction {
 				tree.reload(elt);
 				//tree = new FormationTreeModel((FormationElement)tree.getRoot());	
 			}
-			if (obj instanceof Course){
-			
-			}
 		}
 		if (refs.length == 4){
 			Object obj = mainframe.getSelectedObject();

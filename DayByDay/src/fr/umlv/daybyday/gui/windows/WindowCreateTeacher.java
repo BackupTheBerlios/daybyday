@@ -62,7 +62,7 @@ public class WindowCreateTeacher extends WindowAbstract {
 	public static void createWindow(final JFrame frame,Object [] obj){
 		
 		final MainFrame mainframe = (MainFrame) obj[0];
-		initWindow(frame,"Nouvel Enseignant", 400, 320);
+		initWindow(frame,"Nouvel Enseignant", 400, 400);
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -145,7 +145,7 @@ public class WindowCreateTeacher extends WindowAbstract {
 		c.gridwidth = 1; 
 		c.fill = GridBagConstraints.CENTER;
 		
-		JLabel profileLabel = new JLabel("  Bureau : ");
+		JLabel profileLabel = new JLabel("  Profile : ");
 		gridbag.setConstraints(profileLabel, c);
 		contentPane.add(profileLabel);
 	

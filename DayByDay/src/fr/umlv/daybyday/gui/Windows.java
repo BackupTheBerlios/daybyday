@@ -42,6 +42,7 @@ public class Windows extends WindowAbstract{
 	public static void createWindow(String identifier, Object[] obj) {
 		JFrame frame = new JFrame();
 		frame.setResizable(false);
+		frame.setIconImage(Images.getImage("daybyday"));
 		Container contentPane = frame.getContentPane();
 		
 

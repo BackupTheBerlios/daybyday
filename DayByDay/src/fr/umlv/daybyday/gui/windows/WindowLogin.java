@@ -9,11 +9,13 @@ package fr.umlv.daybyday.gui.windows;
 import java.awt.Container;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -24,6 +26,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import fr.umlv.daybyday.ejb.admin.user.UserDto;
+import fr.umlv.daybyday.ejb.admin.user.UserPK;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.gui.DBDColor;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
@@ -42,7 +47,7 @@ public class WindowLogin extends WindowAbstract {
 	 * @param obj the object 
 	 */
 	
-	public static void createWindow(JFrame frame,Object [] obj){
+	public static void createWindow(final JFrame frame,Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj [0];
 		
 		final JFrame framefinal = frame;
@@ -67,7 +72,7 @@ public class WindowLogin extends WindowAbstract {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		JTextField loginTextField = new JTextField();
+		final JTextField loginTextField = new JTextField();
 		gridbag.setConstraints(loginTextField, c);
 		contentPane.add(loginTextField);
 	
@@ -81,7 +86,7 @@ public class WindowLogin extends WindowAbstract {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
 				
-		JPasswordField passewordField = new JPasswordField();
+		final JPasswordField passewordField = new JPasswordField();
 		gridbag.setConstraints(passewordField, c);
 		contentPane.add(passewordField);
 	
@@ -93,8 +98,15 @@ public class WindowLogin extends WindowAbstract {
 		okButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
-				mainframe.setEnable(true);
-				framefinal.dispose();
+				try {
+					//System.out.println();
+					MainFrame.myDaybyday.getUser(new UserPK(loginTextField.getText(), new String(passewordField.getPassword())));
+					mainframe.setEnable(true);
+					framefinal.dispose();
+				} catch (RemoteException e) {
+					mainframe.showError(frame,e.toString());
+				}
+				
 			}
 			
 		});
