@@ -40,7 +40,7 @@ public class Windows extends WindowAbstract{
 	 * @param obj All the parameter neccessary to construct the window.
 	 */
 	public static void createWindow(String identifier, Object[] obj) {
-		MainFrame mainframe = (MainFrame)obj[0];
+
 		JFrame frame = new JFrame();
 		
 		frame.setResizable(false);
@@ -51,7 +51,7 @@ public class Windows extends WindowAbstract{
 		try {
 			Method m =  Class.forName("fr.umlv.daybyday.gui.windows." + identifier).getMethod("createWindow",
 					new Class[] { frame.getClass(), obj.getClass()});
-			m.invoke(mainframe.getFrame(),new Object[] { frame, obj });
+			m.invoke(null,new Object[] { frame, obj });
 		} catch (ClassNotFoundException e) {
 			throw new InternalError("Request for a wrong class.");
 		} catch (IllegalAccessException e) {
