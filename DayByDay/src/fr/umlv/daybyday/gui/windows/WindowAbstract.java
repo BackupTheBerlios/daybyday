@@ -65,7 +65,7 @@ public abstract class WindowAbstract {
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        f.setLocation(x + 30 ,y + 30);//(screenSize.width - frameSize.width) / 2,(screenSize.height - frameSize.height) / 2);
+        f.setLocation(/*x + 30 ,y + 30);*/(screenSize.width - frameSize.width) / 2,(screenSize.height - frameSize.height) / 2);
     }
 	
 	
@@ -398,7 +398,7 @@ public abstract class WindowAbstract {
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		
 		//TODO Faire une bouble le nombre d'utilisateur
-		for(int i=0; i< 2/*((ArrayList)obj[0]).size()*/; i++ ){
+		for(int i=0; i< obj.length; i++ ){
 			
 			c2.gridwidth = 4; 
 			c2.fill = GridBagConstraints.HORIZONTAL;
@@ -556,7 +556,7 @@ public abstract class WindowAbstract {
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 	
 		//TODO Faire une bouble le nombre d'utilisateur
-		JList idList = new JList(((ArrayList)obj[0]).toArray());
+		JList idList = new JList(obj);
 		idList.setVisibleRowCount(3);
 		JScrollPane scrollpane = new JScrollPane(idList);
 		gridbag2.setConstraints(scrollpane, c2);

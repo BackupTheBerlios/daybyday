@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import org.w3c.dom.UserDataHandler;
-
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.gui.MainFrame;
 
