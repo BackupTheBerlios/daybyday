@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -43,11 +37,12 @@ import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.FormationTreeModel;
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to create 
+ * a new subject
  */
 public class WindowCreateSubject extends WindowAbstract {
 	
@@ -61,9 +56,9 @@ public class WindowCreateSubject extends WindowAbstract {
 	/**
 	 * This method builds the window witch create a new subject
 	 * 
-	 * @param contentPane the container of the window
-	 * @param refName the reference name
-	 * @param listTeacher the list of the teacher
+	 * @param frame the frame of the window
+	 * @param obj the table object. in position 0 the mainframe,
+	 * in position 1 the teachers
 	 */
 	public static void createWindow(final JFrame frame, Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
@@ -147,7 +142,7 @@ public class WindowCreateSubject extends WindowAbstract {
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		
-		final JComboBox responsableBox = new JComboBox((Object [])obj[1]);
+		final JComboBox responsableBox = new JComboBox((Object []) );
 		responsableBox.setRenderer(new ComboBoxFormationElementRenderer());
 		gridbag2.setConstraints(responsableBox, c2);
 		sectionPanel.add(responsableBox);
@@ -224,7 +219,6 @@ public class WindowCreateSubject extends WindowAbstract {
 			c3.fill = GridBagConstraints.CENTER;
 			c3.anchor = GridBagConstraints.LINE_END;
 			JButton deleteButton = new JButton("Supprimer");
-			//deleteButton.setBackground(DBDColor.getColor("DARK_GRAY"));
 			gridbag3.setConstraints(deleteButton, c3);
 			teacherPanel.add(deleteButton);
 			
@@ -261,7 +255,6 @@ public class WindowCreateSubject extends WindowAbstract {
 		c3.gridwidth = GridBagConstraints.REMAINDER;
 		c3.fill = GridBagConstraints.HORIZONTAL;
 		JButton addButton = new JButton("Ajouter");
-		//addButton.setBackground(DBDColor.getColor("DARK_GRAY"));
 		gridbag3.setConstraints(addButton, c3);
 		teacherPanel.add(addButton);
 		gridbag.setConstraints(teacherPanel, c);
@@ -328,13 +321,8 @@ public class WindowCreateSubject extends WindowAbstract {
 					MainFrame.myDaybyday.createSubject(newdto);
 					Object obj = mainframe.getModelSelectedObject();
 					FormationTreeModel tree = (FormationTreeModel)obj;
-					
-					//SectionDto sectiondefault = new SectionDto("GENERALE",newdto.getName(),newdto.getFormationYear(),null,newdto.getTeacherName(),newdto.getTeacherFirstname(),"",new Boolean(true));
-					//MainFrame.myDaybyday.createSection(sectiondefault);
-					//mainframe.addFormationTabbePane(new Formation(newdto));
-					if (father != null){
+							if (father != null){
 						MainFrame.myDaybyday.updateSection(father);
-						//tree.nodesWereInserted((FormationElement)mainframe.getSelectedObject(),tree.);
 					}
 					MainFrame.myDaybyday.updateFormation(formglo);
 					FormationElement father2 = ((FormationElement)mainframe.getSelectedObject()).getFather();
@@ -347,17 +335,15 @@ public class WindowCreateSubject extends WindowAbstract {
 				}catch (NumberFormatException e){
 					mainframe.showError(frame,e.toString());
 				}catch (ConstraintException e) {
-					// TODO Auto-generated catch block
+	
 					e.printStackTrace();
 				} catch (StaleUpdateException e) {
-					// TODO Auto-generated catch block
+			
 					e.printStackTrace();
 				} catch (WriteDeniedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 
-				
+					e.printStackTrace();
+				}			
 			}
 			
 		});
@@ -379,16 +365,15 @@ public class WindowCreateSubject extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
-		//addButtonValidation(contentPane, c, gridbag );
 	}
 
+	
 	/**
-	 * This method builds the window witch contains the
-	 * informations about a section.
+	 * This method builds the window witch create a new subject
 	 * 
-	 * @param contentPane the container of the window
-	 * @param refName the name reference
-	 * @param listTeacher the list of the teacher
+	 * @param frame the frame of the window
+	 * @param obj the table object. in position 0 the mainframe,
+	 * in position 1 the teachers
 	 */
 	public static void createWindow2(final JFrame frame,Object [] obj){
 		initWindow(frame,"Nouvelle matière", 400, 250);
@@ -560,6 +545,5 @@ public class WindowCreateSubject extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
-		//addButtonValidation(contentPane, c, gridbag );
 	}
 }

@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -48,16 +42,25 @@ import fr.umlv.daybyday.model.Equipment;
 import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.Room;
 import fr.umlv.daybyday.model.Teacher;
+
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to create 
+ * a new formation
  */
 public class WindowCreateFormation extends WindowAbstract {
 
-
-	
+	/**
+	 * This method buildsthe window which permits to create 
+	 * a new formation
+	 * 
+	 * @param frame the frame of the window
+	 * @param obj the table of object . In position 0, the mainframe,
+	 * in position 1 the formation, in position 2 the teacher,
+	 * in position 3 the rooms 
+	 */	
 	public static void createWindow(JFrame frame,Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
 		
@@ -111,7 +114,6 @@ public class WindowCreateFormation extends WindowAbstract {
 		importBox.setRenderer(new ListCellRenderer(){
 
 			public Component getListCellRendererComponent(JList arg0, Object arg1, int arg2, boolean arg3, boolean arg4) {
-				// TODO Auto-generated method stub
 				
 				if (arg1 instanceof FormationDto){
 					FormationDto dto = (FormationDto)arg1;
@@ -193,7 +195,6 @@ public class WindowCreateFormation extends WindowAbstract {
 		responsableBox.setRenderer(new ListCellRenderer(){
 
 			public Component getListCellRendererComponent(JList arg0, Object arg1, int arg2, boolean arg3, boolean arg4) {
-				// TODO Auto-generated method stub
 				
 				if (arg1 instanceof FormationDto){
 					FormationDto dto = (FormationDto)arg1;
@@ -231,13 +232,12 @@ public class WindowCreateFormation extends WindowAbstract {
 		gridbag2.setConstraints(roomLabel, c2);
 		formationPanel.add(roomLabel);
 		
-		final JComboBox roomBox = new JComboBox((Object [])obj[3]);
+		final JComboBox roomBox = new JComboBox((Object [])
+);
 		roomBox.setRenderer(new ComboBoxFormationElementRenderer());
 		gridbag2.setConstraints(roomBox, c2);
 		formationPanel.add(roomBox);
-
-
-		
+	
 		gridbag.setConstraints(formationPanel, c);
 		contentPane.add(formationPanel);
 		
@@ -296,10 +296,8 @@ public class WindowCreateFormation extends WindowAbstract {
 					mainframe.addFormationTabbePane(new Formation(newdto));
 					framefinal.dispose();
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ConstraintException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -325,7 +323,6 @@ public class WindowCreateFormation extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
-		//addButtonValidation(contentPane, c, gridbag );
 	}
 
 	

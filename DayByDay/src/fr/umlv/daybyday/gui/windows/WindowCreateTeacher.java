@@ -1,9 +1,4 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
+
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -41,23 +36,24 @@ import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.FormationTreeModel;
+
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to create 
+ * a new teacher
  */
 public class WindowCreateTeacher extends WindowAbstract {
 
 	
-
-
 	
 	/**
 	 * This method builds the windows witch permit to
 	 * create a teacher
 	 * 
-	 * @param contentPane the container of the window
+	 * @param frame the frame of the window
+	 * @param obj the table object. in position 0 the mainframe,
 	 */
 	public static void createWindow(final JFrame frame,Object [] obj){
 		

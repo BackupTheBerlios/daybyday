@@ -1,9 +1,4 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
+
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -22,24 +17,34 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to create 
+ * availibilities teacher
  */
 public class WindowDetailsCourse extends WindowAbstract {
-
+	
+	
 	/**
-	 * This method builds the window calendar.  
+	 * This method builds the windows witch permit to
+	 * create availibilities teacher
 	 * 
-	 * @param contentPane The container of the JFrame
-	 * @param obj the object 
+	 * @param frame the frame of the window
+	 * @param obj the table object. in position 0 the mainframe,
 	 */
 	public static void createWindow(JFrame frame,Object [] obj){
 		createWindow(frame);
 	}
 	
+	
+	/**
+	 * This method builds the windows witch permit to
+	 * create availibilities teacher
+	 * 
+	 * @param frame the frame of the window
+	 */
 	public static void createWindow(JFrame frame){
 		initWindow(frame,"Niveau de détails des cours", 550, 520);
 		Container contentPane = frame.getContentPane();

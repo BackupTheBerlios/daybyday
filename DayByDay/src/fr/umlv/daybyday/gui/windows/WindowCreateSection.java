@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -41,24 +35,25 @@ import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
 import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.FormationTreeModel;
+
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to create 
+ * a new section
  */
 public class WindowCreateSection extends WindowAbstract {
 
 	
 	
-
 	/**
 	 * This method builds the window witch contains the
 	 * informations about a section.
 	 * 
-	 * @param contentPane the container of the window
-	 * @param refName the name reference
-	 * @param listTeacher the list of the teacher
+	 * @param frame the frame of the window
+	 * @param obj the table object. in position 0 the mainframe,
+	 * in position 1 the teachers
 	 */
 	public static void createWindow(final JFrame frame,Object [] obj){
 		initWindow(frame,"Nouvelle filière", 400, 250);
@@ -230,8 +225,6 @@ public class WindowCreateSection extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
-		//addButtonValidation(contentPane, c, gridbag );
 	}
-
 	
 }
