@@ -178,12 +178,30 @@ public class ActionExport extends AbstractAction {
 		   elem.addContent(room);
 		   
 		   //Add a building attribute to a room
-		   Attribute building = new Attribute("Building", datacourse.getRoomBuilding());
-		   room.setAttribute(building);
+		   String roombuilding = datacourse.getRoomBuilding();
+		   if (roombuilding == null)
+		   {
+		   	   Attribute building = new Attribute("Building", "");
+			   room.setAttribute(building);
+		   }
+		   else
+		   {
+			   Attribute building = new Attribute("Building", roombuilding);
+			   room.setAttribute(building);		   	
+		   }
 		   
 		   //Add an area attribute to a room
-		   Attribute area = new Attribute("Area", datacourse.getRoomArea());
-		   room.setAttribute(area);
+		   String roomarea = datacourse.getRoomArea();
+		   if (roomarea == null)
+		   {
+		   	   Attribute area = new Attribute("Area", "");
+			   room.setAttribute(area);
+		   }
+		   else
+		   {
+		   	   Attribute area = new Attribute("Area", roomarea);
+			   room.setAttribute(area);		   	
+		   }
 		   
 		   //The date and hours informations are in a timestamp object
 		   //We must extract them from it
