@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.model.CourseDetail;
 
 /**
  * @author Marc
@@ -24,6 +26,7 @@ public class ActionGridDetailStudent extends AbstractAction {
 	
 	public ActionGridDetailStudent(Object [] refs) {
 		super("Etudiant",Images.getImageIcon("etudiant"));
+		this.refs = refs;
 	}
 
 	/**
@@ -31,5 +34,30 @@ public class ActionGridDetailStudent extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		
+		MainFrame mainframe = (MainFrame) refs[0];
+		
+		CourseDetail.formId = false;
+		CourseDetail.formInfo = false;
+		
+		CourseDetail.teacherName = true;
+		CourseDetail.teacherFirstname = true;
+		CourseDetail.teacherOffice = false;
+		
+		CourseDetail.equipmentName = false;
+		CourseDetail.equipmentDesc = false;
+		
+		CourseDetail.roomName = true;
+		CourseDetail.roomInfo = false;
+		
+		CourseDetail.subjectName = true;
+		CourseDetail.subjectType = true;
+		CourseDetail.subjectGroupe = true;
+		
+		CourseDetail.coursColor = true;
+		CourseDetail.coursPeriode = true;
+		CourseDetail.coursFrequence = true;
+		CourseDetail.coursHour = true;
+		
+		mainframe.refreshAllTimeTable();
 	}
 }
