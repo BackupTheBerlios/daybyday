@@ -103,7 +103,7 @@ public class MainFrame {
         myDaybyday = DaybydayHome.create();
         
         treesrc = new ArrayList();
-        
+       
 		frame = new JFrame("DaYbYDaY");
 		frame.setIconImage(Images.getImage("daybyday"));
 		frame.setSize(850, 600);

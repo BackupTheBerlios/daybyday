@@ -35,7 +35,6 @@ import javax.swing.event.ChangeListener;
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
@@ -510,7 +509,7 @@ public class WindowCreateCourse extends WindowAbstract {
 		gridbag.setConstraints(totalePanel2, c);
 		contentPane.add(totalePanel2);
 		
-		// Add button OK and Annuler
+//		 Add button OK and Annuler
 		
 		JButton ok = new JButton("OK");
 		ok.setPreferredSize(new Dimension(100,20));
@@ -551,20 +550,15 @@ public class WindowCreateCourse extends WindowAbstract {
 		           else
 		           		sectionname = section.getName();
 		           		
-		           String typesubject = "cours";
-		           if (course.isSelected()) typesubject = "cours";
-		           else if (td.isSelected()) typesubject = "td";
-		           else if (tp.isSelected()) typesubject = "tp";
-		           
 				CourseDto newdto = new CourseDto(
 						obj.getName(),
 						sectionname,
 						formation.getName(),
 						formation.getYear(),
-						typesubject,
+						"cours",
 						startDate,
 						endDate,
-						(String)groupelist.getSelectedItem(),
+						"groupe1",
 						obj2.getName(),
 						obj2.getFirstname(),
 						obj4.getName(),
@@ -588,11 +582,24 @@ public class WindowCreateCourse extends WindowAbstract {
 						//mainframe.addFormationTabbePane(new Formation(newdto));
 						framefinal.dispose();
 						df.changeSource(new Section(((Section)section).getDTO(),section.getFather()));
-
 					}
-
+					if (section instanceof Formation){
+						try{
+							MainFrame.myDaybyday.updateFormation((FormationDto) ((Formation)section).getDto());
+						}catch (RemoteException e) {
+							e.printStackTrace();
+							mainframe.showError(frame,e.toString());
+						} 
+						((Formation)section).getCourseList();
+						((Formation)section).upDateDto(null);
+						framefinal.dispose();
+						df.changeSource((Formation)section);
+					}
+					
+				}catch (java.lang.NumberFormatException e){
+					mainframe.showError(frame,"Champs manquant(s) ou mal renseigné(s)");
+					
 				}
-
 				catch (RemoteException e) {
 					mainframe.showError(frame,e.toString());
 				} catch (ConstraintException e) {
@@ -611,27 +618,32 @@ public class WindowCreateCourse extends WindowAbstract {
 					mainframe.showError(frame,"Problème de version " + e);
 				} catch (WriteDeniedException e) {
 					mainframe.showError(frame,e.toString());
-				} catch (NullPointerException e){
-					mainframe.showError(frame,"Champs manquant(s) ou mal renseigné(s)");
 				}
+
+				
 			}
-			});
-
-			JButton cancel = new JButton("Annuler");
-			cancel.setPreferredSize(new Dimension(100, 20));
-			cancel.addActionListener(new ActionListener() {
-
-				public void actionPerformed(ActionEvent arg0) {
-					framefinal.dispose();
-
-
-				}
-
-			});
-			c.anchor = GridBagConstraints.WEST;
-			gridbag.setConstraints(cancel, c);
-			contentPane.add(cancel);
-		}
+			
+		});
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		gridbag.setConstraints(ok, c);
+		contentPane.add(ok);
+		JButton cancel = new JButton("Annuler");
+		cancel.setPreferredSize(new Dimension(100,20));
+		cancel.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent arg0) {
+				framefinal.dispose();
+				
+			}
+			
+		});
+		c.anchor = GridBagConstraints.WEST;
+		gridbag.setConstraints(cancel, c);
+		contentPane.add(cancel);
+		//addButtonValidation(contentPane, c, gridbag );
+	}
 	}
 
 	
