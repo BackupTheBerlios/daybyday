@@ -209,11 +209,11 @@ public class ActionExport extends AbstractAction {
 		   
 		   gc.setTimeInMillis(datacourse.getStartDate().getTime());
 		   String startD = gc.get(Calendar.DAY_OF_MONTH)+"/"+gc.get(Calendar.MONTH)+"/"+gc.get(Calendar.YEAR);
-		   String startH = gc.get(Calendar.HOUR)+":"+gc.get(Calendar.MINUTE);
+		   String startH = gc.get(Calendar.HOUR_OF_DAY)+":"+gc.get(Calendar.MINUTE);
 		   
 		   gc.setTimeInMillis(datacourse.getEndDate().getTime());
 		   String endD = gc.get(Calendar.DAY_OF_MONTH)+"/"+gc.get(Calendar.MONTH)+"/"+gc.get(Calendar.YEAR);
-		   String endH = gc.get(Calendar.HOUR)+":"+gc.get(Calendar.MINUTE);
+		   String endH = gc.get(Calendar.HOUR_OF_DAY)+":"+gc.get(Calendar.MINUTE);
 		   
 		   Element starthour = new Element("STARTHOUR");
 		   starthour.setText(startH);
