@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
+import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.DBDColor;
 import fr.umlv.daybyday.gui.MainFrame;
@@ -72,9 +73,9 @@ public class WindowAdministration extends WindowAbstract{
 		/*in.close();
 		lnr.close();
 		*/
-		initWindow(frame,"Panneau Administrateur", 430, 450, mainframe.getFrameX(), mainframe.getFrameY());
+		initWindow(frame,"Panneau Administrateur", 500, 450, mainframe.getFrameX(), mainframe.getFrameY());
 		
-		UserDto userdto = mainframe.getUser();
+		final UserDto userdto = mainframe.getUser();
 
 			Container contentPane = frame.getContentPane();
 		
@@ -95,7 +96,7 @@ public class WindowAdministration extends WindowAbstract{
 		contentPane.add(id);
 		
 		c.anchor = GridBagConstraints.LINE_START;
-		JTextField loginTextField = new JTextField(userdto.getName());
+		final JTextField loginTextField = new JTextField(userdto.getLogin());
 		gridbag.setConstraints(loginTextField, c);
 		contentPane.add(loginTextField);
 
@@ -106,7 +107,7 @@ public class WindowAdministration extends WindowAbstract{
 	
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.LINE_START;
-		JPasswordField passewordField = new JPasswordField(userdto.getFirstname());
+		final JPasswordField passewordField = new JPasswordField(userdto.getPass());
 		gridbag.setConstraints(passewordField, c);
 		contentPane.add(passewordField);
 		
@@ -154,6 +155,8 @@ public class WindowAdministration extends WindowAbstract{
 		
 		c7.gridwidth = 10;		
 		final JTextField loginTextField8 = new JTextField();
+		loginTextField8.setPreferredSize(new Dimension(80,20));
+		loginTextField8.setMinimumSize(new Dimension(80,20));
 		gridbag7.setConstraints(loginTextField8, c7);
 		newAccount.add(loginTextField8);
 	
@@ -167,6 +170,8 @@ public class WindowAdministration extends WindowAbstract{
 		c7.anchor = GridBagConstraints.LINE_START;
 		c7.gridwidth = 10;
 		final JPasswordField passewordField8 = new JPasswordField();
+		passewordField8.setPreferredSize(new Dimension(80,20));
+		passewordField8.setMinimumSize(new Dimension(80,20));
 		gridbag7.setConstraints(passewordField8, c7);
 		newAccount.add(passewordField8);
 		
@@ -318,6 +323,13 @@ public class WindowAdministration extends WindowAbstract{
 			public void actionPerformed(ActionEvent arg0) {
 				File property2;
 				try {
+					userdto.setLogin(loginTextField.getText());
+					userdto.setPass(passewordField.getText());
+					try{
+						MainFrame.myDaybyday.updateUser(userdto);
+					}catch (fr.umlv.daybyday.ejb.util.exception.StaleUpdateException e1){
+						
+					}
 					property2 = new File((new JLabel()).getClass().getResource("/property").toURI());
 					BufferedWriter on = new BufferedWriter(new FileWriter(property2));
 					on.write(loginTextField2.getText()+ "\n" +
@@ -337,6 +349,12 @@ public class WindowAdministration extends WindowAbstract{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  catch (WriteDeniedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (EntityNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

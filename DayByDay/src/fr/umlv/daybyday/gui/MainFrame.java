@@ -645,6 +645,7 @@ public class MainFrame {
 	
 	
 	public void removeTabbePane (int i){
+		if (i < 0) return;
 		selectedTable.remove(i);
 		tabepane.removeTabAt(i);
 		tabbepanelistname.remove(i);
