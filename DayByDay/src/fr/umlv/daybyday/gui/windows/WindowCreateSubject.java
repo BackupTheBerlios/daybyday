@@ -62,7 +62,7 @@ public class WindowCreateSubject extends WindowAbstract {
 		
 		int height = 360;
 		height = height + 50 *(((Object [])obj[1]).length - 1);
-		initWindow(frame,"Nouvelle matière", 600, height);	
+		initWindow(frame,"Nouvelle matière", 600, /*height*/220);	
 			Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -159,7 +159,7 @@ public class WindowCreateSubject extends WindowAbstract {
 		c.insets =new Insets(0,10,0,20);
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;	
-		
+	/*	
 		JPanel teacherPanel = new JPanel(null);		
 		teacherPanel.setBorder(BorderFactory.createTitledBorder(" Enseignants associés : "));
 	
@@ -257,7 +257,7 @@ public class WindowCreateSubject extends WindowAbstract {
 		teacherPanel.add(addButton);
 		gridbag.setConstraints(teacherPanel, c);
 		contentPane.add(teacherPanel);
-		
+		*/
 		// Add button OK and Annuler
 		JButton ok = new JButton("OK");
 		ok.setPreferredSize(new Dimension(100,20));

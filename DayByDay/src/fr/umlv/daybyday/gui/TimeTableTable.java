@@ -43,6 +43,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import fr.umlv.daybyday.actions.ActionCourseAdd;
 import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
@@ -427,6 +428,7 @@ public class TimeTableTable {
 	 			if (clickedref instanceof Course){
 	 				MainFrame.setSelectedCourse(clickedref);
 	 				MainFrame.setModelSelectedCourse(this);
+	 				InstancesActions.getAction("ActionCourseAdd",null).setEnabled(false);
 				}
 	 			else {
 	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
@@ -434,6 +436,7 @@ public class TimeTableTable {
 	 				ActionPaste action = (ActionPaste)InstancesActions.getAction("ActionPaste",null);
 	 				action.setEnabled(true);
 	 				action.setRefs(refsplus);
+	 				ActionCourseAdd action2 = (ActionCourseAdd)InstancesActions.getAction("ActionCourseAdd",null);action2.setEnabled(true);action2.setRefs(refsplus);
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseAdd",refsplus));
 	 				popup.add(new JSeparator());
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPrint",refs));
@@ -508,6 +511,7 @@ public class TimeTableTable {
 	 				InstancesActions.getAction("ActionCut",null).setEnabled(true);
 	 				InstancesActions.getAction("ActionCopy",null).setEnabled(true);
 	 				InstancesActions.getAction("ActionPaste",null).setEnabled(false);
+	 				InstancesActions.getAction("ActionCourseAdd",null).setEnabled(false);
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCut",refs));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCopy",refs));
 	 				
@@ -523,9 +527,9 @@ public class TimeTableTable {
 	 			else {
 	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
 	 				InstancesActions.getAction("ActionCopy",null).setEnabled(false);
-	 				ActionPaste action = (ActionPaste)InstancesActions.getAction("ActionPaste",null);
-	 				action.setEnabled(true);
-	 				action.setRefs(refsplus);
+	 				ActionPaste action = (ActionPaste)InstancesActions.getAction("ActionPaste",null);action.setEnabled(true);action.setRefs(refsplus);
+	 				ActionCourseAdd action2 = (ActionCourseAdd)InstancesActions.getAction("ActionCourseAdd",null);action2.setEnabled(true);action2.setRefs(refsplus);
+	 				
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseAdd",refsplus));
 	 				popup.add(new JSeparator());
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPrint",refs));

@@ -366,6 +366,7 @@ public class MainFrame {
 		tabbepanelist.put(form.getName(),tmp);
 		
 		  tabepane.addTab(form.getName(),tmp);
+		  tabepane.setSelectedIndex(tabepane.getTabCount() - 1);
 		 
 	}
 	

@@ -36,12 +36,17 @@ public class ActionCourseAdd extends AbstractAction {
 		this.refs = refs;
 	}
 
+	public void setRefs(Object [] refs) {
+		this.refs = refs;
+	}
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		MainFrame mainframe = (MainFrame) refs[0];
 		
+		
+		MainFrame mainframe = (MainFrame) refs[0];
+		try{
 		TimeTableTable df = (TimeTableTable) refs[1];
 		
 		Object obj = mainframe.getSelectedObject();
@@ -104,5 +109,9 @@ public class ActionCourseAdd extends AbstractAction {
 		} catch (RemoteException e1) {
 			mainframe.showError(e1.getMessage());
 		}
+		}catch(ArrayIndexOutOfBoundsException e2){
+			mainframe.showError("Emploi du temps non spécifié pour l'ajout");
+		}
 	}
+
 }
