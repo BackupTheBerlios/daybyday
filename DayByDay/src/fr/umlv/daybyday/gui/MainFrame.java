@@ -721,6 +721,7 @@ public class MainFrame {
 	
 	public void setEnable (boolean state){
 		frame.setEnabled(state);
+		frame.setVisible(true);
 	}
 	
 	public void reLog() {

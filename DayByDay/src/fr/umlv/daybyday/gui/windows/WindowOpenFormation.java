@@ -130,6 +130,7 @@ public class WindowOpenFormation extends WindowAbstract {
 				framefinal.dispose();
 				mainframe.setEnable(true);
 				
+				
 			}
 			
 		});
