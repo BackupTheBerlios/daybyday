@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -73,9 +74,9 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		final GregorianCalendar cal = new GregorianCalendar();
 
         
-		if (typeObjectRef == TEACHER) initWindow(frame,"Gestion des disponibilités d'un enseignant", 550, 450, mainframe.getFrameX(), mainframe.getFrameY());
-		if (typeObjectRef == ROOM) initWindow(frame,"Gestion des disponibilités d'une salle", 550, 450, mainframe.getFrameX(), mainframe.getFrameY());
-		if (typeObjectRef == EQUIP) initWindow(frame,"Gestion des disponibilités d'un équipement", 550, 450, mainframe.getFrameX(), mainframe.getFrameY());
+		if (typeObjectRef == TEACHER) initWindow(frame,"Gestion des disponibilités d'un enseignant", 550, 300, mainframe.getFrameX(), mainframe.getFrameY());
+		if (typeObjectRef == ROOM) initWindow(frame,"Gestion des disponibilités d'une salle", 550, 300, mainframe.getFrameX(), mainframe.getFrameY());
+		if (typeObjectRef == EQUIP) initWindow(frame,"Gestion des disponibilités d'un équipement", 550, 300, mainframe.getFrameX(), mainframe.getFrameY());
 	
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
@@ -91,7 +92,7 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
 		JLabel teacher = new JLabel(" Enseignant : ");
-		if (typeObjectRef == TEACHER) teacher.setText("Enseigant : ");
+		if (typeObjectRef == TEACHER) teacher.setText("Enseignant : ");
 		if (typeObjectRef == ROOM) teacher.setText("Salle : ");
 		if (typeObjectRef == EQUIP) teacher.setText("Equipement : ");
 		gridbag.setConstraints(teacher, c);
@@ -184,18 +185,22 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 						gridbag3.setConstraints(end, c3);
 						date.add(end);
 						
+						String desc = "";
 						if (typeObjectRef == TEACHER){
 							begin.setText(((TeacherConstraintDto)Objectref[i]).getStartDate() + "");
 							end.setText(((TeacherConstraintDto)Objectref[i]).getEndDate() + "");
+							desc = ((TeacherConstraintDto)Objectref[i]).getDescription();
 						}
 						if (typeObjectRef == ROOM) {
 							begin.setText(((RoomConstraintDto)Objectref[i]).getStartDate() + "");
 							end.setText(((RoomConstraintDto)Objectref[i]).getEndDate() + "");
+							desc = ((RoomConstraintDto)Objectref[i]).getDescription();
 						
 						}
 						if (typeObjectRef == EQUIP) {
 							begin.setText(((EquipmentConstraintDto)Objectref[i]).getStartDate() + "");
-							end.setText(((EquipmentConstraintDto)Objectref[i]).getEndDate() + "");						
+							end.setText(((EquipmentConstraintDto)Objectref[i]).getEndDate() + "");	
+							desc = ((EquipmentConstraintDto)Objectref[i]).getDescription();
 						}
 					
 						c3.gridwidth = 1;
@@ -211,6 +216,8 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 										if (typeObjectRef == ROOM) MainFrame.myDaybyday.removeRoomConstraint(((RoomConstraintDto)Objectreffinal[j]).getRoomConstraintId());
 										if (typeObjectRef == EQUIP) MainFrame.myDaybyday.removeEquipmentConstraint(((EquipmentConstraintDto)Objectreffinal[j]).getEquipmentConstraintId());
 										teacherCombo.setSelectedItem(teacherCombo.getSelectedItem());
+										dateScrollpane.getViewport().setVisible(true);
+										//frame.setVisible(true);
 									} catch (RemoteException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -236,13 +243,20 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 						JCheckBox iBox = new JCheckBox("", true);
 						gridbag3.setConstraints(iBox, c3);
 						date.add(iBox);
+						
+						ButtonGroup boxgroupe = new ButtonGroup();
+						boxgroupe.add(dBox);boxgroupe.add(iBox);
+						dBox.setEnabled(false);iBox.setEnabled(false);
+						if (desc.compareTo("Disponibilité") == 0) dBox.setSelected(true);
+						else iBox.setSelected(true);
+						
 					}	
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 					date.setVisible(true);
-
+					dateScrollpane.setVisible(true);
 
 					frame.setVisible(true);
 				}
@@ -303,12 +317,24 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		gridbag5.setConstraints(fSecondTextField, c5);
 		newAvailability.add(fSecondTextField);
 		
+		c5.gridwidth = 2;
+		JLabel separatorSecondLabel3 = new JLabel("Fréqence : ");
+		gridbag5.setConstraints(separatorSecondLabel3, c5);
+		newAvailability.add(separatorSecondLabel3);
+		
+		c5.gridwidth = 1;
 		c5.gridwidth = GridBagConstraints.REMAINDER;
-		c5.fill = GridBagConstraints.FIRST_LINE_START;
-		JLabel blank= new JLabel();
+		//c5.fill = GridBagConstraints.FIRST_LINE_START;
+		final JTextField fSecondTextField3 = new JTextField("1");
+		fSecondTextField3.setPreferredSize(new Dimension(30,20));
+		gridbag5.setConstraints(fSecondTextField3, c5);
+		newAvailability.add(fSecondTextField3);
+		
+		
+		/*JLabel blank= new JLabel();
 		gridbag5.setConstraints(blank, c5);
 		newAvailability.add(blank);
-		
+		*/
 		c5.gridwidth = 1;
 		c5.fill = GridBagConstraints.HORIZONTAL;
 		
@@ -354,10 +380,14 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		gridbag5.setConstraints(iBox, c5);
 		newAvailability.add(iBox);
 		
+		ButtonGroup boxgroupe = new ButtonGroup();
+		boxgroupe.add(dBox);boxgroupe.add(iBox);
+		
 		JButton add = new JButton("Ajouter");
 		add.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent arg0) {
+				try{
 				int bghour = Integer.parseInt(secondTextField.getText());
 				int bgmin = Integer.parseInt(fSecondTextField.getText());
 				int endhour = Integer.parseInt(secondSecondLineTextField.getText());
@@ -368,7 +398,7 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 				int endday = Integer.parseInt(secondLineTextField.getText());
 				int endmonth = Integer.parseInt(fSecondLineTextField.getText());
 				int freq = 1;//Integer.parseInt(firstTextField11.getText());
-				
+
 				final GregorianCalendar cal2 = new GregorianCalendar();
 				cal2.set(2005, endmonth - 1, endday);
 				cal.set(2005, bgmonth - 1, bgday);
@@ -393,7 +423,7 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 									((TeacherDto)(teacherCombo.getSelectedItem())).getTeacherId(),
 									startDate,
 									endDate,
-									"NO COMMENT"
+									typeDispo
 							));
 						
 						
@@ -402,7 +432,7 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 									((RoomDto)(teacherCombo.getSelectedItem())).getRoomId(),
 									startDate,
 									endDate,
-									"NO COMMENT"
+									typeDispo
 						));
 			   			
 			   			if (typeObjectRef == EQUIP) 
@@ -410,7 +440,7 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 								((EquipmentDto)(teacherCombo.getSelectedItem())).getEquipmentId(),
 								startDate,
 								endDate,
-								"NO COMMENT"
+								typeDispo
 							));
 			           } catch (Exception e) {
 			           	mainframe.showError("ATTENTION : CREATION D UNE CONTRAINTE IMPOSSIBLE : une contrainte de temps en recouvre une autre");
@@ -430,6 +460,11 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 				}
 				teacherCombo.setSelectedItem(teacherCombo.getSelectedItem());
 			}
+			
+				catch(NumberFormatException e1){
+					mainframe.showError(frame,"Paramètres saisies incorects ou manquants");
+				}
+			}
 		});
 		//add.setBackground(DBDColor.getColor("DARK_GRAY"));
 		gridbag5.setConstraints(add, c5);
@@ -442,205 +477,10 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		c2.anchor = GridBagConstraints.CENTER;
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		c2.insets =new Insets(10,0,0,0);
-		JLabel title = new JLabel("     Jour      Fréquence" +
-				"      Intervalle" +
-				"            Horaire          " +
-				"                                      " +
-				"      D              I");
-		gridbag2.setConstraints(title, c2);
-		availability.add(title);
-		
-		c2.insets =new Insets(5,5,5,5);
-		final JPanel hour = new JPanel();
-		
-		JScrollPane hourScrollpane = new JScrollPane(hour);	
-		
-		//TODO Faire une bouble sur les dispo et non prof
-		teacherCombo.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent arg0) {
-				
-			
-
-		GridBagLayout gridbag2 = new GridBagLayout();
-		GridBagConstraints c2 = new GridBagConstraints();
-		hour.setLayout(gridbag2);
-		hour.removeAll();
-		c2.weightx = 1; 
-		c2.weighty = 1; 
-		c2.gridwidth = 1; 
-		
-		c2.insets =new Insets(0,5,0,5);
-		c2.anchor = GridBagConstraints.LINE_START;
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		
-		//TODO Faire une bouble sur les dispo et non prof
-		for(int i=0; i<3; i++ ){
-			c2.fill = GridBagConstraints.HORIZONTAL;
-			JLabel day = new JLabel("  jour");
-			day.setBorder(BorderFactory.createLineBorder(DBDColor.getColor("DARK_GRAY")));
-			gridbag2.setConstraints(day, c2);
-			hour.add(day);
 	
-			JLabel frq = new JLabel("    frq");
-			frq.setBorder(BorderFactory.createLineBorder(DBDColor.getColor("DARK_GRAY")));
-			gridbag2.setConstraints(frq, c2);
-			hour.add(frq);
-	
-			JLabel interval = new JLabel("    n° a n°");
-			interval.setBorder(BorderFactory.createLineBorder(DBDColor.getColor("DARK_GRAY")));
-			gridbag2.setConstraints(interval, c2);
-			hour.add(interval);
-		
-			JLabel hour2 = new JLabel("    H:M à H:M");
-			hour2.setBorder(BorderFactory.createLineBorder(DBDColor.getColor("DARK_GRAY")));
-			gridbag2.setConstraints(hour2, c2);
-			hour.add(hour2);
-			
-			c2.gridwidth = 1;
-			c2.fill = GridBagConstraints.CENTER;
-			JButton delete = new JButton("Supprimer");
-			delete.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg0) {
-					
-				}
-			});
-			gridbag2.setConstraints(delete, c2);
-			hour.add(delete);
-			
-			JCheckBox dBox = new JCheckBox("", true);
-			gridbag2.setConstraints(dBox, c2);
-			hour.add(dBox);
-			
-			c2.gridwidth = GridBagConstraints.REMAINDER;
-			JCheckBox iBox = new JCheckBox("", true);
-			gridbag2.setConstraints(iBox, c2);
-			hour.add(iBox);
-		}	
-		
-
-	}});
-		
-		hourScrollpane.setPreferredSize(new Dimension(500,60));
-		hourScrollpane.setMinimumSize(new Dimension(500,60));
-		gridbag2.setConstraints(hourScrollpane, c2);
-		availability.add(hourScrollpane);
 		gridbag.setConstraints(availability,c);
 		contentPane.add(availability);
 
-		JPanel newAvailability2 = new JPanel();
-		
-		GridBagLayout gridbag6 = new GridBagLayout();
-		GridBagConstraints c6 = new GridBagConstraints();
-		newAvailability2.setBorder(BorderFactory.createTitledBorder(" Nouveau : "));
-		newAvailability2.setLayout(gridbag6);
-		
-		c6.weightx = 1; 
-		c6.weighty = 1; 
-		c6.gridwidth = 1; 
-		
-		c6.insets =new Insets(0,6,0,6);
-		c6.anchor = GridBagConstraints.LINE_START;
-		c6.fill = GridBagConstraints.HORIZONTAL;
-		
-		JLabel firstLabel2 = new JLabel(" Début : ");
-		gridbag6.setConstraints(firstLabel2, c6);
-		newAvailability2.add(firstLabel2);
-	
-		JTextField firstTextField2 = new JTextField();
-		firstTextField2.setPreferredSize(new Dimension(30,20));
-		gridbag6.setConstraints(firstTextField2, c6);
-		newAvailability2.add(firstTextField2);
-		
-		JLabel separatorLabel2 = new JLabel("/");
-		gridbag6.setConstraints(separatorLabel2, c6);
-		newAvailability2.add(separatorLabel2);
-		
-		c6.anchor = GridBagConstraints.FIRST_LINE_START;
-		JTextField fTextField2 = new JTextField();
-		fTextField2.setPreferredSize(new Dimension(30,20));
-		gridbag6.setConstraints(fTextField2, c6);
-		newAvailability2.add(fTextField2);
-		
-		c6.anchor = GridBagConstraints.CENTER;
-		JTextField secondTextField2 = new JTextField();
-		gridbag6.setConstraints(secondTextField2, c6);
-		newAvailability2.add(secondTextField2);
-		
-		JLabel separatorSecondLabel2 = new JLabel("h");
-		gridbag6.setConstraints(separatorSecondLabel2, c6);
-		newAvailability2.add(separatorSecondLabel2);
-		
-		JTextField fSecondTextField2 = new JTextField();
-		fSecondTextField2.setPreferredSize(new Dimension(30,20));
-		gridbag6.setConstraints(fSecondTextField2, c6);
-		newAvailability2.add(fSecondTextField2);
-		
-		c6.gridwidth = GridBagConstraints.REMAINDER;
-		c6.fill = GridBagConstraints.FIRST_LINE_START;
-		JLabel blank2= new JLabel();
-		gridbag6.setConstraints(blank2, c6);
-		newAvailability2.add(blank2);
-		
-		c6.gridwidth = 1;
-		c6.fill = GridBagConstraints.HORIZONTAL;
-		
-		JLabel endLabel2 = new JLabel(" Fin : ");
-		gridbag6.setConstraints(endLabel2, c6);
-		newAvailability2.add(endLabel2);
-		
-		JTextField secondLineTextField2 = new JTextField();
-		secondLineTextField2.setPreferredSize(new Dimension(30,20));
-		gridbag6.setConstraints(secondLineTextField2, c6);
-		newAvailability2.add(secondLineTextField2);
-		
-		JLabel separatorSecondLineLabel2 = new JLabel("/");
-		gridbag6.setConstraints(separatorSecondLineLabel2, c6);
-		newAvailability2.add(separatorSecondLineLabel2);
-				
-		JTextField fSecondLineTextField2 = new JTextField();
-		fSecondLineTextField2.setPreferredSize(new Dimension(30,20));
-		gridbag6.setConstraints(fSecondLineTextField2, c6);
-		newAvailability2.add(fSecondLineTextField2);
-		
-		JTextField secondSecondLineTextField2 = new JTextField();
-		secondSecondLineTextField2.setPreferredSize(new Dimension(30,20));
-		gridbag6.setConstraints(secondSecondLineTextField2, c6);
-		newAvailability2.add(secondSecondLineTextField2);
-		
-		JLabel separatorSecondLineSecondLabel2 = new JLabel("h");
-		gridbag6.setConstraints(separatorSecondLineSecondLabel2, c6);
-		newAvailability2.add(separatorSecondLineSecondLabel2);
-	
-		JTextField fSecondLineSecondTextField2 = new JTextField();
-		fSecondLineSecondTextField2.setPreferredSize(new Dimension(30,20));
-		gridbag6.setConstraints(fSecondLineSecondTextField2, c6);
-		newAvailability2.add(fSecondLineSecondTextField2);
-		
-		c6.gridwidth = 1;
-		c6.gridheight = 6;
-		JCheckBox dBox2 = new JCheckBox("D", true);
-		gridbag6.setConstraints(dBox2, c6);
-		newAvailability2.add(dBox2);
-		
-		JCheckBox iBox2 = new JCheckBox("I", true);
-		gridbag6.setConstraints(iBox2, c6);
-		newAvailability2.add(iBox2);
-		
-		JButton add2 = new JButton("Ajouter");
-		add2.addActionListener(new ActionListener(){
-			
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
-		//add.setBackground(DBDColor.getColor("DARK_GRAY"));
-		gridbag6.setConstraints(add2, c6);
-		newAvailability2.add(add2);
-		
-		gridbag.setConstraints(newAvailability2,c);
-		contentPane.add(newAvailability2);
-		
 //		 Add button OK and Annuler
 		
 		JButton ok = new JButton("OK");

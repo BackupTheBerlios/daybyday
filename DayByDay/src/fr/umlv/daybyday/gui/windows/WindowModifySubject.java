@@ -60,7 +60,7 @@ public class WindowModifySubject extends WindowAbstract {
 		
 		int height = 360;
 		height = height + 50 *(((Object [])obj[1]).length - 1);
-		initWindow(frame,"Mofifier matière", 600, /*height*/220, mainframe.getFrameX(), mainframe.getFrameY());	
+		initWindow(frame,"Modifier matière", 600, /*height*/220, mainframe.getFrameX(), mainframe.getFrameY());	
 			Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
