@@ -367,7 +367,7 @@ public class TimeTableTable {
 		}
 		public void mouseReleased (MouseEvent me ) {
 			
-			if ( SwingUtilities.isRightMouseButton( me ) ){
+		if ( SwingUtilities.isRightMouseButton( me ) ){
 				int x = me.getX();
 	            int y = me.getY(); 
 	            int row = table[index].columnAtPoint(me.getPoint());
@@ -454,37 +454,8 @@ public class TimeTableTable {
 	            }
 	         }
 		}
-	       public void mouseClicked( MouseEvent me ) {
+	      public void mouseClicked( MouseEvent me ) {
 	       	
-	        if ( SwingUtilities.isLeftMouseButton( me ) ) {
-	             int x = me.getX();
-	             int y = me.getY(); 
-	             int row = table[index].columnAtPoint(me.getPoint());
-	             					
-				if (row == -1) return;
-				for (int i = 0; i < table.length; ++i){
-					table[i].removeColumnSelectionInterval(0, table[i].getColumnCount()-1);
-				}
-	            
-				table[index].setRowSelectionInterval(0,0);
-	             table[index].setColumnSelectionInterval(row,row);
-	             
-	             Object clickedref = table[index].getValueAt(0,row);
-	             if (clickedref instanceof Course){
-	 				InstancesActions.getAction("ActionCut",null).setEnabled(true);
-	 				InstancesActions.getAction("ActionCopy",null).setEnabled(true);
-	 				InstancesActions.getAction("ActionPaste",null).setEnabled(false);
-	 				MainFrame.setSelectedCourse(clickedref);
-	 				MainFrame.setModelSelectedCourse(this);
-					
-				}
-	 			else {
-	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
-	 				InstancesActions.getAction("ActionCopy",null).setEnabled(false);
-	 				InstancesActions.getAction("ActionPaste",null).setEnabled(true);
-				}
-	        }
-	          if ( SwingUtilities.isRightMouseButton( me ) ) {
 	             int x = me.getX();
 	             int y = me.getY();
 	             int row = table[index].columnAtPoint(me.getPoint());
@@ -509,7 +480,7 @@ public class TimeTableTable {
 	             //Create the popup menu.
 	             JPopupMenu popup = new JPopupMenu();
 	             TableColumnModel model =  table[index].getColumnModel();
-	             System.out.println();
+
 	             int realrow = 0;
 	             for (int i = 0; i < model.getColumnCount(); ++i){
 	             	if (i == row) break;
@@ -570,9 +541,10 @@ public class TimeTableTable {
 	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionModifyFormation"));
 				}
 
-	 			
+	 			if ( SwingUtilities.isRightMouseButton( me ) ) {
 	             popup.show( table[index], me.getX(), me.getY() );
-	          }
+	 			}
+	          
 	       }
 	    };
 	    

@@ -59,7 +59,8 @@ public class InstancesActions {
 		}
 		if (strActionClass.compareTo("ActionCopy") == 0 || 
 			strActionClass.compareTo("ActionCut") == 0 ||
-			strActionClass.compareTo("ActionPaste") == 0)
+			strActionClass.compareTo("ActionPaste") == 0||
+			strActionClass.compareTo("ActionAdmin") == 0)
 		listeActions.put(strActionClass, a);
 		return a;
 	}

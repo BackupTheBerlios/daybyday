@@ -47,6 +47,8 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.text.StyleConstants;
 
+import fr.umlv.daybyday.actions.ActionAdmin;
+import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.facade.Daybyday;
@@ -285,6 +287,8 @@ public class MainFrame {
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionQuit", refs));
 		menuBar.add(menu);
 		
+
+		
 		menu = new JMenu("Edition");
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionCancel", refs));
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionRedo", refs));
@@ -333,15 +337,20 @@ public class MainFrame {
 		menu.add(MenuBarFactory.CreateMultiMenu ("Disponibilités", "dispo", actionlist, refs));
 		menuBar.add(menu);
 		
-		//if (MainFrame.user.getProfile().compareTo("admin") == 0){
+		
 			menu = new JMenu("Administrer");
 			menu.add(MenuBarFactory.CreateMenuItem ("ActionAdmin", refs));
 			menuBar.add(menu);
-		//}
+		
 		
 		menu = new JMenu("Aide");
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionHelp", refs));
 		menuBar.add(menu);
+		
+		
+		InstancesActions.getAction("ActionCut",null).setEnabled(false);
+		InstancesActions.getAction("ActionCopy",null).setEnabled(false);
+		InstancesActions.getAction("ActionPaste",null).setEnabled(false);
 		
 		return menuBar;
 	
@@ -722,7 +731,11 @@ public class MainFrame {
 	}
 	
 	public void setUser(UserDto user) {
+		
 		MainFrame.user = user;
+		
+		ActionAdmin action = (ActionAdmin)InstancesActions.getAction("ActionAdmin",null);
+		action.setEnabled(MainFrame.user.getProfile().compareTo("admin") == 0);
 	}
 
 

@@ -237,7 +237,6 @@ public class ActionExport extends AbstractAction {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		System.out.println("FileChouser");
 		JFileChooser filechouser = new JFileChooser();
 		//filechouser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int result = -1;
