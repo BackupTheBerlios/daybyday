@@ -102,6 +102,7 @@ public class ActionPaste extends AbstractAction {
 		Integer endMinute  = (Integer) refs[7];
 		int index  = ((Integer) refs[5]).intValue();
 		
+		if (coursref == null) return;
 		CourseDto olddto =  (CourseDto)coursref.getDto();
 		
 		int bghour = bgHour.intValue();

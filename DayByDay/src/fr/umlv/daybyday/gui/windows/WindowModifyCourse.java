@@ -219,6 +219,8 @@ public class WindowModifyCourse extends WindowAbstract {
 			c5.anchor = GridBagConstraints.LINE_START;
 			c5.fill = GridBagConstraints.HORIZONTAL;
 			JLabel firstLabelp = new JLabel(first + " : ");
+			firstLabelp.setPreferredSize(new Dimension(30,20));
+			firstLabelp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(firstLabelp, c5);
 			period.add(firstLabelp);
 
@@ -234,6 +236,8 @@ public class WindowModifyCourse extends WindowAbstract {
 
 			c5.gridwidth = 1;
 			JLabel separatorLabelp = new JLabel(sep);
+			separatorLabelp.setPreferredSize(new Dimension(10,20));
+			separatorLabelp.setMinimumSize(new Dimension(10,20));
 			gridbag5.setConstraints(separatorLabelp, c5);
 			period.add(separatorLabelp);
 
@@ -243,9 +247,25 @@ public class WindowModifyCourse extends WindowAbstract {
 			fTextFieldp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(fTextFieldp, c5);
 			period.add(fTextFieldp);
+			c5.gridwidth = 1;
+			
+			JLabel separatorLabelp2 = new JLabel(sep);
+			separatorLabelp2.setPreferredSize(new Dimension(10,20));
+			separatorLabelp2.setMinimumSize(new Dimension(10,20));
+			gridbag5.setConstraints(separatorLabelp2, c5);
+			period.add(separatorLabelp2);
 
+				 
+			final JTextField fTextFieldp2 = new JTextField(""+ (cal.get(Calendar.YEAR)));
+			fTextFieldp2.setPreferredSize(new Dimension(40,20));
+			fTextFieldp2.setMinimumSize(new Dimension(40,20));
+			gridbag5.setConstraints(fTextFieldp2, c5);
+			period.add(fTextFieldp2);
+			
 			c5.gridwidth = 1;
 			JLabel endLabelp = new JLabel(end + " : ");
+			endLabelp.setPreferredSize(new Dimension(30,20));
+			endLabelp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(endLabelp, c5);
 			period.add(endLabelp);
 
@@ -259,16 +279,34 @@ public class WindowModifyCourse extends WindowAbstract {
 
 			c5.gridwidth = 1;
 			JLabel sepLabelp = new JLabel(sep);
+			sepLabelp.setPreferredSize(new Dimension(10,20));
+			sepLabelp.setMinimumSize(new Dimension(10,20));
 			gridbag5.setConstraints(sepLabelp, c5);
 			period.add(sepLabelp);
 
-			c5.gridwidth = GridBagConstraints.REMAINDER;
+			
 
 			final JTextField endEndTextFieldp = new JTextField(""+ (cal.get(Calendar.MONTH)+1));
 			endEndTextFieldp.setPreferredSize(new Dimension(30,20));
 			endEndTextFieldp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(endEndTextFieldp, c5);
 			period.add(endEndTextFieldp);
+			
+			c5.gridwidth = 1;
+			JLabel sepLabelp2 = new JLabel(sep);
+			sepLabelp2.setPreferredSize(new Dimension(10,20));
+			sepLabelp2.setMinimumSize(new Dimension(10,20));
+			gridbag5.setConstraints(sepLabelp2, c5);
+			period.add(sepLabelp2);
+
+			c5.gridwidth = GridBagConstraints.REMAINDER;
+
+			final JTextField endEndTextFieldp2 = new JTextField(""+ (cal.get(Calendar.YEAR)));
+			endEndTextFieldp2.setPreferredSize(new Dimension(40,20));
+			endEndTextFieldp2.setMinimumSize(new Dimension(40,20));
+			gridbag5.setConstraints(endEndTextFieldp2, c5);
+			period.add(endEndTextFieldp2);
+			
 			gridbag2.setConstraints(period, c2);
 			totalePanel.add(period);
 
@@ -627,8 +665,11 @@ public class WindowModifyCourse extends WindowAbstract {
 				
 				int bgday =  Integer.parseInt(firstTextFieldp.getText());
 				int bgmonth = Integer.parseInt(fTextFieldp.getText());
+				int bgyear = Integer.parseInt(fTextFieldp2.getText());
 				int endday = Integer.parseInt(firstEndTextFieldp.getText());
 				int endmonth = Integer.parseInt(endEndTextFieldp.getText());
+				int endyear = Integer.parseInt(endEndTextFieldp2.getText());
+				
 				int freq = Integer.parseInt(firstTextField11.getText());
 				Color color = jcc.getColor();
 				
@@ -642,8 +683,8 @@ public class WindowModifyCourse extends WindowAbstract {
 					//cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (daycpt -1));
 					
 					final GregorianCalendar cal2 = new GregorianCalendar();
-					cal2.set(2005, endmonth - 1, endday);
-					cal.set(2005, bgmonth - 1, bgday);
+					cal2.set(endyear, endmonth - 1, endday);
+					cal.set(bgyear, bgmonth - 1, bgday);
 					//cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (index -1));
 			        int nbweek = (cal2.get(Calendar.DAY_OF_YEAR) - cal.get(Calendar.DAY_OF_YEAR))/7;
 			        
@@ -652,8 +693,8 @@ public class WindowModifyCourse extends WindowAbstract {
 						if (i%freq == 0){
 //System.out.println(cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR));
 
-				           Timestamp startDate = toTimeStamp(2005,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),bghour,bgmin,00);
-				           Timestamp endDate = toTimeStamp(2005,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),endhour,endmin,00);
+				           Timestamp startDate = toTimeStamp(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),bghour,bgmin,00);
+				           Timestamp endDate = toTimeStamp(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),endhour,endmin,00);
 				         
 				           String sectionname ;
 				           if (section instanceof Formation)

@@ -284,11 +284,21 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		gridbag5.setConstraints(separatorLabel, c5);
 		newAvailability.add(separatorLabel);
 		
-		c5.anchor = GridBagConstraints.FIRST_LINE_START;
 		final JTextField fTextField = new JTextField();
 		fTextField.setPreferredSize(new Dimension(30,20));
 		gridbag5.setConstraints(fTextField, c5);
 		newAvailability.add(fTextField);
+		
+		JLabel separatorLabel2 = new JLabel("/");
+		gridbag5.setConstraints(separatorLabel2, c5);
+		newAvailability.add(separatorLabel2);
+		
+		c5.anchor = GridBagConstraints.FIRST_LINE_START;
+		final JTextField fTextField2 = new JTextField();
+		fTextField2.setPreferredSize(new Dimension(30,20));
+		gridbag5.setConstraints(fTextField2, c5);
+		newAvailability.add(fTextField2);
+		
 		
 		c5.anchor = GridBagConstraints.CENTER;
 		final JTextField secondTextField = new JTextField();
@@ -343,6 +353,16 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		gridbag5.setConstraints(fSecondLineTextField, c5);
 		newAvailability.add(fSecondLineTextField);
 		
+		JLabel separatorSecondLineLabel2 = new JLabel("/");
+		gridbag5.setConstraints(separatorSecondLineLabel2, c5);
+		newAvailability.add(separatorSecondLineLabel2);
+				
+		final JTextField fSecondLineTextField2 = new JTextField();
+		fSecondLineTextField2.setPreferredSize(new Dimension(30,20));
+		gridbag5.setConstraints(fSecondLineTextField2, c5);
+		newAvailability.add(fSecondLineTextField2);
+		
+		
 		final JTextField secondSecondLineTextField = new JTextField();
 		secondSecondLineTextField.setPreferredSize(new Dimension(30,20));
 		gridbag5.setConstraints(secondSecondLineTextField, c5);
@@ -382,13 +402,15 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 				
 				int bgday =  Integer.parseInt(firstTextField.getText());
 				int bgmonth = Integer.parseInt(fTextField.getText());
+				int bgyear = Integer.parseInt(fTextField2.getText());
 				int endday = Integer.parseInt(secondLineTextField.getText());
 				int endmonth = Integer.parseInt(fSecondLineTextField.getText());
+				int endyear = Integer.parseInt(fSecondLineTextField2.getText());
 				int freq = 1;//Integer.parseInt(firstTextField11.getText());
 
 				final GregorianCalendar cal2 = new GregorianCalendar();
-				cal2.set(2005, endmonth - 1, endday);
-				cal.set(2005, bgmonth - 1, bgday);
+				cal2.set(endyear, endmonth - 1, endday);
+				cal.set(bgyear, bgmonth - 1, bgday);
 				//cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (index -1));
 		        int nbweek = (cal2.get(Calendar.DAY_OF_YEAR) - cal.get(Calendar.DAY_OF_YEAR))/7;
 		        int daycpt = 0; 
@@ -401,8 +423,8 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 					if (i%freq == 0){
 //System.out.println(cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR));
 
-			           Timestamp startDate = WindowCreateCourse.toTimeStamp(2005,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),bghour,bgmin,00);
-			           Timestamp endDate = WindowCreateCourse.toTimeStamp(2005,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),endhour,endmin,00);
+			           Timestamp startDate = WindowCreateCourse.toTimeStamp(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),bghour,bgmin,00);
+			           Timestamp endDate = WindowCreateCourse.toTimeStamp(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),endhour,endmin,00);
 			           try {
 			           if (typeObjectRef == TEACHER)
 						
