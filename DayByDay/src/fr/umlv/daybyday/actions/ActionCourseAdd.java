@@ -102,8 +102,7 @@ public class ActionCourseAdd extends AbstractAction {
 			}
 			
 		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			mainframe.showError(e1.getMessage());
 		}
 	}
 }

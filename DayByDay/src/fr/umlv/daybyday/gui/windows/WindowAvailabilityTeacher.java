@@ -59,5 +59,6 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		
 		// Add buttons OK and Annuler
 		addButtonValidation(contentPane, c, gridbag );
+		frame.setVisible(true);
 	}
 }

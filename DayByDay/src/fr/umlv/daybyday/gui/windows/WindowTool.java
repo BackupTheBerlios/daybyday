@@ -64,7 +64,8 @@ public class WindowTool extends WindowAbstract {
 		gridbag.setConstraints(blank , c);
 		contentPane.add(blank );
 		
-		addButtonValidation(contentPane, c, gridbag );			
+		addButtonValidation(contentPane, c, gridbag );	
+		frame.setVisible(true);
 	}
 
 	

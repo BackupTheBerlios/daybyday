@@ -112,6 +112,7 @@ public class WindowRessources extends WindowAbstract {
 		contentPane.add(teacher);
 		
 		addButtonValidation(contentPane, c, gridbag );
+		frame.setVisible(true);
 	}
 
 	

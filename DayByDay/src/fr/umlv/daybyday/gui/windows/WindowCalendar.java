@@ -47,6 +47,7 @@ public class WindowCalendar extends WindowAbstract {
 		DBDCalendarPanel calendar =new DBDCalendarPanel();	
 		gridbag.setConstraints(calendar, c);
 		contentPane.add(calendar);	
+		frame.setVisible(true);
 	}
 
 	

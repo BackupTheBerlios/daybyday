@@ -199,6 +199,7 @@ public class WindowMaterial extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
+		frame.setVisible(true);
 	}
 
 	

@@ -52,6 +52,7 @@ public class WindowOpenEquipment extends WindowAbstract{
 		contentPane.add(importCombo);
 
 		addButtonValidation(contentPane, c, gridbag );
+		frame.setVisible(true);
 	}
 
 	

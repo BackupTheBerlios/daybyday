@@ -123,6 +123,7 @@ public class WindowLogin extends WindowAbstract {
 		gridbag.setConstraints(cancelButton, c);
 		contentPane.add(cancelButton);		
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 	

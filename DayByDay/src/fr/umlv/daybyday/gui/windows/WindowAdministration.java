@@ -81,5 +81,6 @@ public class WindowAdministration extends WindowAbstract{
 		
 		// Add buttons Ok and Annuler
 		addButtonValidation(contentPane, c, gridbag );	
+		frame.setVisible(true);
 	}
 }

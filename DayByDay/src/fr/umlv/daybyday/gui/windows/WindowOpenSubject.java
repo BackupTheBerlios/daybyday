@@ -52,5 +52,6 @@ public class WindowOpenSubject extends WindowAbstract{
 		contentPane.add(importCombo);
 
 		addButtonValidation(contentPane, c, gridbag );
+		frame.setVisible(true);
 	}
 }

@@ -76,6 +76,7 @@ public class WindowCreateCourse extends WindowAbstract {
 	public static void createWindow(final JFrame frame, Object [] obj){ 
 	{		
 		final MainFrame mainframe = (MainFrame) obj[0];
+		try{
 		final Formation formation = (Formation) obj[5];
 		final FormationElement section   = (FormationElement) obj[6];
 		final TimeTableTable df   = (TimeTableTable) obj[7];
@@ -642,8 +643,14 @@ public class WindowCreateCourse extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
+		frame.setVisible(true);
 		//addButtonValidation(contentPane, c, gridbag );
+		}catch (Exception e){
+			mainframe.showError(frame,"Ajoutez d'abord des matières à la filière ou à la formation");
+			frame.dispose();
+		}
 	}
+		
 	}
 
 	

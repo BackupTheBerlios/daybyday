@@ -58,6 +58,8 @@ public class WindowCreateSubject extends WindowAbstract {
 	 */
 	public static void createWindow(final JFrame frame, Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
+		try{
+		
 		int height = 360;
 		height = height + 50 *(((Object [])obj[1]).length - 1);
 		initWindow(frame,"Nouvelle matière", 600, height);	
@@ -138,7 +140,7 @@ public class WindowCreateSubject extends WindowAbstract {
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		
-		final JComboBox responsableBox = new JComboBox((Object [])obj[2] );
+		final JComboBox responsableBox = new JComboBox((Object [])obj[1] );
 		responsableBox.setRenderer(new ComboBoxFormationElementRenderer());
 		gridbag2.setConstraints(responsableBox, c2);
 		sectionPanel.add(responsableBox);
@@ -331,13 +333,13 @@ public class WindowCreateSubject extends WindowAbstract {
 				}catch (NumberFormatException e){
 					mainframe.showError(frame,e.toString());
 				}catch (ConstraintException e) {
-	
+					mainframe.showError(frame,e.toString());
 					e.printStackTrace();
 				} catch (StaleUpdateException e) {
-			
+					mainframe.showError(frame,e.toString());
 					e.printStackTrace();
 				} catch (WriteDeniedException e) {
-
+					mainframe.showError(frame,e.toString());
 					e.printStackTrace();
 				}			
 			}
@@ -361,6 +363,10 @@ public class WindowCreateSubject extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
+		frame.setVisible(true);
+	}catch (Exception e){
+		mainframe.showError(frame,e.toString());
+	}
 	}
 
 

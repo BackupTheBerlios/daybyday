@@ -53,6 +53,7 @@ public class WindowOpenTeacher extends WindowAbstract{
 		contentPane.add(importCombo);
 
 		addButtonValidation(contentPane, c, gridbag );
+		frame.setVisible(true);
 	}
 
 }

@@ -59,12 +59,12 @@ public class Windows extends WindowAbstract{
 		} catch (SecurityException e) {
 			throw new InternalError("Security exception.");
 		} catch (InvocationTargetException e) {
-			throw new InternalError("Invocation target exception.");
+			throw new InternalError("fr.umlv.daybyday.gui.windows." + identifier + "\n" + e);//Invocation target exception.");
 		} catch (NoSuchMethodException e) {
 			throw new InternalError("No such constructor.");
 		}
 	
-		frame.setVisible(true);
+		
 	}
 	
 	
