@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.gui.MainFrame;
 
 
@@ -209,9 +210,11 @@ public class WindowCreateTeacher extends WindowAbstract {
 					emailTextField.getText(),
 					phoneTextField.getText(),
 					officeTextField.getText(),
+					idTextField.getText(),
+					new String(passewordField.getPassword()),
 					(String) profileTextField.getSelectedItem(),
-					infoList.getText(),
-					new Boolean(true));
+					infoList.getText()
+					);
 
 		//	("Stéphanie","Martinez","stephanie.martin@univ-mlv.fr","06 21 23 24 25","3x100","stephpass","user",new Boolean(true));
 			UserDto newuserdto = new UserDto
@@ -220,9 +223,10 @@ public class WindowCreateTeacher extends WindowAbstract {
 							emailTextField.getText(),
 							phoneTextField.getText(),
 							officeTextField.getText(),
+							idTextField.getText(),
 							new String(passewordField.getPassword()),
-							"user",
-							new Boolean(true));
+							"user"
+							);
 
 				
 				
@@ -232,10 +236,13 @@ public class WindowCreateTeacher extends WindowAbstract {
 					MainFrame.myDaybyday.createUser(newuserdto);
 					mainframe.showError(frame,"Nouvel enseignant créé : \n"+
 												"Login : " + nameTextField.getText() + 
-												"Mot de passe : " + new String(passewordField.getPassword()));
+												" Mot de passe : " + new String(passewordField.getPassword()));
 					framefinal.dispose();
 				} catch (RemoteException e) {
 					mainframe.showError(frame,e.toString());
+				} catch (CreationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 				

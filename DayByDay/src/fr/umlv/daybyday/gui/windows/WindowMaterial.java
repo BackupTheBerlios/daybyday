@@ -25,7 +25,8 @@ import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
-import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
+
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**
@@ -135,9 +136,9 @@ public class WindowMaterial extends WindowAbstract {
 							idTextField.getText(),
 							batimentTextField.getText(),
 							siteTextField.getText(),
-							infoList.getText(),
 							new Integer(50),
-							new Boolean(true)	
+							infoList.getText()
+							
 					);
 						
 					
@@ -151,6 +152,9 @@ public class WindowMaterial extends WindowAbstract {
 				
 					} catch (RemoteException e) {
 						mainframe.showError(frame,"Champs non renseigné ou salle déja exisante");
+					} catch (CreationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 			}
 			
@@ -160,8 +164,8 @@ public class WindowMaterial extends WindowAbstract {
 							idTextField.getText(),
 							batimentTextField.getText(),
 							siteTextField.getText(),
-							infoList.getText(),
-							new Boolean(true)	
+							infoList.getText()
+							
 					);
 						
 					
@@ -175,8 +179,9 @@ public class WindowMaterial extends WindowAbstract {
 				
 					} catch (RemoteException e) {
 						mainframe.showError(frame,"Champs non renseigné ou équipement déja exisant");
-					} catch (ConstraintException e) {
-						mainframe.showError(frame,"Champs non renseigné ou équipement déja exisant");
+					} catch (CreationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}		
 			}
 			}

@@ -24,12 +24,13 @@ import javax.swing.ListCellRenderer;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
-import fr.umlv.daybyday.ejb.resource.room.RoomPK;
+import fr.umlv.daybyday.ejb.resource.room.RoomBusinessPK;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.Formation;
 
@@ -189,8 +190,7 @@ public class WindowModifyFormation extends WindowAbstract {
 		//TODO faire un truc plus prope
 		for (int i = 0; i < responsableBox.getItemCount(); ++i){
 			TeacherDto teachdto = (TeacherDto)responsableBox.getItemAt(i);
-			if (teachdto.getFirstname().compareTo(oldformdto.getTeacherFirstname()) == 0 &&
-					teachdto.getName().compareTo(oldformdto.getTeacherName()) == 0 ){
+			if (teachdto.getTeacherId().compareTo(oldformdto.getTeacherId()) == 0) {
 				responsableBox.setSelectedIndex(i);
 				break;
 			}
@@ -254,16 +254,16 @@ public class WindowModifyFormation extends WindowAbstract {
 				infoList.setText(dto.getDescription());
 				nameTextField2.setText(dto.getName());
 				
-				try {
-					responsableBox.setSelectedItem(MainFrame.myDaybyday.getTeacher(new TeacherPK(dto.getTeacherName(), dto.getTeacherFirstname())));
+	/*			try {
+					responsableBox.setSelectedItem(MainFrame.myDaybyday.getTeacher(new TeacherBusinessPK(dto.getTeacherName(), dto.getTeacherFirstname())));
 				} catch (RemoteException e) {
 				}
 				try {
-					roomBox.setSelectedItem(MainFrame.myDaybyday.getRoom(new RoomPK(dto.getRoomName(), dto.getRoomBuilding(), dto.getRoomArea())));
+					roomBox.setSelectedItem(MainFrame.myDaybyday.getRoom(new RoomBusinessPK(dto.getRoomName(), dto.getRoomBuilding(), dto.getRoomArea())));
 				} catch (RemoteException e) {
 					//	e.printStackTrace();
 				}
-				
+		*/		
 			}
 			
 		});
@@ -282,27 +282,30 @@ public class WindowModifyFormation extends WindowAbstract {
 				FormationDto newdto = new FormationDto(
 						nameTextField.getText(),
 						yearTextField.getText(),
-						infoList.getText(),
-						((TeacherDto)obj2).getName(),
-						((TeacherDto)obj2).getFirstname(),
-						mainframe.getUser().getName(),
-						mainframe.getUser().getFirstname(),
-						((RoomDto)obj3).getName(),
-						((RoomDto)obj3).getBuilding(),
-						((RoomDto)obj3).getArea(),
-						new Boolean(true));
+						((TeacherDto)obj2).getTeacherId(),
+						mainframe.getUser().getUserId(),
+						((RoomDto)obj3).getRoomId(),
+						infoList.getText()
+						);
 				
 				try {
 				
 					MainFrame.myDaybyday.createFormation(newdto);
 					
-					SectionDto sectiondefault = new SectionDto("GENERALE",newdto.getName(),newdto.getFormationYear(),null,newdto.getTeacherName(),newdto.getTeacherFirstname(),"",new Boolean(true));
+					SectionDto sectiondefault = new SectionDto(
+							"GENERALE",
+							null,
+							newdto.getFormationId(),
+							newdto.getTeacherId(),
+							""
+							);
 					MainFrame.myDaybyday.createSection(sectiondefault);
 					mainframe.addFormationTabbePane(new Formation(newdto));
 					framefinal.dispose();
 				} catch (RemoteException e) {
 					e.printStackTrace();
-				} catch (ConstraintException e) {
+				} catch (CreationException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 

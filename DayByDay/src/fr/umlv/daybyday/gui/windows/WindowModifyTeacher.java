@@ -20,8 +20,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
-import fr.umlv.daybyday.ejb.admin.user.UserPK;
+import fr.umlv.daybyday.ejb.admin.user.UserBusinessPK;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.Teacher;
 
@@ -164,9 +166,12 @@ public class WindowModifyTeacher extends WindowAbstract {
 		UserDto olduserdto = null;
 		try {
 			// Identifiant 
-			olduserdto = MainFrame.myDaybyday.getUser(new UserPK(oldteachref.getName(),oldteachref.getFirstname()));
+			olduserdto = MainFrame.myDaybyday.getUser(new UserBusinessPK(oldteachref.getName(),oldteachref.getFirstname()));
 		} catch (RemoteException e1) {
 			olduserdto = new UserDto();
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		c.gridwidth = 1;
 		c.fill = GridBagConstraints.CENTER;
@@ -222,9 +227,11 @@ public class WindowModifyTeacher extends WindowAbstract {
 					emailTextField.getText(),
 					phoneTextField.getText(),
 					officeTextField.getText(),
+					"login",
+					"pass",
 					(String) profileTextField.getSelectedItem(),
-					infoList.getText(),
-					new Boolean(true));
+					infoList.getText()
+					);
 
 		//	("Stéphanie","Martinez","stephanie.martin@univ-mlv.fr","06 21 23 24 25","3x100","stephpass","user",new Boolean(true));
 			UserDto newuserdto = new UserDto
@@ -233,9 +240,10 @@ public class WindowModifyTeacher extends WindowAbstract {
 							emailTextField.getText(),
 							phoneTextField.getText(),
 							officeTextField.getText(),
+							"login",
 							new String(passewordField.getPassword()),
-							"user",
-							new Boolean(true));
+							"user"
+							);
 
 				
 				
@@ -249,6 +257,9 @@ public class WindowModifyTeacher extends WindowAbstract {
 					framefinal.dispose();
 				} catch (RemoteException e) {
 					mainframe.showError(frame,e.toString());
+				} catch (CreationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 				

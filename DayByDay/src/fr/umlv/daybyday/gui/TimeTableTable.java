@@ -796,7 +796,10 @@ public class TimeTableTable {
 			tag.setText(null);
 			if (arg1 instanceof Course){
 				Course cours = (Course)arg1;
+				
 				//tag.setIcon(Images.getImageIcon("formation"));
+				
+				
 				tag.setText(((Course)arg1).getRepresentation());
 				if (CourseDetail.coursColor)
 				tag.setBackground(new Color(((Course)arg1).colorR, ((Course)arg1).colorG, ((Course)arg1).colorB));

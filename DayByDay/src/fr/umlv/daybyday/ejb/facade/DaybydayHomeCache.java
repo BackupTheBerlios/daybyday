@@ -8,7 +8,9 @@ import javax.rmi.*;
 import java.util.*;
 import javax.naming.*;
 
-import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
+
+
 
 public class DaybydayHomeCache {
 
@@ -35,7 +37,7 @@ public class DaybydayHomeCache {
         Hashtable environment = new Hashtable();
         environment.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
         environment.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
-        environment.put(Context.PROVIDER_URL, "jnp://pccop2b104-05:1099");
+        environment.put(Context.PROVIDER_URL, "jnp://localhost:1099");
         return new InitialContext(environment);
     }
 

@@ -12,12 +12,16 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
+import fr.umlv.daybyday.ejb.resource.room.RoomDto;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
+import fr.umlv.daybyday.ejb.timetable.formation.FormationBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
+import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**
@@ -40,6 +44,7 @@ public class Formation implements FormationElement{
 	private String year;
 	
 	public Formation (String name,String responsable,String room,String year){
+		
 		this.name = name;
 		this.responsable = responsable;
 		this.room = room;
@@ -50,9 +55,22 @@ public class Formation implements FormationElement{
 	}
 	
 	public Formation (FormationDto formationDto) {
+		
 		this.name = formationDto.getName();
-		this.responsable = formationDto.getTeacherName();
-		this.room = formationDto.getRoomName();
+		TeacherDto teacher = null;
+		RoomDto room = null;
+		try {
+			teacher = MainFrame.myDaybyday.getTeacher(formationDto.getTeacherId());
+			room = MainFrame.myDaybyday.getRoom(formationDto.getRoomId());
+		} catch (RemoteException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		} catch (EntityNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		this.responsable = teacher.getName();
+		this.room = room.getName();
 		this.year = formationDto.getFormationYear();
 		this.formationdto = formationDto;
 		
@@ -61,36 +79,55 @@ public class Formation implements FormationElement{
 		matiere =  new ArrayList();
 		
 		try {
-			SectionDto defaults =  MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",name,year));
-			ArrayList filieretmp = MainFrame.myDaybyday.getChildrenOfSection(defaults.getSectionPK());
+			
+			SectionBusinessPK sec = new SectionBusinessPK("GENERALE",formationDto.getFormationId());
+			SectionDto defaults =  MainFrame.myDaybyday.getSection(sec);
+			ArrayList filieretmp = MainFrame.myDaybyday.getChildrenOfSection(sec);
 
 		
 		for (int i = 0; i < filieretmp.size(); ++i)
 			filieres.add(new Section((SectionDto)filieretmp.get(i),this)); 
 		
 		} catch (RemoteException e) {
+			e.printStackTrace();
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		ArrayList matieretmp = null;
 		try {
-			sectionDto = MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",name,year));
-			matieretmp = MainFrame.myDaybyday.getSubjectsOfSection(new SectionPK("GENERALE",name,year));
+			
+			SectionBusinessPK sec = new SectionBusinessPK("GENERALE",formationDto.getFormationId());
+			sectionDto = MainFrame.myDaybyday.getSection(sec);
+			matieretmp = MainFrame.myDaybyday.getSubjectsOfSection(sec);
 			for (int i = 0; i < matieretmp.size(); ++i)
 				matiere.add(new Subject((SubjectDto)matieretmp.get(i),this)); 
 		} catch (RemoteException e1) {
-
+			e1.printStackTrace();
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 
 		
 		ArrayList courslisttmp = null;
 		try {
-			courslisttmp = MainFrame.myDaybyday.getCoursesOfSection(new SectionPK("GENERALE",name,year));
+			
+			SectionDto sec = MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENERALE",formationDto.getFormationId()));
+			
+			courslisttmp = MainFrame.myDaybyday.getCoursesOfSection(sec.getSectionId());
+			
 			for (int i = 0; i < courslisttmp.size(); ++i)
-				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
+				courslist.add(new Course((CourseDto)courslisttmp.get(i)));
+			
 		} catch (RemoteException e2) {
-
+			e2.printStackTrace();
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 
@@ -98,6 +135,7 @@ public class Formation implements FormationElement{
 	}
 	
 	public Formation (String name, ArrayList courslist,String responsable,String room,String year){
+		
 		this.name = name;
 		this.responsable = responsable;
 		this.room = room;
@@ -112,20 +150,24 @@ public class Formation implements FormationElement{
 		
 		ArrayList courslisttmp = null;
 		try {
-			SectionDto newdto =  MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",name,year));
-			FormationDto newfdto =  MainFrame.myDaybyday.getFormation(new FormationPK(name,year));
+			FormationDto newfdto =  MainFrame.myDaybyday.getFormation(new FormationBusinessPK(name,year));
+			SectionDto newdto =  MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENERALE",newfdto.getFormationId()));
+			
 			if (sectionDto.getVersion().intValue() != newdto.getVersion().intValue() || 
 					formationdto.getVersion().intValue() != newfdto.getVersion().intValue()){
 				courslist =  new ArrayList();
 				sectionDto = newdto;
 				formationdto = newfdto;
 				courslist = new ArrayList();
-				courslisttmp = MainFrame.myDaybyday.getCoursesOfSection(new SectionPK("GENERALE",name,year));
+				courslisttmp = MainFrame.myDaybyday.getCoursesOfSection(new SectionBusinessPK("GENERALE",formationdto.getFormationId()));
 				for (int i = 0; i < courslisttmp.size(); ++i)
 					courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 			}
 		} catch (RemoteException e2) {
 
+		} catch (EntityNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
 		return courslist;
 	}
@@ -173,14 +215,17 @@ public class Formation implements FormationElement{
 	public int getElementNombre() {
 		try {
 			// TODO Auto-generated method stub
-			FormationDto dto = MainFrame.myDaybyday.getFormation(new FormationPK(name,year));
+			FormationDto dto = MainFrame.myDaybyday.getFormation(new FormationBusinessPK(name,year));
 			if (formationdto.getVersion().intValue() != dto.getVersion().intValue()){
 				formationdto = dto;
-		try {
+			
+			SectionBusinessPK sec = new SectionBusinessPK("GENERALE",dto.getFormationId());
+			try {
 			filieres = new ArrayList();
 			
-			SectionDto defaults =  MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",name,year));
-			ArrayList filieretmp = MainFrame.myDaybyday.getChildrenOfSection(defaults.getSectionPK());
+			
+			SectionDto defaults =  MainFrame.myDaybyday.getSection(sec);
+			ArrayList filieretmp = MainFrame.myDaybyday.getChildrenOfSection(sec);
 
 		
 		for (int i = 0; i < filieretmp.size(); ++i)
@@ -194,7 +239,7 @@ public class Formation implements FormationElement{
 		try {
 			//sectionDto = MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",name,year));
 			matiere = new ArrayList();
-			matieretmp = MainFrame.myDaybyday.getSubjectsOfSection(new SectionPK("GENERALE",name,year));
+			matieretmp = MainFrame.myDaybyday.getSubjectsOfSection(sec);
 			for (int i = 0; i < matieretmp.size(); ++i)
 				matiere.add(new Subject((SubjectDto)matieretmp.get(i),this)); 
 		} catch (RemoteException e1) {
@@ -203,6 +248,9 @@ public class Formation implements FormationElement{
 }
 		} catch (RemoteException e2) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return filieres.size() + matiere.size();
 	}

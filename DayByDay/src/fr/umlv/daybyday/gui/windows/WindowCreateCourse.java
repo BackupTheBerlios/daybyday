@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.ejb.CreateException;
-import javax.ejb.FinderException;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -33,13 +32,19 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
+import fr.umlv.daybyday.ejb.resource.room.RoomBusinessPK;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.timetable.course.CourseBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
+
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.ejb.util.exception.CourseConfusionException;
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
+import fr.umlv.daybyday.ejb.util.exception.OperationFailedException;
 import fr.umlv.daybyday.ejb.util.exception.ResourceUnavailableException;
 import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 import fr.umlv.daybyday.ejb.util.exception.TimeslotException;
@@ -471,6 +476,9 @@ public class WindowCreateCourse extends WindowAbstract {
 			c3.gridwidth = 13;
 
 			final JComboBox respCombo = new JComboBox((Object[]) obj[2]);
+			String aucun= "aucun";
+			respCombo.addItem(aucun);
+			respCombo.setSelectedItem(aucun);
 			gridbag3.setConstraints(respCombo, c3);
 			totalePanel2.add(respCombo);
 			respCombo.setRenderer(new ComboBoxFormationElementRenderer());
@@ -488,6 +496,9 @@ public class WindowCreateCourse extends WindowAbstract {
 
 			c3.gridwidth = GridBagConstraints.REMAINDER;
 			final JComboBox roomCombo = new JComboBox((Object[]) obj[3]);
+			String aucune = "aucune";
+			roomCombo.addItem(aucune);
+			roomCombo.setSelectedItem(aucune);
 			roomCombo.setRenderer(new ComboBoxFormationElementRenderer());
 			gridbag3.setConstraints(roomCombo, c3);
 			totalePanel2.add(roomCombo);
@@ -499,6 +510,9 @@ public class WindowCreateCourse extends WindowAbstract {
 
 			c3.gridwidth = GridBagConstraints.REMAINDER;
 			final JComboBox materialCombo = new JComboBox((Object[]) obj[4]);
+			
+			materialCombo.addItem(aucun);
+			materialCombo.setSelectedItem(aucun);
 			materialCombo.setRenderer(new ComboBoxFormationElementRenderer());
 			gridbag3.setConstraints(materialCombo, c3);
 			totalePanel2.add(materialCombo);
@@ -550,9 +564,17 @@ public class WindowCreateCourse extends WindowAbstract {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				SubjectDto obj =   (SubjectDto)subjectCombo.getSelectedItem();
-				TeacherDto obj2 =  (TeacherDto)respCombo.getSelectedItem();
-				EquipmentDto obj3 =  (EquipmentDto) materialCombo.getSelectedItem();
-				RoomDto obj4 =  (RoomDto) roomCombo.getSelectedItem();
+				
+				
+				TeacherDto obj2 = null;
+				EquipmentDto obj3 = null;
+				RoomDto obj4 = null;
+				if (respCombo.getSelectedItem() instanceof TeacherDto)
+					obj2 =  (TeacherDto)respCombo.getSelectedItem();
+				if (materialCombo.getSelectedItem() instanceof EquipmentDto)
+					obj3 =  (EquipmentDto) materialCombo.getSelectedItem();
+				if (roomCombo.getSelectedItem() instanceof RoomDto)
+					obj4 =  (RoomDto) roomCombo.getSelectedItem();
 				
 				try{
 				int bghour = Integer.parseInt(firstTextField.getText());
@@ -595,21 +617,28 @@ public class WindowCreateCourse extends WindowAbstract {
 				           		sectionname = "GENERALE";
 				           else
 				           		sectionname = section.getName();
-				           		
+				           
 				           String typeCours = "";
 				           if (course.isSelected()) typeCours = "cours";
 				           if (td.isSelected()) typeCours = "td";
 				           if (tp.isSelected()) typeCours = "tp";
+				          
 				           
 						CourseDto newdto = new CourseDto(
-								obj.getName(),
-								sectionname,
-								formation.getName(),
-								formation.getYear(),
+								obj.getSubjectId(),
 								typeCours,
+								(String)groupelist.getSelectedItem(),
 								startDate,
 								endDate,
-								(String)groupelist.getSelectedItem(),
+								new Integer(colorf),
+								infoList.getText()
+								/*sectionname,
+								formation.getName(),
+								formation.getYear(),
+								
+								
+								
+								
 								obj2.getName(),
 								obj2.getFirstname(),
 								obj4.getName(),
@@ -618,13 +647,20 @@ public class WindowCreateCourse extends WindowAbstract {
 								null,
 								null,
 								null,
-								infoList.getText(),
-								new Integer(colorf),
-								new Boolean(true)
+								
+								
+								new Boolean(true)*/
 								);
 						
 						
-							MainFrame.myDaybyday.createCourse(newdto);
+							String id = MainFrame.myDaybyday.createCourse(newdto);
+							newdto.setCourseId(id);
+							if (obj2 != null)
+							MainFrame.myDaybyday.addTeacherToCourse(obj2.getTeacherId(),newdto.getCourseId());
+							if (obj3 != null)
+								MainFrame.myDaybyday.addEquipmentToCourse(obj3.getEquipmentId(),newdto.getCourseId());
+							if (obj4 != null)	
+								MainFrame.myDaybyday.addRoomToCourse(obj4.getRoomId(),newdto.getCourseId());
 						}
 						if (i == 0)
 							daycpt += 7;
@@ -669,14 +705,17 @@ public class WindowCreateCourse extends WindowAbstract {
 					if (section instanceof Section){
 						MainFrame.myDaybyday.updateSection(((Section)section).getDTO());
 					
-						((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionPK()));
+						((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionId()));
 						//mainframe.addFormationTabbePane(new Formation(newdto));
 						framefinal.dispose();
 						df.changeSource(new Section(((Section)section).getDTO(),section.getFather()));
-						((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionPK()));
-						MainFrame.myDaybyday.updateTeacher(obj2);
-						MainFrame.myDaybyday.updateEquipment(obj3);
-						MainFrame.myDaybyday.updateRoom(obj4);
+						((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionId()));
+						if (obj2 != null)
+							MainFrame.myDaybyday.updateTeacher(obj2);
+						if (obj3 != null)
+							MainFrame.myDaybyday.updateEquipment(obj3);
+						if (obj4 != null)
+							MainFrame.myDaybyday.updateRoom(obj4);
 						
 					}
 					if (section instanceof Formation){
@@ -690,9 +729,12 @@ public class WindowCreateCourse extends WindowAbstract {
 						((Formation)section).upDateDto(null);
 						framefinal.dispose();
 						df.changeSource((Formation)section);
-						MainFrame.myDaybyday.updateTeacher(obj2);
-						MainFrame.myDaybyday.updateEquipment(obj3);
-						MainFrame.myDaybyday.updateRoom(obj4);
+						if (obj2 != null)
+							MainFrame.myDaybyday.updateTeacher(obj2);
+						if (obj3 != null)
+							MainFrame.myDaybyday.updateEquipment(obj3);
+						if (obj4 != null)
+							MainFrame.myDaybyday.updateRoom(obj4);
 					}
 					
 				}catch (java.lang.NumberFormatException e){
@@ -709,14 +751,22 @@ public class WindowCreateCourse extends WindowAbstract {
 					mainframe.showError(frame,"Attention! recouvrement du cours que vous voulez créer avec un cours existant!");
 				} catch (TimeslotException e) {
 					mainframe.showError(frame,"La date de début est supérieure à la date de fin");
-				} catch (CreateException e) {
-					mainframe.showError(frame,e.toString());
-				} catch (FinderException e) {
-					mainframe.showError(frame,e.toString());
 				} catch (StaleUpdateException e) {
 					mainframe.showError(frame,"Problème de version " + e);
 				} catch (WriteDeniedException e) {
 					mainframe.showError(frame,e.toString());
+				} catch (CreationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (EntityNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}/* catch (OperationFailedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/ catch (OperationFailedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 				

@@ -6,10 +6,21 @@
  */
 package fr.umlv.daybyday.model;
 
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
+import fr.umlv.daybyday.ejb.resource.room.RoomDto;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
+import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
+import fr.umlv.daybyday.gui.MainFrame;
 
 /**
  * @author Marc
@@ -65,7 +76,17 @@ public class Course {
 		this.bgminute =  bgdate.getMinutes();
 		this.endhour = enddate.getHours();
 		this.endminute = enddate.getMinutes();
-		this.text = dto.getSubjectName();
+		SubjectDto sub=null;
+		try {
+			sub = MainFrame.myDaybyday.getSubject(dto.getSubjectId());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.text = sub.getName();
 		Integer i = dto.getColor();
 		if (i != null){
 		int color =i.intValue();
@@ -116,36 +137,116 @@ public class Course {
 			tag += dto.getSubjectType();
 		
 			if (CourseDetail.subjectName)
-				tag += " " + dto.getSubjectName();
-		
+			{
+				SubjectDto sub=null;
+				try {
+					sub = MainFrame.myDaybyday.getSubject(dto.getSubjectId());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (CreationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				tag += " " +sub.getName();
+			}
 			if(CourseDetail.subjectGroupe )
 				tag += " " +dto.getGroupeName();
 		
 		
 		if(CourseDetail.formId ){
-			tag += "\n" +dto.getFormationName();
+			
+			SubjectDto sub=null;
+			try {
+				sub = MainFrame.myDaybyday.getSubject(dto.getSubjectId());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (CreationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			SectionDto sec = null;
+			FormationDto ff = null;
+			try {
+				sec = MainFrame.myDaybyday.getSection(sub.getSectionId());
+				ff  = MainFrame.myDaybyday.getFormation(sec.getFormationId());
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (EntityNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			 
+			tag += "\n" +ff.getName();
 			if(CourseDetail.formInfo )
 				tag += " " +dto.getDescription();
 		}
 		
 		if(CourseDetail.teacherName ){
+			ArrayList teachers =null;
+			try {
+				
+				teachers = MainFrame.myDaybyday.getTeachersOfCourse(dto.getCourseId());
+			
+			for (int i=0;i<teachers.size();i++)
+			{
+				TeacherDto teacher = (TeacherDto)teachers.get(i);
 			if(CourseDetail.teacherFirstname )
-			tag += "\n" +dto.getTeacherFirstname().charAt(0)+"." ;
+			tag += "\n" +teacher.getFirstname().charAt(0)+"." ;
 		
-			tag += " " +dto.getTeacherName() ;
+			tag += " " +teacher.getName() ;
 		
 			if(CourseDetail.teacherOffice );
+			}
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (EntityNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if(CourseDetail.equipmentName ){
-			tag += "\n" +dto.getEquipmentName();
-			if(CourseDetail.equipmentDesc );
+			ArrayList rooms =null;
+			try {
+				rooms = MainFrame.myDaybyday.getEquipmentsOfCourse(dto.getCourseId());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (EntityNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (int i=0;i<rooms.size();i++)
+			{
+				EquipmentDto equipment = (EquipmentDto)rooms.get(i);
+				tag += "\n" +equipment.getName();
+				if(CourseDetail.equipmentDesc );
+			}
 		}
 
 		if(CourseDetail.roomName ){
-			tag += "\n" +dto.getRoomName();
-			if(CourseDetail.roomInfo );
+			ArrayList rooms =null;
+			try {
+				rooms = MainFrame.myDaybyday.getRoomsOfCourse(dto.getCourseId());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (EntityNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (int i=0;i<rooms.size();i++)
+			{
+				RoomDto room = (RoomDto)rooms.get(i);
+				tag += "\n" +room.getName();
+				if(CourseDetail.roomInfo );
+			}
 		}
+		
 		if(CourseDetail.coursPeriode ){
 			GregorianCalendar cal = new GregorianCalendar();
 			cal.setTimeInMillis(dto.getStartDate().getTime());

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import fr.umlv.daybyday.gui.DBDColor;
+import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.icone.DBDIcon;
 
 /**
@@ -46,6 +48,7 @@ public abstract class WindowAbstract {
 	public static void initWindow(JFrame frame, String name, int width, int height, int x, int y) {
 		frame.setTitle(name);
 		frame.setSize(width, height);
+	
 		centerWindow(frame, x, y);
 	}
 	

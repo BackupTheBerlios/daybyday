@@ -13,8 +13,9 @@ import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
-import fr.umlv.daybyday.ejb.resource.equipment.EquipmentPK;
+import fr.umlv.daybyday.ejb.resource.equipment.EquipmentBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**
@@ -58,11 +59,14 @@ public class Equipment implements FormationElement {
 		this.courslist = new ArrayList();
 		ArrayList courslisttmp = null;
 		try {
-			courslisttmp = MainFrame.myDaybyday.getCoursesOfEquipment(new EquipmentPK(dto.getName(),dto.getBuilding(),dto.getArea()));
+			courslisttmp = MainFrame.myDaybyday.getCoursesOfEquipment(new EquipmentBusinessPK(dto.getName(),dto.getBuilding(),dto.getArea()));
 			for (int i = 0; i < courslisttmp.size(); ++i)
 				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 		} catch (RemoteException e2) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}	
 	}
 
@@ -70,16 +74,19 @@ public class Equipment implements FormationElement {
 
 		ArrayList courslisttmp = null;
 		try {
-			EquipmentDto newdto =  MainFrame.myDaybyday.getEquipment(new EquipmentPK(name,building,area));
+			EquipmentDto newdto =  MainFrame.myDaybyday.getEquipment(new EquipmentBusinessPK(name,building,area));
 			if (newdto.getVersion().longValue() != roomdto.getVersion().longValue()){
 				roomdto = newdto;
 				courslist = new ArrayList();
-				courslisttmp = MainFrame.myDaybyday.getCoursesOfEquipment(new EquipmentPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
+				courslisttmp = MainFrame.myDaybyday.getCoursesOfEquipment(new EquipmentBusinessPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
 				for (int i = 0; i < courslisttmp.size(); ++i)
 					courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 			}
 		} catch (RemoteException e2) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}	
 		return courslist;
 	}

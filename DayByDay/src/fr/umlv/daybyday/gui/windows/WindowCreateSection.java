@@ -19,9 +19,12 @@ import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
+
+import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
+
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.MainFrame;
@@ -134,37 +137,47 @@ public class WindowCreateSection extends WindowAbstract {
 				if (ref instanceof FormationDto){
 					FormationDto form = (FormationDto) ref;
 					formglo = form;
+					SectionDto sec =null;
+					try {
+						 sec= MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENERALE",form.getFormationId()));
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (EntityNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					newdto = new SectionDto(nameTextField.getText(),
-							form.getName(),
-							form.getFormationYear(),
-							"GENERALE",
-							obj2.getName(),
-							obj2.getFirstname(),
-							infoList.getText(),
-							new Boolean(true)
+							sec.getSectionId(),
+							form.getFormationId(),
+							obj2.getTeacherId(),
+							infoList.getText()
 							);
 				}
 				if (ref instanceof SectionDto){
 						father = (SectionDto) ref;
 					try {
-						formglo = MainFrame.myDaybyday.getFormation(new FormationPK(father.getFormationName(),father.getFormationYear()));
+						
+						formglo = MainFrame.myDaybyday.getFormation(father.getFormationId());
 					} catch (RemoteException e1) {
 
 
+					} catch (EntityNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					} 
+					System.out.println("section id : "+father.getSectionId());
 					newdto = new SectionDto(nameTextField.getText(),
-							father.getFormationName(),
-							father.getFormationYear(),
-							father.getName(),
-							obj2.getName(),
-							obj2.getFirstname(),
-							infoList.getText(),
-							new Boolean(true)
+							father.getSectionId(),
+							father.getFormationId(),	
+							obj2.getTeacherId(),
+							infoList.getText()
+							
 							);
 				}
 				
 				try {
-				
+					System.out.println("section : "+newdto.toString());
 					MainFrame.myDaybyday.createSection(newdto);
 					Object obj = mainframe.getModelSelectedObject();
 					FormationTreeModel tree = (FormationTreeModel)obj;
@@ -184,13 +197,16 @@ public class WindowCreateSection extends WindowAbstract {
 					framefinal.dispose();
 				} catch (RemoteException e) {
 					mainframe.showError(frame,e.toString());
-				} catch (ConstraintException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				} catch (StaleUpdateException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (WriteDeniedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (CreationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (EntityNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

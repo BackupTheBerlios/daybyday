@@ -13,8 +13,9 @@ import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
-import fr.umlv.daybyday.ejb.resource.room.RoomPK;
+import fr.umlv.daybyday.ejb.resource.room.RoomBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**
@@ -59,27 +60,33 @@ public class Room implements FormationElement {
 		this.courslist = new ArrayList();
 		ArrayList courslisttmp = null;
 		try {
-			courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomPK(dto.getName(),dto.getBuilding(),dto.getArea()));
+			courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomBusinessPK(dto.getName(),dto.getBuilding(),dto.getArea()));
 			for (int i = 0; i < courslisttmp.size(); ++i)
 				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 		} catch (RemoteException e2) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}	
 	}
 
 	public ArrayList getCourseList(){
 		ArrayList courslisttmp = null;
 		try {
-			RoomDto newdto =  MainFrame.myDaybyday.getRoom(new RoomPK(name,building,area));
+			RoomDto newdto =  MainFrame.myDaybyday.getRoom(new RoomBusinessPK(name,building,area));
 			if (newdto.getVersion().longValue() != roomdto.getVersion().longValue()){
 				roomdto = newdto;
 				courslist = new ArrayList();
-				courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
+				courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomBusinessPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
 				for (int i = 0; i < courslisttmp.size(); ++i)
 					courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 			}
 		} catch (RemoteException e2) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}	
 		return courslist;
 	}

@@ -9,20 +9,25 @@ package fr.umlv.daybyday.actions;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.ejb.CreateException;
-import javax.ejb.FinderException;
+
 import javax.swing.AbstractAction;
 
+import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
+import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
+
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.ejb.util.exception.CourseConfusionException;
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
+import fr.umlv.daybyday.ejb.util.exception.OperationFailedException;
 import fr.umlv.daybyday.ejb.util.exception.ResourceUnavailableException;
 import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 import fr.umlv.daybyday.ejb.util.exception.TimeslotException;
@@ -103,7 +108,7 @@ public class ActionPaste extends AbstractAction {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
         cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (index -1));
-        
+
 		int bgday =  cal.get(Calendar.DAY_OF_MONTH);
 		int bgmonth = (cal.get(Calendar.MONTH)+1);
 		int endday = cal.get(Calendar.DAY_OF_MONTH);
@@ -120,38 +125,38 @@ public class ActionPaste extends AbstractAction {
         }
         else{
         		sectionname = section.getName();
-        		formationname = ((SectionDto) section.getDto()).getFormationName();
-        		formationyear = ((SectionDto) section.getDto()).getFormationYear();
+        		FormationDto ff=null;
+				try {
+					ff = MainFrame.myDaybyday.getFormation(((SectionDto) section.getDto()).getFormationId());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (EntityNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				formationname = ff.getName();
+        		formationyear = ff.getFormationYear();
         }
         		
-        String typesubject = "cours";
+        //String typesubject = "cours";
         
         
 		CourseDto newdto = new CourseDto(
-				olddto.getSubjectName(),
-				sectionname,
-				formationname,
-				formationyear,
+				olddto.getSubjectId(),
 				olddto.getSubjectType(),
+				olddto.getGroupeName(),
 				startDate,
 				endDate,
-				olddto.getGroupeName(),
-				olddto.getTeacherName(),
-				olddto.getTeacherFirstname(),
-				olddto.getEquipmentName(),
-				olddto.getEquipmentBuilding(),
-				olddto.getEquipmentArea(),
-				null,
-				null,
-				null,
-				olddto.getDescription(),
 				olddto.getColor(),
-				new Boolean(true)
+				olddto.getDescription()
+						
 				);
 		
 		
 			try {
-				MainFrame.myDaybyday.createCourse(newdto);
+				String course_id = MainFrame.myDaybyday.createCourse(newdto);
+				newdto.setCourseId(course_id);
 			} catch (RemoteException e2) {
 				mainframe.showError(e2.getMessage());
 				return;
@@ -167,33 +172,120 @@ public class ActionPaste extends AbstractAction {
 			} catch (TimeslotException e2) {
 				mainframe.showError(e2.getMessage());
 				return;
-			} catch (CreateException e2) {
-				mainframe.showError(e2.getMessage());
-				return;
-			} catch (FinderException e2) {
-				mainframe.showError(e2.getMessage());
-				return;
+			} catch (CreationException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
 			
+			
+			//section.getDTO().setVersion(new Long(section.getDTO().getVersion().longValue()+1));
+			
+			
+			try {
+				ArrayList teachers = MainFrame.myDaybyday.getTeachersOfCourse(olddto.getCourseId());
+				for (int i = 0;i<teachers.size();i++)
+				{
+					TeacherDto teacher = (TeacherDto)teachers.get(i);
+					
+					MainFrame.myDaybyday.addTeacherToCourse(teacher.getTeacherId(),newdto.getCourseId());
+					MainFrame.myDaybyday.updateTeacher(teacher);
+				}
+				
+				ArrayList rooms = MainFrame.myDaybyday.getRoomsOfCourse(olddto.getCourseId());
+				for (int i = 0;i<teachers.size();i++)
+				{
+					RoomDto room = (RoomDto)rooms.get(i);
+					MainFrame.myDaybyday.addRoomToCourse(room.getRoomId(),newdto.getCourseId());
+					MainFrame.myDaybyday.updateRoom(room);
+					
+				}
+				
+				ArrayList equipments = MainFrame.myDaybyday.getEquipmentsOfCourse(olddto.getCourseId());
+				for (int i = 0;i<teachers.size();i++)
+				{
+					EquipmentDto equipment = (EquipmentDto)equipments.get(i);
+					MainFrame.myDaybyday.addEquipmentToCourse(equipment.getEquipmentId(),newdto.getCourseId());
+					MainFrame.myDaybyday.updateEquipment(equipment);
+					
+				}
+				
+				
+			} catch (RemoteException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (StaleUpdateException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (WriteDeniedException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (EntityNotFoundException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+			catch (OperationFailedException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			if (cut){
 				try {
-					MainFrame.myDaybyday.removeCourse(olddto.getCoursePK());
+					
+					
+					ArrayList teachers = MainFrame.myDaybyday.getTeachersOfCourse(olddto.getCourseId());
+					for (int i = 0;i<teachers.size();i++)
+					{
+						TeacherDto teacher = (TeacherDto)teachers.get(i);
+						
+						MainFrame.myDaybyday.removeTeacherFromCourse(teacher.getTeacherId(),olddto.getCourseId());
+						MainFrame.myDaybyday.updateTeacher(teacher);
+					}
+					
+					ArrayList rooms = MainFrame.myDaybyday.getRoomsOfCourse(olddto.getCourseId());
+					for (int i = 0;i<teachers.size();i++)
+					{
+						RoomDto room = (RoomDto)rooms.get(i);
+						MainFrame.myDaybyday.removeRoomFromCourse(room.getRoomId(),olddto.getCourseId());
+						MainFrame.myDaybyday.updateRoom(room);
+						
+					}
+					
+					ArrayList equipments = MainFrame.myDaybyday.getEquipmentsOfCourse(olddto.getCourseId());
+					for (int i = 0;i<teachers.size();i++)
+					{
+						EquipmentDto equipment = (EquipmentDto)equipments.get(i);
+						MainFrame.myDaybyday.removeEquipmentFromCourse(equipment.getEquipmentId(),olddto.getCourseId());
+						MainFrame.myDaybyday.updateEquipment(equipment);
+						
+					}
+					MainFrame.myDaybyday.removeCourse(olddto.getCourseId());
+					
+				
 				} catch (RemoteException e1) {
 					mainframe.showError(e1.getMessage());
 					return;
 				} catch (WriteDeniedException e1) {
 					mainframe.showError(e1.getMessage());
 					return;
+				} catch (EntityNotFoundException e1) {
+					// TODO Auto-generated catch block
+					mainframe.showError(e1.getMessage());
+					e1.printStackTrace();
+				} catch (OperationFailedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (StaleUpdateException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 				cut = false;
-			}
-			//section.getDTO().setVersion(new Long(section.getDTO().getVersion().longValue()+1));
+			} 
+			
 			if (section instanceof Section){
 				try {
 					MainFrame.myDaybyday.updateSection(((Section)section).getDTO());
 				
 			
-				((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionPK()));
+				((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionId()));
 				} catch (RemoteException e3) {
 					// TODO Auto-generated catch block
 					e3.printStackTrace();
@@ -201,6 +293,9 @@ public class ActionPaste extends AbstractAction {
 					// TODO Auto-generated catch block
 					e3.printStackTrace();
 				} catch (WriteDeniedException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+				} catch (EntityNotFoundException e3) {
 					// TODO Auto-generated catch block
 					e3.printStackTrace();
 				}
@@ -217,6 +312,9 @@ public class ActionPaste extends AbstractAction {
 				} catch (WriteDeniedException e10) {
 					// TODO Auto-generated catch block
 					e10.printStackTrace();
+				} catch (EntityNotFoundException e10) {
+					// TODO Auto-generated catch block
+					e10.printStackTrace();
 				} 
 				((Formation)section).getCourseList();
 				((Formation)section).upDateDto(null);
@@ -224,20 +322,6 @@ public class ActionPaste extends AbstractAction {
 				df.changeSource((Formation)section);
 			}
 			
-			TeacherDto resp;
-			try {
-				resp = MainFrame.myDaybyday.getTeacher(new TeacherPK(olddto.getTeacherName(),olddto.getTeacherFirstname()));
-				MainFrame.myDaybyday.updateTeacher(resp);
-			} catch (RemoteException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			} catch (StaleUpdateException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			} catch (WriteDeniedException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			}
 			
 		
 	}

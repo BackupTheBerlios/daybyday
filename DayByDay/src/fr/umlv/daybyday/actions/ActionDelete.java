@@ -8,16 +8,19 @@ package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JTabbedPane;
 
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.formation.FormationBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
+import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
-import fr.umlv.daybyday.ejb.timetable.subject.SubjectPK;
+import fr.umlv.daybyday.ejb.timetable.subject.SubjectBusinessPK;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.Images;
@@ -63,19 +66,28 @@ public class ActionDelete extends AbstractAction {
 			Object obj = mainframe.getSelectedObject();
 			if (obj instanceof Section){
 				//System.out.println(((Section)obj).getNamePath());
+				
 				FormationElement elt = ((Section)obj).getFather();
+				
 				SectionDto dto = (SectionDto) ((Section)obj).getDto();
 				try {
-					if (elt.getName().equals(dto.getFormationName()) ){
-							MainFrame.myDaybyday.removeSection(new SectionPK(dto.getName(),dto.getFormationName(),dto.getFormationYear()));
+				FormationDto ff = MainFrame.myDaybyday.getFormation(dto.getFormationId());
+				
+					if (elt.getName().equals(ff.getName()) ){
+						
+							MainFrame.myDaybyday.removeSection(new SectionBusinessPK(dto.getName(),dto.getFormationId()));
 					}
 					else	{
-						MainFrame.myDaybyday.removeSection(new SectionPK(dto.getName(),dto.getFormationName(),dto.getFormationYear()));
+						
+						MainFrame.myDaybyday.removeSection(new SectionBusinessPK(dto.getName(),dto.getFormationId()));
 					}					
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (WriteDeniedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (EntityNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	
@@ -90,19 +102,31 @@ public class ActionDelete extends AbstractAction {
 				
 				FormationElement elt = ((Subject)obj).getFather();
 				SubjectDto dto = (SubjectDto) ((Subject)obj).getDto();
-
 				try {
-					if (elt.getName().equals(dto.getFormationName()) ){
-							MainFrame.myDaybyday.removeSubject(new SubjectPK(dto.getName(),"GENERALE",dto.getFormationName(),dto.getFormationYear()));
+				SectionDto s =  MainFrame.myDaybyday.getSection(dto.getSectionId());
+				FormationDto ff = MainFrame.myDaybyday.getFormation(s.getFormationId());
+				ArrayList cours = MainFrame.myDaybyday.getCoursesOfSubject(new SubjectBusinessPK(dto.getName(),dto.getSectionId()));
+				for (int i=0;i<cours.size();i++)
+				{
+					CourseDto c = (CourseDto)cours.get(i);
+					MainFrame.myDaybyday.removeCourse(c.getCourseId());
+				}
+				
+				
+					if (elt.getName().equals(ff.getName()) ){
+							MainFrame.myDaybyday.removeSubject(dto.getSubjectId());
 					
 					}
 					else	{
-							MainFrame.myDaybyday.removeSubject(new SubjectPK(dto.getName(),elt.getName(),dto.getFormationName(),dto.getFormationYear()));
+							MainFrame.myDaybyday.removeSubject(new SubjectBusinessPK(dto.getName(),dto.getSectionId()));
 					}					
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (WriteDeniedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (EntityNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	
@@ -123,7 +147,7 @@ public class ActionDelete extends AbstractAction {
 					try {
 //System.out.println("Suppression de cours");
 						TimeTableTable df = (TimeTableTable) refs[1];
-						MainFrame.myDaybyday.removeCourse(((CourseDto)(((Course)cours).getDto())).getCoursePK());
+						MainFrame.myDaybyday.removeCourse(((CourseDto)(((Course)cours).getDto())).getCourseId());
 						
 						SectionDto dto = ((Section)obj).getDTO();
 						FormationElement father = ((Section)obj).getFather();
@@ -131,7 +155,7 @@ public class ActionDelete extends AbstractAction {
 						df.changeSource(new Section(dto,father));
 						MainFrame.myDaybyday.updateSection(dto);
 						final Section section   = (Section)obj;
-						section.upDateDto(MainFrame.myDaybyday.getSection(section.getDTO().getSectionPK()));
+						section.upDateDto(MainFrame.myDaybyday.getSection(section.getDTO().getSectionId()));
 						
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
@@ -140,6 +164,9 @@ public class ActionDelete extends AbstractAction {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (StaleUpdateException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (EntityNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -153,10 +180,11 @@ public class ActionDelete extends AbstractAction {
 					try {
 //System.out.println("Suppression de cours" + " formation");
 						Formation form = (Formation) obj;
+						FormationDto ff = MainFrame.myDaybyday.getFormation(new FormationBusinessPK(form.getName(),form.getYear()));
 						TimeTableTable df = (TimeTableTable) refs[1];
-						MainFrame.myDaybyday.removeCourse(((CourseDto)(((Course)cours).getDto())).getCoursePK());
+						MainFrame.myDaybyday.removeCourse(((CourseDto)(((Course)cours).getDto())).getCourseId());
 						
-						SectionDto dto =MainFrame.myDaybyday.getSection(new SectionPK("GENERALE", form.getName(), form.getYear()));
+						SectionDto dto =MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENERALE",ff.getFormationId() ));
 						
 						MainFrame.myDaybyday.updateFormation((FormationDto) form.getDto());
 						df.changeSource( form);
@@ -170,6 +198,9 @@ public class ActionDelete extends AbstractAction {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (StaleUpdateException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (EntityNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}

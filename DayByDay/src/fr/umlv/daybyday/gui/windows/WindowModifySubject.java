@@ -20,10 +20,13 @@ import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
+
+import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
-import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
+
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.MainFrame;
@@ -143,8 +146,7 @@ public class WindowModifySubject extends WindowAbstract {
 		//TODO faire un truc plus prope
 		for (int i = 0; i < responsableBox.getItemCount(); ++i){
 			TeacherDto teachdto = (TeacherDto)responsableBox.getItemAt(i);
-			if (teachdto.getFirstname().compareTo(oldsubdto.getTeacherFirstname()) == 0 &&
-					teachdto.getName().compareTo(oldsubdto.getTeacherName()) == 0 ){
+			if (teachdto.getTeacherId().compareTo(oldsubdto.getTeacherId()) == 0){
 				responsableBox.setSelectedIndex(i);
 				break;
 			}
@@ -287,41 +289,39 @@ public class WindowModifySubject extends WindowAbstract {
 				if (ref instanceof FormationDto){
 					FormationDto form = (FormationDto) ref;
 					formglo = form;
+					SectionDto sec = MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENRALE",form.getFormationId()));
 					newdto = new SubjectDto(nameTextField.getText(),
-							"GENERALE",
-							form.getName(),
-							form.getFormationYear(),
-							obj2.getName(),
-							obj2.getFirstname(),
+							sec.getSectionId(),
+							obj2.getTeacherId(),
+							
 							new Integer(courshourText.getText()),
 							new Integer(TDhourText.getText()),
 							new Integer(TPhourText.getText()),
 							new Integer(coursgroupeText.getText()),
 							new Integer(TDgroupeText.getText()),
 							new Integer(TPgroupeText.getText()),
-							infoList.getText(),
-							new Boolean(true)
+							infoList.getText()
+							
 							);
 				}
 				if (ref instanceof SectionDto){
 						father = (SectionDto) ref;
 					
-						formglo = MainFrame.myDaybyday.getFormation(new FormationPK(father.getFormationName(),father.getFormationYear()));
-		
+						formglo = MainFrame.myDaybyday.getFormation(father.getFormationId());
+						SectionDto sec = MainFrame.myDaybyday.getSection(new SectionBusinessPK(father.getName(),father.getFormationId()));
 						newdto = new SubjectDto(nameTextField.getText(),
-							father.getName(),
-							father.getFormationName(),
-							father.getFormationYear(),
-							obj2.getName(),
-							obj2.getFirstname(),
+							sec.getSectionId(),
+							
+							obj2.getTeacherId(),
+							
 							new Integer(courshourText.getText()),
 							new Integer(TPhourText.getText()),
 							new Integer(TDhourText.getText()),
 							new Integer(coursgroupeText.getText()),
 							new Integer(TPhourText.getText()),
 							new Integer(TDhourText.getText()),
-							infoList.getText(),
-							new Boolean(true)
+							infoList.getText()
+							
 							);
 
 				}
@@ -344,14 +344,17 @@ public class WindowModifySubject extends WindowAbstract {
 					mainframe.showError(frame,e.toString());
 				}catch (NumberFormatException e){
 					mainframe.showError(frame,e.toString());
-				}catch (ConstraintException e) {
-					mainframe.showError(frame,e.toString());
-					e.printStackTrace();
-				} catch (StaleUpdateException e) {
+				}catch (StaleUpdateException e) {
 					mainframe.showError(frame,e.toString());
 					e.printStackTrace();
 				} catch (WriteDeniedException e) {
 					mainframe.showError(frame,e.toString());
+					e.printStackTrace();
+				} catch (EntityNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (CreationException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}			
 			}

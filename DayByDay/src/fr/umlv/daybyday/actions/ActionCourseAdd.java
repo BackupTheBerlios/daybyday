@@ -13,7 +13,8 @@ import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
+import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.Images;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.TimeTableTable;
@@ -69,7 +70,7 @@ public class ActionCourseAdd extends AbstractAction {
 				
 					Windows.createWindow("WindowCreateCourse",new Object[]{
 					refs[0],
-					MainFrame.myDaybyday.getSubjectsOfSection(dto.getSectionPK()).toArray(),
+					MainFrame.myDaybyday.getSubjectsOfSection(dto.getSectionId()).toArray(),
 					MainFrame.myDaybyday.getAllTeachers().toArray(),
 					MainFrame.myDaybyday.getAllRooms().toArray(),
 					MainFrame.myDaybyday.getAllEquipments().toArray(),
@@ -86,12 +87,12 @@ public class ActionCourseAdd extends AbstractAction {
 			if (obj instanceof Formation){
 
 				FormationDto dto = ((FormationDto)((Formation)obj).getDto());
-				SectionDto defaultsec = MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",dto.getName(),dto.getFormationYear()));
+				SectionDto defaultsec = MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENERALE",dto.getFormationId()));
 
 				
 					Windows.createWindow("WindowCreateCourse",new Object[]{
 					refs[0],
-					MainFrame.myDaybyday.getSubjectsOfSection(defaultsec.getSectionPK()).toArray(),
+					MainFrame.myDaybyday.getSubjectsOfSection(defaultsec.getSectionId()).toArray(),
 					MainFrame.myDaybyday.getAllTeachers().toArray(),
 					MainFrame.myDaybyday.getAllRooms().toArray(),
 					MainFrame.myDaybyday.getAllEquipments().toArray(),
@@ -108,6 +109,9 @@ public class ActionCourseAdd extends AbstractAction {
 			
 		} catch (RemoteException e1) {
 			mainframe.showError(e1.getMessage());
+		} catch (EntityNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		}catch(ArrayIndexOutOfBoundsException e2){
 			mainframe.showError("Emploi du temps non spécifié pour l'ajout");

@@ -51,6 +51,10 @@ public class ComboBoxFormationElementRenderer implements ListCellRenderer{
 			EquipmentDto dto = (EquipmentDto)arg1;
 			return new JLabel(dto.getName());
 		}
+		if (arg1 instanceof String){
+			String s = (String)arg1;
+			return new JLabel(s);
+		}
 		return new JLabel();
 	}
 	

@@ -50,9 +50,11 @@ import javax.swing.text.StyleConstants;
 import fr.umlv.daybyday.actions.ActionAdmin;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
-import fr.umlv.daybyday.ejb.facade.Daybyday;
-import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+//import fr.umlv.daybyday.ejb.facade.Daybyday;
+//import fr.umlv.daybyday.ejb.facade.DaybydayHome;
 import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
+import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
+import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
 import fr.umlv.daybyday.model.Equipment;
 import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
@@ -100,6 +102,10 @@ public class MainFrame {
 	public static DaybydayHome DaybydayHome;
 	public static Daybyday myDaybyday;
 	
+	public JFrame getFrame()
+	{
+		return frame;
+	}
 	
 	public MainFrame() throws NamingException, RemoteException, CreateException {
 		

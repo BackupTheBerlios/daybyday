@@ -28,10 +28,16 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import fr.umlv.daybyday.ejb.facade.Daybyday;
+//import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
+import fr.umlv.daybyday.ejb.resource.room.RoomDto;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
+import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
+import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.Images;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.Formation;
@@ -163,21 +169,51 @@ public class ActionExport extends AbstractAction {
 		   
 		   //Add all the course attribute
 		   Element name_course = new Element("NAME");
-		   name_course.setText(datacourse.getSubjectName());
+		   SubjectDto sub = null;
+		try {
+			sub = MainFrame.myDaybyday.getSubject(datacourse.getSubjectId());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		name_course.setText(sub.getName());
 		   elem.addContent(name_course);
 
 		   Element teacher = new Element("TEACHER");
 		   elem.addContent(teacher);
 		   
-		   AddElementWithText(datacourse.getTeacherName() +" "+ datacourse.getTeacherFirstname(), teacher, "TEACHERNAME");
+		   TeacherDto t = null;
+		try {
+			t = (TeacherDto)MainFrame.myDaybyday.getTeachersOfCourse(datacourse.getCourseId()).get(0);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (EntityNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		AddElementWithText(t.getName() +" "+ t.getFirstname(), teacher, "TEACHERNAME");
 		   	   
 		   //Add a room Element to the XML File
 		   Element room = new Element("ROOM");
-		   room.setText(datacourse.getRoomName());
+		   RoomDto r=null;
+		try {
+			r = (RoomDto)MainFrame.myDaybyday.getRoomsOfCourse(datacourse.getCourseId()).get(0);
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (EntityNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		room.setText(r.getName());
 		   elem.addContent(room);
 		   
 		   //Add a building attribute to a room
-		   String roombuilding = datacourse.getRoomBuilding();
+		   String roombuilding = r.getBuilding();
 		   if (roombuilding == null)
 		   {
 		   	   Attribute building = new Attribute("Building", "");
@@ -190,7 +226,7 @@ public class ActionExport extends AbstractAction {
 		   }
 		   
 		   //Add an area attribute to a room
-		   String roomarea = datacourse.getRoomArea();
+		   String roomarea = r.getArea();
 		   if (roomarea == null)
 		   {
 		   	   Attribute area = new Attribute("Area", "");
@@ -303,12 +339,16 @@ public class ActionExport extends AbstractAction {
 
 	   
 	    // a list that contains all the Section of the Formation
-        ArrayList sectionList;
+        ArrayList sectionList = null;
 		try {
-			sectionList = myDaybyday.getSectionsOfFormation(form.getFormationPK());
+			
+			sectionList = myDaybyday.getSectionsOfFormation(form.getFormationId());
 		} catch (RemoteException e1) {
 			e1.printStackTrace();
 			return;
+		} catch (EntityNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		// contains all the Section information
         SectionDto sec;
@@ -332,12 +372,16 @@ public class ActionExport extends AbstractAction {
 			section.setAttribute(name_section);
             
             // a list that contains all the courses of a Section (not only for one week)
-            ArrayList courseList;
+            ArrayList courseList = null;
 			try {
-				courseList = myDaybyday.getCoursesOfSection(sec.getSectionPK());
+				
+				courseList = myDaybyday.getCoursesOfSection(sec.getSectionId());
 			} catch (RemoteException e2) {
 				e2.printStackTrace();
 				return;
+			} catch (EntityNotFoundException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
 			// contains all the Courses information
             CourseDto sectioncourse;

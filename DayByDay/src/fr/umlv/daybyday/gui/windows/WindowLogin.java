@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import fr.umlv.daybyday.ejb.admin.user.UserPK;
+import fr.umlv.daybyday.ejb.admin.user.UserBusinessPK;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**
@@ -40,11 +40,10 @@ public class WindowLogin extends WindowAbstract {
 	 */
 	public static void createWindow(final JFrame frame,Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj [0];
-		
 		final JFrame framefinal = frame;
+		
 		Container contentPane = frame.getContentPane();
 		initWindow(frame,"Login", 400, 140, mainframe.getFrameX(), mainframe.getFrameY());
-	
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);		
@@ -91,7 +90,8 @@ public class WindowLogin extends WindowAbstract {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					
-					mainframe.setUser(MainFrame.myDaybyday.getUser(new UserPK(loginTextField.getText(), new String(passewordField.getPassword()))));
+					mainframe.setUser(MainFrame.myDaybyday.getUserByLogin(loginTextField.getText(), new String(passewordField.getPassword())));
+					//mainframe.setUser(MainFrame.myDaybyday.getUser(new UserBusinessPK(loginTextField.getText(), new String(passewordField.getPassword()))));
 					mainframe.setEnable(true);
 					framefinal.dispose();
 				} catch (Exception e) {

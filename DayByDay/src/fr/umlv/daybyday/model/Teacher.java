@@ -13,9 +13,10 @@ import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**
@@ -46,18 +47,27 @@ public class Teacher implements FormationElement {
 		this.courslist = new ArrayList();
 		
 		try {
-			ArrayList matieretmp = MainFrame.myDaybyday.getSubjectsOfTeacher(new TeacherPK(dto.getName(),dto.getFirstname()));
+			
+			ArrayList matieretmp = MainFrame.myDaybyday.getSubjectsOfTeacher(new TeacherBusinessPK(dto.getName(),dto.getFirstname()));
 			for (int i = 0; i < matieretmp.size(); ++i)
+			{
 				matiere.add(new Subject((SubjectDto)matieretmp.get(i),this)); 
+			}
 		} catch (RemoteException e1) {
-
+			e1.printStackTrace();
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		try {
-			ArrayList courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherPK(teacherDto.getName(),teacherDto.getFirstname()));
+			ArrayList courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherBusinessPK(teacherDto.getName(),teacherDto.getFirstname()));
 		for (int i = 0; i < courslisttmp.size(); ++i)
 			courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 		} catch (RemoteException e1) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	
 	}
@@ -69,16 +79,19 @@ public class Teacher implements FormationElement {
 		ArrayList courslisttmp = null;
 		
 		try {
-			TeacherDto newdto =  MainFrame.myDaybyday.getTeacher(new TeacherPK(name,firstname));
+			TeacherDto newdto =  MainFrame.myDaybyday.getTeacher(new TeacherBusinessPK(name,firstname));
 			if (newdto.getVersion().longValue() != teacherDto.getVersion().longValue()){
 				teacherDto = newdto;
 				courslist = new ArrayList();
-			courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherPK(teacherDto.getName(),teacherDto.getFirstname()));
+			courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherBusinessPK(teacherDto.getName(),teacherDto.getFirstname()));
 			for (int i = 0; i < courslisttmp.size(); ++i)
 				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 			}
 		} catch (RemoteException e2) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return courslist;
 	}
@@ -112,16 +125,16 @@ public class Teacher implements FormationElement {
 	 */
 	public int getElementNombre() {
 			try {
-				TeacherDto newdto =  MainFrame.myDaybyday.getTeacher(new TeacherPK(name,firstname));
+				TeacherDto newdto =  MainFrame.myDaybyday.getTeacher(new TeacherBusinessPK(name,firstname));
 
 				if (newdto.getVersion().longValue() != teacherDto.getVersion().longValue()){
 					teacherDto = newdto;
 					matiere = new ArrayList();
-					ArrayList matieretmp = MainFrame.myDaybyday.getSubjectsOfTeacher(new TeacherPK(newdto.getName(),newdto.getFirstname()));
+					ArrayList matieretmp = MainFrame.myDaybyday.getSubjectsOfTeacher(new TeacherBusinessPK(newdto.getName(),newdto.getFirstname()));
 					for (int i = 0; i < matieretmp.size(); ++i)
 						matiere.add(new Subject((SubjectDto)matieretmp.get(i),this)); 
 					courslist = new ArrayList();
-					ArrayList courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherPK(teacherDto.getName(),teacherDto.getFirstname()));
+					ArrayList courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherBusinessPK(teacherDto.getName(),teacherDto.getFirstname()));
 					for (int i = 0; i < courslisttmp.size(); ++i)
 						courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 					}
@@ -129,6 +142,9 @@ public class Teacher implements FormationElement {
 				
 		} catch (RemoteException e1) {
 
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		// TODO Auto-generated method stub
