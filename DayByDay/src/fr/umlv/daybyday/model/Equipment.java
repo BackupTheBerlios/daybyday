@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
+import fr.umlv.daybyday.ejb.resource.equipment.EquipmentPK;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
@@ -31,6 +32,8 @@ public class Equipment implements FormationElement {
 	ArrayList courslist;
 	EquipmentDto roomdto;
 	String name;
+	String area;
+	String building;
 	
 	public Equipment (String name){
 		
@@ -51,10 +54,13 @@ public class Equipment implements FormationElement {
 	public Equipment(EquipmentDto dto) {
 		roomdto = dto;
 		name = dto.getName();
-		ArrayList courslist = new ArrayList();
+		building = dto.getBuilding();
+		area = dto.getArea();
+		
+		this.courslist = new ArrayList();
 		ArrayList courslisttmp = null;
 		try {
-			courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomPK(dto.getName(),dto.getBuilding(),dto.getArea()));
+			courslisttmp = MainFrame.myDaybyday.getCoursesOfEquipment(new EquipmentPK(dto.getName(),dto.getBuilding(),dto.getArea()));
 			for (int i = 0; i < courslisttmp.size(); ++i)
 				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 		} catch (RemoteException e2) {
@@ -63,12 +69,17 @@ public class Equipment implements FormationElement {
 	}
 
 	public ArrayList getCourseList(){
-		ArrayList courslist = new ArrayList();
+
 		ArrayList courslisttmp = null;
 		try {
-			courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
-			for (int i = 0; i < courslisttmp.size(); ++i)
-				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
+			EquipmentDto newdto =  MainFrame.myDaybyday.getEquipment(new EquipmentPK(name,building,area));
+			if (newdto.getVersion().longValue() != roomdto.getVersion().longValue()){
+				roomdto = newdto;
+				courslist = new ArrayList();
+				courslisttmp = MainFrame.myDaybyday.getCoursesOfEquipment(new EquipmentPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
+				for (int i = 0; i < courslisttmp.size(); ++i)
+					courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
+			}
 		} catch (RemoteException e2) {
 
 		}	

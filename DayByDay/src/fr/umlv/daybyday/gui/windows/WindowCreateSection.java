@@ -230,7 +230,7 @@ public class WindowCreateSection extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
-		addButtonValidation(contentPane, c, gridbag );
+		//addButtonValidation(contentPane, c, gridbag );
 	}
 
 	
