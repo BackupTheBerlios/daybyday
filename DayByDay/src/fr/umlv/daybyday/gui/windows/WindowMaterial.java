@@ -7,8 +7,10 @@
  */
 package fr.umlv.daybyday.gui.windows;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -19,6 +21,7 @@ import java.rmi.RemoteException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -55,7 +58,8 @@ public class WindowMaterial extends WindowAbstract {
 		if (type.intValue() == ROOM)
 			initWindow(frame,"Nouvelle Salle", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 		
-		Container contentPane = frame.getContentPane();
+		Container mainpanel = frame.getContentPane();
+		Container contentPane = new Container();  
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
@@ -203,6 +207,18 @@ public class WindowMaterial extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
+		
+		mainpanel.add(contentPane,BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new FlowLayout());
+		ok.setMinimumSize(new Dimension(100,20));
+		cancel.setMinimumSize(new Dimension(100,20));
+		ok.setPreferredSize(new Dimension(100,20));
+		cancel.setPreferredSize(new Dimension(100,20));
+		southPanel.add(ok);
+		southPanel.add(cancel);
+		mainpanel.add(southPanel,BorderLayout.SOUTH);
+		
 		frame.setVisible(true);
 	}
 

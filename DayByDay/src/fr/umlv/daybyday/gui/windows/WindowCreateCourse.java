@@ -1,8 +1,10 @@
 package fr.umlv.daybyday.gui.windows;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -93,7 +95,8 @@ public class WindowCreateCourse extends WindowAbstract {
         cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (index -1));
        
 		initWindow(frame,"Nouveau cours", 930, 450, mainframe.getFrameX(), mainframe.getFrameY());
-		Container contentPane = frame.getContentPane();
+		Container mainpanel = frame.getContentPane();
+		Container contentPane = new Container();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 	
@@ -828,6 +831,18 @@ public class WindowCreateCourse extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
+		
+		mainpanel.add(contentPane,BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new FlowLayout());
+		ok.setMinimumSize(new Dimension(100,20));
+		cancel.setMinimumSize(new Dimension(100,20));
+		ok.setPreferredSize(new Dimension(100,20));
+		cancel.setPreferredSize(new Dimension(100,20));
+		southPanel.add(ok);
+		southPanel.add(cancel);
+		mainpanel.add(southPanel,BorderLayout.SOUTH);
+		
 		frame.setVisible(true);
 		//addButtonValidation(contentPane, c, gridbag );
 		}catch (Exception e){

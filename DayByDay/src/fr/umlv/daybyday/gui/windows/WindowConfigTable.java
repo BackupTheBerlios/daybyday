@@ -3,6 +3,7 @@ package fr.umlv.daybyday.gui.windows;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -42,8 +43,9 @@ public class WindowConfigTable extends WindowAbstract {
 		final MainFrame mainframe = (MainFrame) obj[0];
 		//initWindow(frame,"Configuration de la grille", 330, 250);
 
-		initWindow(frame,"Configuration de la grille", 430, 250, mainframe.getFrameX(), mainframe.getFrameY());
-		Container contentPane = frame.getContentPane();
+		initWindow(frame,"Configuration de la grille", 380, 250, mainframe.getFrameX(), mainframe.getFrameY());
+		Container mainpanel = frame.getContentPane();
+		Container contentPane = new Container();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
@@ -250,7 +252,24 @@ public class WindowConfigTable extends WindowAbstract {
 		});
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
-		contentPane.add(cancel);	
+		contentPane.add(cancel);
+		
+		
+		/*
+		Container mainpanel = frame.getContentPane();
+		Container contentPane = new Container();  
+		 */
+		mainpanel.add(contentPane,BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new FlowLayout());
+		ok.setMinimumSize(new Dimension(100,20));
+		cancel.setMinimumSize(new Dimension(100,20));
+		ok.setPreferredSize(new Dimension(100,20));
+		cancel.setPreferredSize(new Dimension(100,20));
+		southPanel.add(ok);
+		southPanel.add(cancel);
+		mainpanel.add(southPanel,BorderLayout.SOUTH);
+		
 		frame.setVisible(true);
 	}
 	

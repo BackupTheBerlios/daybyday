@@ -7,7 +7,10 @@
  */
 package fr.umlv.daybyday.gui.windows;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,6 +20,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -41,7 +45,8 @@ public class WindowLogin extends WindowAbstract {
 		final MainFrame mainframe = (MainFrame) obj [0];
 		final JFrame framefinal = frame;
 		
-		Container contentPane = frame.getContentPane();
+		Container mainpanel = frame.getContentPane();
+		Container contentPane = new Container();
 		initWindow(frame,"Login", 400, 140, mainframe.getFrameX(), mainframe.getFrameY());
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -113,6 +118,7 @@ public class WindowLogin extends WindowAbstract {
 		});
 				
 	
+		
 		gridbag.setConstraints(okButton, c);
 		contentPane.add(okButton);
 		
@@ -121,6 +127,18 @@ public class WindowLogin extends WindowAbstract {
 	
 		gridbag.setConstraints(cancelButton, c);
 		contentPane.add(cancelButton);		
+		
+		mainpanel.add(contentPane,BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new FlowLayout());
+		okButton.setMinimumSize(new Dimension(100,20));
+		cancelButton.setMinimumSize(new Dimension(100,20));
+		okButton.setPreferredSize(new Dimension(100,20));
+		cancelButton.setPreferredSize(new Dimension(100,20));
+		southPanel.add(okButton);
+		southPanel.add(cancelButton);
+		mainpanel.add(southPanel,BorderLayout.SOUTH);
+		
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setVisible(true);
 	}

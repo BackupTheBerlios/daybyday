@@ -1,8 +1,10 @@
 package fr.umlv.daybyday.gui.windows;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
@@ -47,7 +50,8 @@ public class WindowOpenFormation extends WindowAbstract {
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
-		Container contentPane = frame.getContentPane();
+		Container mainpanel = frame.getContentPane();
+		Container contentPane = new Container();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
@@ -137,6 +141,18 @@ public class WindowOpenFormation extends WindowAbstract {
 		c.anchor = GridBagConstraints.WEST;
 		gridbag.setConstraints(cancel, c);
 		contentPane.add(cancel);
+		
+		mainpanel.add(contentPane,BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new FlowLayout());
+		ok.setMinimumSize(new Dimension(100,20));
+		cancel.setMinimumSize(new Dimension(100,20));
+		ok.setPreferredSize(new Dimension(100,20));
+		cancel.setPreferredSize(new Dimension(100,20));
+		southPanel.add(ok);
+		southPanel.add(cancel);
+		mainpanel.add(southPanel,BorderLayout.SOUTH);
+		
 		frame.setVisible(true);
 	}
 

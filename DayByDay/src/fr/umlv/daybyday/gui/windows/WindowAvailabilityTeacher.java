@@ -1,7 +1,9 @@
 package fr.umlv.daybyday.gui.windows;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -65,7 +67,8 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		if (typeObjectRef == ROOM) initWindow(frame,"Gestion des disponibilités d'une salle", 550, 300, mainframe.getFrameX(), mainframe.getFrameY());
 		if (typeObjectRef == EQUIP) initWindow(frame,"Gestion des disponibilités d'un équipement", 550, 300, mainframe.getFrameX(), mainframe.getFrameY());
 	
-		Container contentPane = frame.getContentPane();
+		Container mainpanel = frame.getContentPane();
+		Container contentPane = new Container();  
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
@@ -508,6 +511,18 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		gridbag.setConstraints(ok, c);
 		contentPane.add(ok);
+		
+		mainpanel.add(contentPane,BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new FlowLayout());
+		ok.setMinimumSize(new Dimension(100,20));
+
+		ok.setPreferredSize(new Dimension(100,20));
+
+		southPanel.add(ok);
+
+		mainpanel.add(southPanel,BorderLayout.SOUTH);
+		
 		frame.setVisible(true);
 		}
 		catch (Exception e){
