@@ -154,7 +154,9 @@ public class Course {
 
 		}
 		
-		if(CourseDetail.coursFrequence );
+		if(CourseDetail.coursFrequence ){
+			//tag += "\nOublie de vico et momo";
+		}
 		if(CourseDetail.coursHour ){
 			tag += "\n" + ((bghour < 10 ) ? "0" + bghour: ""+bghour)  +"h" 
 			+ ((bgminute < 10 ) ? "0" + bgminute: ""+bgminute)  + " - " + 

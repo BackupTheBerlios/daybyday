@@ -596,15 +596,20 @@ public class WindowCreateCourse extends WindowAbstract {
 				           else
 				           		sectionname = section.getName();
 				           		
+				           String typeCours = "";
+				           if (course.isSelected()) typeCours = "cours";
+				           if (td.isSelected()) typeCours = "td";
+				           if (tp.isSelected()) typeCours = "tp";
+				           
 						CourseDto newdto = new CourseDto(
 								obj.getName(),
 								sectionname,
 								formation.getName(),
 								formation.getYear(),
-								"cours",
+								typeCours,
 								startDate,
 								endDate,
-								"groupe1",
+								(String)groupelist.getSelectedItem(),
 								obj2.getName(),
 								obj2.getFirstname(),
 								obj4.getName(),
