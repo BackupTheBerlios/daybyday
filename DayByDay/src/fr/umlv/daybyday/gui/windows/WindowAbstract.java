@@ -1145,7 +1145,7 @@ public abstract class WindowAbstract {
 		
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;		
-		JPanel coursePanel = createPanelTypeSubject(" Cours : ",val11, val12);
+		JPanel coursePanel = createPanelTypeSubject(" Cours : ",/*val11*/1, val12);
 		gridbag2.setConstraints(coursePanel, c2);
 		typePanel.add(coursePanel);
 		

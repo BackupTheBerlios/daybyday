@@ -18,7 +18,7 @@ import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
-import fr.umlv.daybyday.ejb.util.exception.CreationException;
+//import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 
@@ -80,9 +80,9 @@ public class Course {
 		try {
 			sub = MainFrame.myDaybyday.getSubject(dto.getSubjectId());
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+	 		// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (CreationException e) {
+		} catch (EntityNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -144,7 +144,7 @@ public class Course {
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (CreationException e) {
+				} catch (EntityNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -162,7 +162,7 @@ public class Course {
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (CreationException e) {
+			} catch (EntityNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

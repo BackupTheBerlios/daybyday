@@ -193,7 +193,7 @@ public class WindowCreateTeacher extends WindowAbstract {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL; 
 		
-		JPasswordField confPassewordField = new JPasswordField();
+		final JPasswordField confPassewordField = new JPasswordField();
 		gridbag.setConstraints(confPassewordField, c);
 		contentPane.add(confPassewordField);
 		
@@ -205,7 +205,11 @@ public class WindowCreateTeacher extends WindowAbstract {
 			
 			public void actionPerformed(ActionEvent arg0) {
 			//	("Zipstein","zipo","zip@univ-mlv.fr","06 66 66 66 66","0001","interne","prof de crypto et d'algorithmes",new Boolean(true));
-			TeacherDto newdto = new TeacherDto(nameTextField.getText(),
+				
+				if (confPassewordField.getText().equals(passewordField.getText()))
+				{
+				
+				TeacherDto newdto = new TeacherDto(nameTextField.getText(),
 					firstnameTextField.getText(),
 					emailTextField.getText(),
 					phoneTextField.getText(),
@@ -245,7 +249,12 @@ public class WindowCreateTeacher extends WindowAbstract {
 					e.printStackTrace();
 				}
 
+				}
+				else
+				{
+					mainframe.showError(frame,"Les mots de passe sont différents");
 				
+				}
 			}
 			
 		});

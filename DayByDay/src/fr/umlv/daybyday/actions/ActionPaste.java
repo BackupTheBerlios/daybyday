@@ -27,9 +27,15 @@ import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.ejb.util.exception.CourseConfusionException;
 import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
+import fr.umlv.daybyday.ejb.util.exception.EquipmentConstraintException;
+import fr.umlv.daybyday.ejb.util.exception.EquipmentUnavailableException;
 import fr.umlv.daybyday.ejb.util.exception.OperationFailedException;
 import fr.umlv.daybyday.ejb.util.exception.ResourceUnavailableException;
+import fr.umlv.daybyday.ejb.util.exception.RoomConstraintException;
+import fr.umlv.daybyday.ejb.util.exception.RoomUnavailableException;
 import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
+import fr.umlv.daybyday.ejb.util.exception.TeacherConstraintException;
+import fr.umlv.daybyday.ejb.util.exception.TeacherUnavailableException;
 import fr.umlv.daybyday.ejb.util.exception.TimeslotException;
 import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.Images;
@@ -224,6 +230,24 @@ public class ActionPaste extends AbstractAction {
 				e3.printStackTrace();
 			}
 			catch (OperationFailedException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (TeacherUnavailableException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (TeacherConstraintException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (RoomUnavailableException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (RoomConstraintException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (EquipmentUnavailableException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (EquipmentConstraintException e3) {
 				// TODO Auto-generated catch block
 				e3.printStackTrace();
 			}
