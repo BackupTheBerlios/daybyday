@@ -50,7 +50,7 @@ public class WindowModifyTeacher extends WindowAbstract {
 		Teacher teachref = (Teacher) mainframe.getSelectedObject();
 		TeacherDto oldteachref = (TeacherDto)teachref.getDto();
 		
-		initWindow(frame,"Modifier Enseignant", 400, 400);
+		initWindow(frame,"Modifier Enseignant", 400, 400, mainframe.getFrameX(), mainframe.getFrameY());
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();

@@ -91,7 +91,7 @@ public class WindowCreateCourse extends WindowAbstract {
 		cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
         cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (index -1));
        
-		initWindow(frame,"Nouveau cours", 930, 450);
+		initWindow(frame,"Nouveau cours", 930, 450, mainframe.getFrameX(), mainframe.getFrameY());
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();

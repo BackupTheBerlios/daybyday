@@ -44,7 +44,7 @@ public class WindowCreateTeacher extends WindowAbstract {
 	public static void createWindow(final JFrame frame,Object [] obj){
 		
 		final MainFrame mainframe = (MainFrame) obj[0];
-		initWindow(frame,"Nouvel Enseignant", 400, 400);
+		initWindow(frame,"Nouvel Enseignant", 400, 400, mainframe.getFrameX(), mainframe.getFrameY());
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();

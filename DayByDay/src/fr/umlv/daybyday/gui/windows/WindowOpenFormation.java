@@ -46,12 +46,12 @@ public class WindowOpenFormation extends WindowAbstract {
 	 * the main frame
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){
-		
+		final MainFrame mainframe = (MainFrame) obj[0];
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
-		initWindow(frame,"Ouvrir...", 300, 100);
+		initWindow(frame,"Ouvrir...", 300, 100, mainframe.getFrameX(), mainframe.getFrameY());
 		
 		c.weightx = 1; 
 		c.weighty = 1; 
@@ -94,7 +94,7 @@ public class WindowOpenFormation extends WindowAbstract {
 		});
 		gridbag.setConstraints(importCombo, c);
 		contentPane.add(importCombo);
-		final MainFrame mainframe = (MainFrame) obj[0];
+		
 		JButton ok = new JButton("OK");
 		ok.setPreferredSize(new Dimension(100,20));
 		final JFrame framefinal = frame;

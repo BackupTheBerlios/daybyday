@@ -61,7 +61,7 @@ public class WindowModifyFormation extends WindowAbstract {
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
-		initWindow(frame,"Modifier formation", 430, 350);
+		initWindow(frame,"Modifier formation", 430, 350, mainframe.getFrameX(), mainframe.getFrameY());
 		c.weightx = 1; 
 		c.weighty = 1; 
 		c.gridwidth = 1; 

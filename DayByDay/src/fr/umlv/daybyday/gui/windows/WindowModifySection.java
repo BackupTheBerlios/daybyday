@@ -49,10 +49,10 @@ public class WindowModifySection extends WindowAbstract {
 	 * in position 1 the teachers
 	 */
 	public static void createWindow(final JFrame frame,Object [] obj){
-		initWindow(frame,"Modifier filière", 400, 250);
+		
 		final MainFrame mainframe = (MainFrame) obj[0];
 			Container contentPane = frame.getContentPane();
-
+			initWindow(frame,"Modifier filière", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 		Section sectionref = (Section)mainframe.getSelectedObject();
 		SectionDto oldsecdto = (SectionDto)sectionref.getDTO();
 		

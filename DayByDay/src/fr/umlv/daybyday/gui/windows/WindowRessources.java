@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import fr.umlv.daybyday.gui.MainFrame;
+
 
 /**
  * @author Emond Emmanuelle, Marc meynier
@@ -37,7 +39,8 @@ public class WindowRessources extends WindowAbstract {
 	 * @param obj object
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){
-		initWindow(frame,"", 550, 520);
+		final MainFrame mainframe = (MainFrame) obj[0];
+		initWindow(frame,"", 550, 520, mainframe.getFrameX(), mainframe.getFrameY());
 		Container contentPane = frame.getContentPane();
 
 		GridBagLayout gridbag = new GridBagLayout();

@@ -7,7 +7,6 @@
 package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 
@@ -35,6 +34,7 @@ public class ActionAdmin extends AbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		Windows.createWindow("WindowAdministration",new Object[]{new ArrayList()});
+		
+		Windows.createWindow("WindowAdministration",refs);
 	}
 }

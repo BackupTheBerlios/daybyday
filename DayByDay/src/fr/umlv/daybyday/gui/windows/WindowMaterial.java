@@ -51,9 +51,9 @@ public class WindowMaterial extends WindowAbstract {
 		final MainFrame mainframe = (MainFrame) obj[0];
 		final Integer type = (Integer)obj[1]; 
 		if (type.intValue() == EQUIP)
-		initWindow(frame,"Nouveau matériel", 400, 250);
+		initWindow(frame,"Nouveau matériel", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 		if (type.intValue() == ROOM)
-			initWindow(frame,"Nouvelle Salle", 400, 250);
+			initWindow(frame,"Nouvelle Salle", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 		
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();

@@ -58,7 +58,7 @@ public class WindowCreateSubject extends WindowAbstract {
 		
 		int height = 360;
 		height = height + 50 *(((Object [])obj[1]).length - 1);
-		initWindow(frame,"Nouvelle matière", 600, /*height*/220);	
+		initWindow(frame,"Nouvelle matière", 600, /*height*/220, mainframe.getFrameX(), mainframe.getFrameY());	
 			Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();

@@ -48,10 +48,10 @@ public class WindowCreateSection extends WindowAbstract {
 	 * in position 1 the teachers
 	 */
 	public static void createWindow(final JFrame frame,Object [] obj){
-		initWindow(frame,"Nouvelle filière", 400, 250);
+		
 		final MainFrame mainframe = (MainFrame) obj[0];
 			Container contentPane = frame.getContentPane();
-
+		initWindow(frame,"Nouvelle filière", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
 
 /**
  * @author Marc
@@ -31,6 +32,7 @@ public class ActionClose extends AbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		
+		MainFrame mainframe = (MainFrame) refs[0];
+		mainframe.removeCurrentTabbePane();
 	}
 }

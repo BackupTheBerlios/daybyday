@@ -58,7 +58,7 @@ public class WindowModifyMaterial extends WindowAbstract {
 		String area = null;
 		String desc = null;
 		if (type.intValue() == EQUIP){
-			initWindow(frame,"Modifier matériel", 400, 250);
+			initWindow(frame,"Modifier matériel", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 			EquipmentDto dto = (EquipmentDto)((Equipment)mainframe.getSelectedObject()).getDto();
 			name = dto.getName();
 			bat = dto.getBuilding();
@@ -66,7 +66,7 @@ public class WindowModifyMaterial extends WindowAbstract {
 			desc = dto.getDescription();
 		}
 		if (type.intValue() == ROOM){
-			initWindow(frame,"Modifier Salle", 400, 250);
+			initWindow(frame,"Modifier Salle", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 			RoomDto dto = (RoomDto)((Room)mainframe.getSelectedObject()).getDto();
 			name = dto.getName();
 			bat = dto.getBuilding();

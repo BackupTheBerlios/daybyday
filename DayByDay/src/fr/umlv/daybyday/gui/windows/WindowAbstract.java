@@ -43,10 +43,10 @@ public abstract class WindowAbstract {
 	 * @param width the width of the window
 	 * @param height the height of the window
 	 */
-	public static void initWindow(JFrame frame, String name, int width, int height) {
+	public static void initWindow(JFrame frame, String name, int width, int height, int x, int y) {
 		frame.setTitle(name);
 		frame.setSize(width, height);
-		centerWindow(frame);
+		centerWindow(frame, x, y);
 	}
 	
 	
@@ -55,7 +55,7 @@ public abstract class WindowAbstract {
 	 * 
 	 * @param f the window to center
 	 */
-	public static void centerWindow(JFrame f) {
+	public static void centerWindow(JFrame f, int x, int y) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         Dimension frameSize = f.getSize();

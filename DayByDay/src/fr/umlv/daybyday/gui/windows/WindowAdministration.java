@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import fr.umlv.daybyday.gui.MainFrame;
+
 
 /**
  * @author Emmanuelle Emond et Marc Meynier
@@ -27,7 +29,8 @@ public class WindowAdministration extends WindowAbstract{
 	 * @param obj the object
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){
-		initWindow(frame,"Panneau Administrateur", 430, 450);
+		final MainFrame mainframe = (MainFrame) obj[0];
+		initWindow(frame,"Panneau Administrateur", 430, 450, mainframe.getFrameX(), mainframe.getFrameY());
 		Container contentPane = frame.getContentPane();
 		
 		GridBagLayout gridbag = new GridBagLayout();

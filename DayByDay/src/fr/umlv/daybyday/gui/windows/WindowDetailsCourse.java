@@ -34,7 +34,7 @@ public class WindowDetailsCourse extends WindowAbstract {
 
 	public static void createWindow(final JFrame frame,Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
-		initWindow(frame,"Niveau de détails des cours", 550, 350);
+		initWindow(frame,"Niveau de détails des cours", 550, 350, mainframe.getFrameX(), mainframe.getFrameY());
 
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();

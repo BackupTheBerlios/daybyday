@@ -58,7 +58,7 @@ public class WindowCreateFormation extends WindowAbstract {
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
-		initWindow(frame,"Nouvelle formation", 430, 350);
+		initWindow(frame,"Nouvelle formation", 430, 350, mainframe.getFrameX(), mainframe.getFrameY());
 		c.weightx = 1; 
 		c.weighty = 1; 
 		c.gridwidth = 1; 

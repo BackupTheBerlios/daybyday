@@ -128,16 +128,16 @@ public class MnemonicMap {
 		maskmap.put("ActionGridDetailPerso",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionGridDetailPerso","Détails des cours personnalisé");
 		
-		mnemomap.put("ActionGridDetailStudent",new Integer(KeyEvent.VK_D));
-		maskmap.put("ActionGridDetailStudent",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionGridDetailStudent",new Integer(KeyEvent.VK_S));
+		maskmap.put("ActionGridDetailStudent",new Integer(ActionEvent.ALT_MASK +  ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionGridDetailStudent","Détails des cours  pour étudiant");
 		
-		mnemomap.put("ActionGridDetailTeacher",new Integer(KeyEvent.VK_D));
-		maskmap.put("ActionGridDetailTeacher",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionGridDetailTeacher",new Integer(KeyEvent.VK_E));
+		maskmap.put("ActionGridDetailTeacher",new Integer(ActionEvent.ALT_MASK  + ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionGridDetailTeacher","Détails des cours  pour enseignant");
 		
-		mnemomap.put("ActionGridDetailCreate",new Integer(KeyEvent.VK_D));
-		maskmap.put("ActionGridDetailCreate",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionGridDetailCreate",new Integer(KeyEvent.VK_N));
+		maskmap.put("ActionGridDetailCreate",new Integer(ActionEvent.ALT_MASK +  ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionGridDetailCreate","Modifier détails des cours");
 		
 		mnemomap.put("ActionGridVisualWeek",new Integer(KeyEvent.VK_D));
@@ -148,8 +148,8 @@ public class MnemonicMap {
 		maskmap.put("ActionGridVisualMultiWeek",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionGridVisualMultiWeek","Visualisation par plusieurs semaines");		
 		
-		mnemomap.put("ActionGridConfig",new Integer(KeyEvent.VK_D));
-		maskmap.put("ActionGridConfig",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionGridConfig",new Integer(KeyEvent.VK_G));
+		maskmap.put("ActionGridConfig",new Integer(ActionEvent.CTRL_MASK +  ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionGridConfig","Configurer la grille");				
 		
 		mnemomap.put("ActionCourseAdd",new Integer(KeyEvent.VK_PLUS));
@@ -243,20 +243,20 @@ public class MnemonicMap {
 		maskmap.put("ActionFontUnderline",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionFontUnderline","Souligné");
 		
-		mnemomap.put("ActionFontAlignRight",new Integer(KeyEvent.VK_U));
-		maskmap.put("ActionFontAlignRight",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionFontAlignRight",new Integer(KeyEvent.VK_D));
+		maskmap.put("ActionFontAlignRight",new Integer(ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionFontAlignRight","Aligner à droite");
 		
-		mnemomap.put("ActionFontAlignLeft",new Integer(KeyEvent.VK_U));
-		maskmap.put("ActionFontAlignLeft",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionFontAlignLeft",new Integer(KeyEvent.VK_G));
+		maskmap.put("ActionFontAlignLeft",new Integer(ActionEvent.CTRL_MASK  + ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionFontAlignLeft","Aligner à gauche");
 		
-		mnemomap.put("ActionFontAlignCenter",new Integer(KeyEvent.VK_U));
-		maskmap.put("ActionFontAlignCenter",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionFontAlignCenter",new Integer(KeyEvent.VK_C));
+		maskmap.put("ActionFontAlignCenter",new Integer(ActionEvent.CTRL_MASK +  ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionFontAlignCenter","Aligner au centre");
 		
-		mnemomap.put("ActionFontAlignJustify",new Integer(KeyEvent.VK_U));
-		maskmap.put("ActionFontAlignJustify",new Integer(ActionEvent.CTRL_MASK));	
+		mnemomap.put("ActionFontAlignJustify",new Integer(KeyEvent.VK_J));
+		maskmap.put("ActionFontAlignJustify",new Integer(ActionEvent.CTRL_MASK  + ActionEvent.SHIFT_MASK));	
 		tooltipmap.put("ActionFontAlignJustify","Justifié");
 		
 		

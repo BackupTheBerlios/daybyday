@@ -43,7 +43,7 @@ public class WindowLogin extends WindowAbstract {
 		
 		final JFrame framefinal = frame;
 		Container contentPane = frame.getContentPane();
-		initWindow(frame,"Login", 400, 140);
+		initWindow(frame,"Login", 400, 140, mainframe.getFrameX(), mainframe.getFrameY());
 	
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
