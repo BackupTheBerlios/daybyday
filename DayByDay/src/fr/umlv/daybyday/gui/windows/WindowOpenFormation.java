@@ -95,6 +95,7 @@ public class WindowOpenFormation extends WindowAbstract {
 		gridbag.setConstraints(importCombo, c);
 		contentPane.add(importCombo);
 		
+		mainframe.setEnable(false);
 		JButton ok = new JButton("OK");
 		ok.setPreferredSize(new Dimension(100,20));
 		final JFrame framefinal = frame;
@@ -112,7 +113,7 @@ public class WindowOpenFormation extends WindowAbstract {
 				else if (obj instanceof EquipmentDto)
 					mainframe.addFormationTabbePane(new Equipment((EquipmentDto)obj));
 				framefinal.dispose();
-				
+				mainframe.setEnable(true);
 			}
 			
 		});
@@ -127,6 +128,7 @@ public class WindowOpenFormation extends WindowAbstract {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				framefinal.dispose();
+				mainframe.setEnable(true);
 				
 			}
 			
