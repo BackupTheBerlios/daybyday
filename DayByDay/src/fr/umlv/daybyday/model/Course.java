@@ -77,6 +77,7 @@ public class Course {
 		this.colorB = bcolor % 256;
 		}
 		else {
+			System.out.println("defaut color");
 			this.colorR = 225;
 			this.colorG = 183;
 			this.colorB = 107;

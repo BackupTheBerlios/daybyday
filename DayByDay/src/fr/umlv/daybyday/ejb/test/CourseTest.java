@@ -20,18 +20,21 @@ public class CourseTest {
 
            //Création d'un cours
           // 1999-01-05 12:05:06
-           Timestamp startDate = toTimeStamp(1999, Calendar.JANUARY,5,10,05,06);
-           Timestamp endDate = toTimeStamp(1999, Calendar.JANUARY,8,11,00,00);
+           Timestamp startDate = toTimeStamp(2005, Calendar.MARCH,8,10,00,00);
+           Timestamp endDate = toTimeStamp(2005, Calendar.MARCH,8,11,00,00);
+           Timestamp startDate1 = toTimeStamp(2005, Calendar.MARCH,8,10,30,00);
 
          //
      //      CourseDto myCourseDto = myDaybyday.getCourse(new CoursePK("Admin reseaux","reseau","DESS CRI","2004","cours",startDate,"groupe1"));
       //     myCourseDto.setStartDate(endDate);
           // myCourseDto.setStartDate(endDate);
-           SectionDto sec = myDaybyday.getSection(new SectionPK("reseau","DESS CRI","2004"));
+           //SectionDto sec = myDaybyday.getSection(new SectionPK("reseau","DESS CRI","2004"));
            
            CourseDto myCourseDto = new CourseDto("GENIE LOGICIEL","GENERALE","DESS CRI","2004","cours",startDate,endDate,"groupe1","Chabert","Samuel","2B114","copernic","mlv","retro1","copernic","mlv","cours de réseau",new Integer (250),new Boolean(true));
           myDaybyday.createCourse(myCourseDto);
-
+          myCourseDto.setEndDate(startDate1);
+          myDaybyday.updateCourse(myCourseDto);
+          
            //Récupération d'un cours existant
 
            //CourseDto myCoursetDto1 = myDaybyday.getCourse(new CoursePK("Admin reseaux","reseau","DESS CRI","2004","cours",startDate));

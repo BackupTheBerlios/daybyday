@@ -150,8 +150,8 @@ public class WindowCreateCourse extends WindowAbstract {
 
 			
 			final JTextField firstTextField = new JTextField("" + bgHour.intValue());
-			firstTextField.setPreferredSize(new Dimension(20,20));
-
+			firstTextField.setPreferredSize(new Dimension(30,20));
+			firstTextField.setMinimumSize(new Dimension(30,20));
 			gridbag4.setConstraints(firstTextField, c4);
 			hour.add(firstTextField);
 
@@ -162,8 +162,8 @@ public class WindowCreateCourse extends WindowAbstract {
 
 				 
 			final JTextField fTextField = new JTextField(""+ bgMinute.intValue());
-			fTextField.setPreferredSize(new Dimension(20,20));
-
+			fTextField.setPreferredSize(new Dimension(30,20));
+			fTextField.setMinimumSize(new Dimension(30,20));
 			gridbag4.setConstraints(fTextField, c4);
 			hour.add(fTextField);
 
@@ -175,8 +175,8 @@ public class WindowCreateCourse extends WindowAbstract {
 			
 			
 			final JTextField firstEndTextField = new JTextField("" + endHour.intValue());
-			firstEndTextField.setPreferredSize(new Dimension(20,20));
-
+			firstEndTextField.setPreferredSize(new Dimension(30,20));
+			firstEndTextField.setMinimumSize(new Dimension(30,20));
 			gridbag4.setConstraints(firstEndTextField, c4);
 			hour.add(firstEndTextField);
 
@@ -188,8 +188,8 @@ public class WindowCreateCourse extends WindowAbstract {
 			c4.gridwidth = GridBagConstraints.REMAINDER;
 
 			final JTextField endEndTextField = new JTextField(""+ endMinute.intValue());
-			endEndTextField.setPreferredSize(new Dimension(20,20));
-
+			endEndTextField.setPreferredSize(new Dimension(30,20));
+			endEndTextField.setMinimumSize(new Dimension(30,20));
 			gridbag4.setConstraints(endEndTextField, c4);
 			hour.add(endEndTextField);
 			gridbag2.setConstraints(hour, c2);
@@ -222,8 +222,8 @@ public class WindowCreateCourse extends WindowAbstract {
 
 			
 			final JTextField firstTextFieldp = new JTextField("" + cal.get(Calendar.DAY_OF_MONTH));
-			firstTextFieldp.setPreferredSize(new Dimension(20,20));
-
+			firstTextFieldp.setPreferredSize(new Dimension(30,20));
+			firstTextFieldp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(firstTextFieldp, c5);
 			period.add(firstTextFieldp);
 
@@ -234,8 +234,8 @@ public class WindowCreateCourse extends WindowAbstract {
 
 				 
 			final JTextField fTextFieldp = new JTextField(""+ (cal.get(Calendar.MONTH)+1));
-			fTextFieldp.setPreferredSize(new Dimension(20,20));
-
+			fTextFieldp.setPreferredSize(new Dimension(30,20));
+			fTextFieldp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(fTextFieldp, c5);
 			period.add(fTextFieldp);
 
@@ -247,8 +247,8 @@ public class WindowCreateCourse extends WindowAbstract {
 			
 			
 			final JTextField firstEndTextFieldp = new JTextField(""+ cal.get(Calendar.DAY_OF_MONTH));
-			firstEndTextFieldp.setPreferredSize(new Dimension(20,20));
-
+			firstEndTextFieldp.setPreferredSize(new Dimension(30,20));
+			firstEndTextFieldp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(firstEndTextFieldp, c5);
 			period.add(firstEndTextFieldp);
 
@@ -260,8 +260,8 @@ public class WindowCreateCourse extends WindowAbstract {
 			c5.gridwidth = GridBagConstraints.REMAINDER;
 
 			final JTextField endEndTextFieldp = new JTextField(""+ (cal.get(Calendar.MONTH)+1));
-			endEndTextFieldp.setPreferredSize(new Dimension(20,20));
-
+			endEndTextFieldp.setPreferredSize(new Dimension(30,20));
+			endEndTextFieldp.setMinimumSize(new Dimension(30,20));
 			gridbag5.setConstraints(endEndTextFieldp, c5);
 			period.add(endEndTextFieldp);
 			gridbag2.setConstraints(period, c2);

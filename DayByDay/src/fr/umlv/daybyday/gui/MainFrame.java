@@ -300,7 +300,7 @@ public class MainFrame {
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionPaste", refs));
 		menu.add(new JSeparator());
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionSelectAll", refs));
-		menu.add(MenuBarFactory.CreateMenuItem ("ActionUnselect", refs));
+		//menu.add(MenuBarFactory.CreateMenuItem ("ActionUnselect", refs));
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionInvertSelect", refs));
 			
 		menuBar.add(menu);

@@ -23,7 +23,7 @@ public class ActionUnselect extends AbstractAction {
 	Object [] refs;
 	
 	public ActionUnselect(Object [] refs) {
-		super("Déselectionner",Images.getImageIcon("Unselect"));
+		super("Déselectionner",Images.getImageIcon("unselect"));
 	}
 
 	/**

@@ -448,7 +448,7 @@ public class TimeTableTable {
 	 				popup.add(new JSeparator());
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionInvertSelect",refs));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionSelectAll",refs));
-	 				popup.add( MenuBarFactory.CreateMenuItem("ActionUnselect",refs));
+	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionUnselect",refs));
 	 				if ( SwingUtilities.isRightMouseButton( me ) ){
 	 				popup.show( table[index], me.getX(), me.getY() );
 	 				}
