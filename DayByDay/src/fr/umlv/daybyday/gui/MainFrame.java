@@ -48,7 +48,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.StyleConstants;
 
 import fr.umlv.daybyday.actions.ActionAdmin;
-import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.facade.Daybyday;
@@ -59,6 +58,8 @@ import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Grid;
 import fr.umlv.daybyday.model.Room;
+import fr.umlv.daybyday.model.Section;
+import fr.umlv.daybyday.model.Subject;
 import fr.umlv.daybyday.model.Teacher;
 
 /**
@@ -327,6 +328,7 @@ public class MainFrame {
 		menu = new JMenu("Gestion");
 		actionlist.clear();actionlist.add("ActionCourseAdd"); 
 		actionlist.add("ActionCourseModify"); 
+		actionlist.add("ActionCourseMove");
 		actionlist.add("ActionCourseCancel"); 
 		actionlist.add("ActionCourseUncancel");
 		menu.add(MenuBarFactory.CreateMultiMenu ("Cours", "cours", actionlist, refs));
@@ -351,7 +353,11 @@ public class MainFrame {
 		InstancesActions.getAction("ActionCut",null).setEnabled(false);
 		InstancesActions.getAction("ActionCopy",null).setEnabled(false);
 		InstancesActions.getAction("ActionPaste",null).setEnabled(false);
-		
+		InstancesActions.getAction("ActionCourseAdd",null).setEnabled(false);
+		InstancesActions.getAction("ActionCourseModify",null).setEnabled(false);
+		InstancesActions.getAction("ActionCourseMove",null).setEnabled(false);
+		InstancesActions.getAction("ActionCourseCancel",null).setEnabled(false);
+		InstancesActions.getAction("ActionCourseUncancel",null).setEnabled(false);
 		return menuBar;
 	
 	}
@@ -367,6 +373,7 @@ public class MainFrame {
 		
 		  tabepane.addTab(form.getName(),tmp);
 		  tabepane.setSelectedIndex(tabepane.getTabCount() - 1);
+		 
 		 
 	}
 	
@@ -508,7 +515,17 @@ public class MainFrame {
 			lab = new JLabel("  Matériel  ");
 			leftpane.add(lab, BorderLayout.NORTH);
 			}
+		
+		
 		FormationTree ft = new FormationTree(form,tttt,titlelab, refs);
+		setSelectedObject(form);
+		
+		if (form instanceof Formation){
+			setTaskBarText(0, ((Formation)form).getFiliereCount() + " filière(s)");
+			setTaskBarText(1, ((Formation)form).getMatiereCount() + " matière(s)");
+			setTaskBarText(2,"Source : " + ((FormationElement)form).getNamePath());
+
+		}
 		leftpane.add(ft.getPane(), BorderLayout.CENTER);
 		
 		JLabel semaine = new JLabel();

@@ -152,11 +152,11 @@ public class MnemonicMap {
 		maskmap.put("ActionGridConfig",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionGridConfig","Configurer la grille");				
 		
-		mnemomap.put("ActionCourseAdd",new Integer(KeyEvent.VK_D));
+		mnemomap.put("ActionCourseAdd",new Integer(KeyEvent.VK_PLUS));
 		maskmap.put("ActionCourseAdd",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionCourseAdd","Ajouter un cours");		
 		
-		mnemomap.put("ActionCourseModify",new Integer(KeyEvent.VK_D));
+		mnemomap.put("ActionCourseModify",new Integer(KeyEvent.VK_EQUALS));
 		maskmap.put("ActionCourseModify",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionCourseModify","Modifier un cours");	
 

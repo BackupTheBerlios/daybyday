@@ -500,30 +500,30 @@ public abstract class WindowAbstract {
 		JPanel panel = new JPanel(null);
 		panel.setBorder(BorderFactory.createTitledBorder(" Fréquence : "));
 	
-		GridBagLayout gridbag2 = new GridBagLayout();
-		GridBagConstraints c2 = new GridBagConstraints();
+		GridBagLayout gridbag10 = new GridBagLayout();
+		GridBagConstraints c10 = new GridBagConstraints();
 	
-		panel.setLayout(gridbag2);
+		panel.setLayout(gridbag10);
 		
-		c2.weightx = 1; 
-		c2.weighty = 1; 
-		c2.gridwidth = 1;
-		c2.insets =new Insets(5,15,5,5);
-		c2.anchor = GridBagConstraints.LINE_START;
-		c2.fill = GridBagConstraints.HORIZONTAL;
+		c10.weightx = 1; 
+		c10.weighty = 1; 
+		c10.gridwidth = 1;
+		c10.insets =new Insets(5,15,5,5);
+		c10.anchor = GridBagConstraints.LINE_START;
+		c10.fill = GridBagConstraints.HORIZONTAL;
 		JLabel firstLabel = new JLabel("Toute les : ");
-		gridbag2.setConstraints(firstLabel, c2);
+		gridbag10.setConstraints(firstLabel, c10);
 		panel.add(firstLabel);
 		
-		c2.gridwidth = 1;
-		c2.fill = GridBagConstraints.HORIZONTAL;
+		c10.gridwidth = 1;
+		c10.fill = GridBagConstraints.HORIZONTAL;
 		
 		JTextField firstTextField = new JTextField();
-		gridbag2.setConstraints(firstTextField, c2);
+		gridbag10.setConstraints(firstTextField, c10);
 		panel.add(firstTextField);
 		
 		JLabel separatorLabel = new JLabel("semaine (s)");
-		gridbag2.setConstraints(separatorLabel, c2);
+		gridbag10.setConstraints(separatorLabel, c10);
 		panel.add(separatorLabel);
 		
 		return panel;

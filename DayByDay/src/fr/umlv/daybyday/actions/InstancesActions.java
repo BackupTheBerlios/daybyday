@@ -61,7 +61,13 @@ public class InstancesActions {
 			strActionClass.compareTo("ActionCut") == 0 ||
 			strActionClass.compareTo("ActionPaste") == 0||
 			strActionClass.compareTo("ActionCourseAdd") == 0||
+			strActionClass.compareTo("ActionCourseModify") == 0||
+			strActionClass.compareTo("ActionCourseMove") == 0||
+			strActionClass.compareTo("ActionCourseCancel") == 0||
+			strActionClass.compareTo("ActionCourseUncancel") == 0||
 			strActionClass.compareTo("ActionAdmin") == 0)
+			
+		
 		listeActions.put(strActionClass, a);
 		return a;
 	}

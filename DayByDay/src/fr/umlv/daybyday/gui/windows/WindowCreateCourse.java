@@ -87,7 +87,7 @@ public class WindowCreateCourse extends WindowAbstract {
 		final Integer endHour   = (Integer) obj[11];
 		final Integer endMinute  = (Integer) obj[12];
 		
-		GregorianCalendar cal = new GregorianCalendar();
+		final GregorianCalendar cal = new GregorianCalendar();
 		cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
         cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (index -1));
        
@@ -267,7 +267,36 @@ public class WindowCreateCourse extends WindowAbstract {
 			gridbag2.setConstraints(period, c2);
 			totalePanel.add(period);
 
-			JPanel frqp = createPanelFrequence();
+
+			JPanel frqp = new JPanel(null);
+			frqp.setBorder(BorderFactory.createTitledBorder(" Fréquence : "));
+		
+			GridBagLayout gridbag11 = new GridBagLayout();
+			GridBagConstraints c11 = new GridBagConstraints();
+		
+			frqp.setLayout(gridbag11);
+			
+			c11.weightx = 1; 
+			c11.weighty = 1; 
+			c11.gridwidth = 1;
+			c11.insets =new Insets(5,15,5,5);
+			c11.anchor = GridBagConstraints.LINE_START;
+			c11.fill = GridBagConstraints.HORIZONTAL;
+			JLabel firstLabel11 = new JLabel("Toute les : ");
+			gridbag11.setConstraints(firstLabel11, c11);
+			frqp.add(firstLabel11);
+			
+			c11.gridwidth = 1;
+			c11.fill = GridBagConstraints.HORIZONTAL;
+			
+			final JTextField firstTextField11 = new JTextField("1");
+			gridbag11.setConstraints(firstTextField11, c11);
+			frqp.add(firstTextField11);
+			
+			JLabel separatorLabel10 = new JLabel("semaine (s)");
+			gridbag11.setConstraints(separatorLabel10, c11);
+			frqp.add(separatorLabel10);
+			
 			gridbag2.setConstraints(frqp, c2);
 			totalePanel.add(frqp);
 
@@ -535,15 +564,71 @@ public class WindowCreateCourse extends WindowAbstract {
 				int bgmonth = Integer.parseInt(fTextFieldp.getText());
 				int endday = Integer.parseInt(firstEndTextFieldp.getText());
 				int endmonth = Integer.parseInt(endEndTextFieldp.getText());
-				
+				int freq = Integer.parseInt(firstTextField11.getText());
 				Color color = jcc.getColor();
 				
 				int colorf = 0;
 				colorf |= (color.getRed() << 16); 
 				colorf |= (color.getGreen() << 8); 
 				colorf |= (color.getBlue()); 
-		           Timestamp startDate = toTimeStamp(2005, bgmonth-1,bgday,bghour,bgmin,00);
-		           Timestamp endDate = toTimeStamp(2005, endmonth-1,endday,endhour,endmin,00);
+				int daycpt = 0; 
+				
+				//if (bgday != endday || bgmonth != endmonth) {
+					//cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (daycpt -1));
+					
+					final GregorianCalendar cal2 = new GregorianCalendar();
+					cal2.set(2005, endmonth - 1, endday);
+					cal.set(2005, bgmonth - 1, bgday);
+					//cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (index -1));
+			        int nbweek = (cal2.get(Calendar.DAY_OF_YEAR) - cal.get(Calendar.DAY_OF_YEAR))/7;
+			        
+					for (int i = 0; i < nbweek + 1; ++i){
+						cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + (daycpt));
+						if (i%freq == 0){
+//System.out.println(cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR));
+
+				           Timestamp startDate = toTimeStamp(2005,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),bghour,bgmin,00);
+				           Timestamp endDate = toTimeStamp(2005,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),endhour,endmin,00);
+				         
+				           String sectionname ;
+				           if (section instanceof Formation)
+				           		sectionname = "GENERALE";
+				           else
+				           		sectionname = section.getName();
+				           		
+						CourseDto newdto = new CourseDto(
+								obj.getName(),
+								sectionname,
+								formation.getName(),
+								formation.getYear(),
+								"cours",
+								startDate,
+								endDate,
+								"groupe1",
+								obj2.getName(),
+								obj2.getFirstname(),
+								obj4.getName(),
+								obj4.getBuilding(),
+								obj4.getArea(),
+								null,
+								null,
+								null,
+								infoList.getText(),
+								new Integer(colorf),
+								new Boolean(true)
+								);
+						
+						
+							MainFrame.myDaybyday.createCourse(newdto);
+						}
+						if (i == 0)
+							daycpt += 7;
+					}
+					
+			//	}
+				
+	/*	           Timestamp startDate = toTimeStamp(2005, bgmonth-1,bgday,bghour,bgmin,00);
+		           Timestamp endDate = toTimeStamp(2005, bgmonth-1,bgday,endhour,endmin,00);
 		         
 		           String sectionname ;
 		           if (section instanceof Formation)
@@ -574,7 +659,7 @@ public class WindowCreateCourse extends WindowAbstract {
 						);
 				
 				
-					MainFrame.myDaybyday.createCourse(newdto);
+					MainFrame.myDaybyday.createCourse(newdto);*/
 					//section.getDTO().setVersion(new Long(section.getDTO().getVersion().longValue()+1));
 					if (section instanceof Section){
 						MainFrame.myDaybyday.updateSection(((Section)section).getDTO());
