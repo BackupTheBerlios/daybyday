@@ -27,6 +27,8 @@ import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.model.Equipment;
+import fr.umlv.daybyday.model.Room;
 
 /**
  * @author Marc
@@ -51,10 +53,26 @@ public class WindowModifyMaterial extends WindowAbstract {
 		final MainFrame mainframe = (MainFrame) obj[0];
 		final Integer type = (Integer)obj[1];
 		
-		if (type.intValue() == EQUIP)
+		String name = null;
+		String bat = null;
+		String area = null;
+		String desc = null;
+		if (type.intValue() == EQUIP){
 			initWindow(frame,"Modifier matériel", 400, 250);
-		if (type.intValue() == ROOM)
+			EquipmentDto dto = (EquipmentDto)((Equipment)mainframe.getSelectedObject()).getDto();
+			name = dto.getName();
+			bat = dto.getBuilding();
+			area = dto.getArea();
+			desc = dto.getDescription();
+		}
+		if (type.intValue() == ROOM){
 			initWindow(frame,"Modifier Salle", 400, 250);
+			RoomDto dto = (RoomDto)((Room)mainframe.getSelectedObject()).getDto();
+			name = dto.getName();
+			bat = dto.getBuilding();
+			area = dto.getArea();
+			desc = dto.getDescription();
+		}
 		
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
@@ -75,7 +93,7 @@ public class WindowModifyMaterial extends WindowAbstract {
 		contentPane.add(idLabel);
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		final JTextField idTextField = new JTextField();
+		final JTextField idTextField = new JTextField(name);
 		gridbag.setConstraints(idTextField, c);
 		contentPane.add(idTextField);;
 		
@@ -89,7 +107,7 @@ public class WindowModifyMaterial extends WindowAbstract {
 	
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		final JTextField batimentTextField = new JTextField();
+		final JTextField batimentTextField = new JTextField(bat);
 		gridbag.setConstraints(batimentTextField, c);
 		contentPane.add(batimentTextField);
 		
@@ -103,7 +121,7 @@ public class WindowModifyMaterial extends WindowAbstract {
 	
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		final JTextField siteTextField = new JTextField();
+		final JTextField siteTextField = new JTextField(area);
 		gridbag.setConstraints(siteTextField, c);
 		contentPane.add(siteTextField);
 		
@@ -116,7 +134,7 @@ public class WindowModifyMaterial extends WindowAbstract {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		final JTextArea infoList= new JTextArea("\n\n");
+		final JTextArea infoList= new JTextArea(desc);
 		
 		JScrollPane infoScrollpane = new JScrollPane(infoList);
 		gridbag.setConstraints(infoScrollpane, c);

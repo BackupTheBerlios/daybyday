@@ -205,7 +205,7 @@ public class MnemonicMap {
 		maskmap.put("ActionCreateSubject",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionCreateSubject","Ajouter une nouvelle matière");
 		
-		mnemomap.put("ActionModifyFormation",new Integer(KeyEvent.VK_D));
+		mnemomap.put("ActionModifyFormation",new Integer(KeyEvent.VK_M));
 		maskmap.put("ActionModifyFormation",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionModifyFormation","Modifer");	
 		
