@@ -367,7 +367,7 @@ public class TimeTableTable {
 		}
 		public void mouseReleased (MouseEvent me ) {
 			
-		if ( SwingUtilities.isRightMouseButton( me ) ){
+		
 				int x = me.getX();
 	            int y = me.getY(); 
 	            int row = table[index].columnAtPoint(me.getPoint());
@@ -446,12 +446,14 @@ public class TimeTableTable {
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionInvertSelect",refs));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionSelectAll",refs));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionUnselect",refs));
+	 				if ( SwingUtilities.isRightMouseButton( me ) ){
 	 				popup.show( table[index], me.getX(), me.getY() );
+	 				}
 	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionCreateSubject"));
 	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionModifyFormation"));
 				}
 	 			rowdeb = -1;
-	            }
+	            
 	         }
 		}
 	      public void mouseClicked( MouseEvent me ) {
