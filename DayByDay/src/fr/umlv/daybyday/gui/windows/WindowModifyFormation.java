@@ -28,6 +28,9 @@ import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.util.exception.CreationException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
+import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
+import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.Formation;
 
@@ -53,7 +56,7 @@ public class WindowModifyFormation extends WindowAbstract {
 		final MainFrame mainframe = (MainFrame) obj[0];
 		
 		Formation form = (Formation)mainframe.getSelectedObject();
-		FormationDto oldformdto = (FormationDto)form.getDto();
+		final FormationDto oldformdto = (FormationDto)form.getDto();
 		
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
@@ -276,34 +279,33 @@ public class WindowModifyFormation extends WindowAbstract {
 				Object obj2 =  responsableBox.getSelectedItem();
 				Object obj3 =  roomBox.getSelectedItem();
 				
-				FormationDto newdto = new FormationDto(
-						nameTextField.getText(),
-						yearTextField.getText(),
-						((TeacherDto)obj2).getTeacherId(),
-						mainframe.getUser().getUserId(),
-						((RoomDto)obj3).getRoomId(),
-						infoList.getText()
-						);
-				
 				try {
-				
-					MainFrame.myDaybyday.createFormation(newdto);
+					oldformdto.setDescription(infoList.getText());
+					oldformdto.setFormationYear(yearTextField.getText());
+					oldformdto.setName(nameTextField.getText());
+					oldformdto.setTeacherId(((TeacherDto)obj2).getTeacherId());
+					oldformdto.setRoomId(((RoomDto)obj3).getRoomId());
 					
-					SectionDto sectiondefault = new SectionDto(
-							"GENERALE",
-							null,
-							newdto.getFormationId(),
-							newdto.getTeacherId(),
-							""
-							);
-					MainFrame.myDaybyday.createSection(sectiondefault);
-					mainframe.addFormationTabbePane(new Formation(newdto));
+					MainFrame.myDaybyday.updateFormation(oldformdto);
+					mainframe.removeCurrentTabbePane();
+					mainframe.addFormationTabbePane(new Formation(oldformdto));
+					//MainFrame.myDaybyday.createFormation(newdto);
+					
 					framefinal.dispose();
 				} catch (RemoteException e) {
-					e.printStackTrace();
-				} catch (CreationException e) {
+					//e.printStackTrace();
+				} /*catch (CreationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} */catch (StaleUpdateException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				} catch (WriteDeniedException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				} catch (EntityNotFoundException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
 				}
 
 				

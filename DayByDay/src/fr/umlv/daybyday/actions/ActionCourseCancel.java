@@ -7,10 +7,21 @@
 package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
+import java.rmi.RemoteException;
 
 import javax.swing.AbstractAction;
 
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
+import fr.umlv.daybyday.ejb.util.exception.CourseConfusionException;
+import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
+import fr.umlv.daybyday.ejb.util.exception.ResourceUnavailableException;
+import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
+import fr.umlv.daybyday.ejb.util.exception.TimeslotException;
+import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.model.Course;
 
 /**
  * @author Marc
@@ -27,10 +38,20 @@ public class ActionCourseCancel extends AbstractAction {
 		this.refs = refs;
 	}
 
+	public void setRefs(Object [] refs) {
+		this.refs = refs;
+	}
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		
+		Course coursRef = (Course) refs [8];
+		CourseDto coursDtoRef = (CourseDto)coursRef.getDto();
+		coursDtoRef.setDescription("ANNULE - " + coursDtoRef.getDescription());
+		try {
+			MainFrame.myDaybyday.updateCourse(coursDtoRef);
+		} catch (Exception e1) {
+			//
+		} 
 	}
 }

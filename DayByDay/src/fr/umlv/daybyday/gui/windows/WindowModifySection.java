@@ -19,9 +19,7 @@ import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;

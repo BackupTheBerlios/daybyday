@@ -56,7 +56,9 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import fr.umlv.daybyday.actions.ActionCourseAdd;
+import fr.umlv.daybyday.actions.ActionCourseCancel;
 import fr.umlv.daybyday.actions.ActionCourseModify;
+import fr.umlv.daybyday.actions.ActionCourseUncancel;
 import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
@@ -488,8 +490,16 @@ public class TimeTableTable {
 	 				refsplusplus[6] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
 	 				refsplusplus[7] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
 	 				refsplusplus[8] = clickedref;
-	 				ActionCourseModify action3 = (ActionCourseModify)InstancesActions.getAction("ActionCourseModify",null);action3.setEnabled(true);action3.setRefs(refsplusplus);
 	 				
+	 				ActionCourseModify action3 = (ActionCourseModify)InstancesActions.getAction("ActionCourseModify",null);action3.setEnabled(true);action3.setRefs(refsplusplus);
+	 				//System.out.println("########## " + ((CourseDto)((Course)clickedref).getDto()).getDescription());
+	 				if (((CourseDto)((Course)clickedref).getDto()).getDescription().indexOf("ANNULE") == -1){
+	 					ActionCourseCancel action4 = (ActionCourseCancel)InstancesActions.getAction("ActionCourseCancel",null);action4.setEnabled(true);action4.setRefs(refsplusplus);
+	 				}else{				
+		 				ActionCourseUncancel action5 = (ActionCourseUncancel)InstancesActions.getAction("ActionCourseUncancel",null);action5.setEnabled(true);action5.setRefs(refsplusplus);
+	 				}
+	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionCourseMove",refsplus));
+
 				}
 	 			else {
 	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);

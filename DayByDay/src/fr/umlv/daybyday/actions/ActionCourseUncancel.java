@@ -10,7 +10,10 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.model.Course;
 
 /**
  * @author Marc
@@ -27,10 +30,20 @@ public class ActionCourseUncancel extends AbstractAction {
 		this.refs = refs;
 	}
 
+	public void setRefs(Object [] refs) {
+		this.refs = refs;
+	}
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		
+		Course coursRef = (Course) refs [8];
+		CourseDto coursDtoRef = (CourseDto)coursRef.getDto();
+		coursDtoRef.setDescription(coursDtoRef.getDescription().substring(10));
+		try {
+			MainFrame.myDaybyday.updateCourse(coursDtoRef);
+		} catch (Exception e1) {
+			//
+		} 
 	}
 }
