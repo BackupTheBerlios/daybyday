@@ -1,13 +1,14 @@
 package fr.umlv.daybyday.ejb.test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import fr.umlv.daybyday.ejb.*;
-import fr.umlv.daybyday.ejb.timetable.section.*;
-import fr.umlv.daybyday.ejb.timetable.subject.*;
-import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import fr.umlv.daybyday.ejb.util.exception.CourseConfusionException;
-import fr.umlv.daybyday.ejb.facade.*;
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
+import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 
 public class SectionTest {
     public static void main(String[] args) {

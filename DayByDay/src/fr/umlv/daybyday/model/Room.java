@@ -14,8 +14,6 @@ import javax.swing.tree.TreeNode;
 
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomPK;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.gui.MainFrame;
 

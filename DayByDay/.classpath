@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="C:/JBoss/client/xdoclet-module-jboss-net.jar"/>
 	<classpathentry kind="lib" path="C:/JBoss/client/jnet.jar"/>
 	<classpathentry kind="lib" path="C:/JBoss/client/jnp-client.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/workspace/DayByDay/src/Ressource/jdom.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

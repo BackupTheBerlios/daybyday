@@ -30,9 +30,9 @@ public class InstancesActions {
 		//if (mainFrame==null || mainModel==null) throw new InternalError("You must initialize InstancesActions before calling this method.");
 		Object o;
 		// Existe ?
-		/*if (listeActions.containsKey(strActionClass))
+		if (listeActions.containsKey(strActionClass))
 			return (AbstractAction)listeActions.get(strActionClass);
-*/
+
 		// N'existe pas, on va essayer de la charger
 		AbstractAction a = null;
 
@@ -57,7 +57,10 @@ public class InstancesActions {
 		} catch (NoSuchMethodException e) {
 			throw new InternalError("No such constructor.");
 		}
-		//listeActions.put(strActionClass, a);
+		if (strActionClass.compareTo("ActionCopy") == 0 || 
+			strActionClass.compareTo("ActionCut") == 0 ||
+			strActionClass.compareTo("ActionPaste") == 0)
+		listeActions.put(strActionClass, a);
 		return a;
 	}
 

@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.model.Course;
 
 /**
  * @author Marc
@@ -30,6 +32,7 @@ public class ActionCopy extends AbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-
+		ActionPaste.coursref = (Course) MainFrame.getSelectedCourse();
+		ActionPaste.cut = false;
 	}
 }

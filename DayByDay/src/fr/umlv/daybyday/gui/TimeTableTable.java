@@ -12,30 +12,25 @@ package fr.umlv.daybyday.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
-
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.Scrollable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -44,15 +39,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
-import javax.swing.text.rtf.RTFEditorKit;
+import javax.swing.text.StyledDocument;
 
-
-
-
+import fr.umlv.daybyday.actions.ActionPaste;
+import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.model.Course;
+import fr.umlv.daybyday.model.CourseDetail;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Grid;
 
@@ -71,22 +66,26 @@ public class TimeTableTable {
 
 
 	private JTable timetable [];
-	private String [] hourstitle;
-	private final int nbday;
-	private final int nbhours;
-	private final int nbhoursslice;
+
+	private int nbday;
+	private int nbhours;
+	private int nbhoursslice;
 	protected JPanel pane;
 	private int columheigth;
 	private int tableheigth;
 	private int bghour, endhour;
-	int columsize = 20;
+	int columsize = 80/Grid.gridSlice;
 	private Object[] refs;
-	private ArrayList daytags;
-	private final JButton tag = new JButton();
+	//private ArrayList daytags;
+	private final JTextPane tag = new JTextPane();
 	private final ArrayList taglist = new ArrayList();
+	private final GregorianCalendar cal = new GregorianCalendar();
 	private final TimeTableTable me = this;
 	
 	private FormationElement cours;
+	final static String []  daytitles = {"","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"};
+	final static String [] hourstitle = {"0h","1h","2h","3h","4h","5h","6h","7h", "8h","9h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h","20h","21h","22h","23h"};
+	
 	
 	public TimeTableTable(
 			final int bghour,
@@ -106,33 +105,19 @@ public class TimeTableTable {
 		this.tableheigth = nbday * 400/nbday;
 		this.columheigth = 400/nbday + 10;
 		this.refs = refs;
-		timetable = new JTable[nbday + 1];
-		daytags = new ArrayList();
+		timetable = new JTable[7 + 1];
+
 		
-		//tag.setBorderPainted(false);
-		//tag.setSize(30, 30);
-		//tag.setPreferredSize(new Dimension(30, 30));
-		//tag.setHorizontalAlignment(SwingConstants.LEADING);
-		tag.setMargin(new Insets(0, 0, 0, 0));
+		tag.setMargin(new Insets(4, 4, 4, 4));
 		
-		
-		final String []  daytitles = {"","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"};
-		final String [] hourstitle = {"0h","1h","2h","3h","4h","5h","6h","7h", "8h","9h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h","20h","21h","22h","23h"};
-			
-		/*try{
-		timetable.setModel(new TimeTableTableModel(columstitles, linestitles, nbcolums, nblines, values));
-		}
-		catch (Exception e){
-			//e.printStackTrace();
-		}*/
-		
+					
 		timetable[0] = new JTable();
 		timetable[0].setRowHeight(20);
 		timetable[0].setDragEnabled(false);
 		
 		timetable[0].setModel(new AbstractTableModel() {
 		    public String getColumnName(int col) {
-		        return hourstitle[col+bghour].toString();
+		        return TimeTableTable.hourstitle[col+bghour].toString();
 		    }
 		    public int getRowCount() { return 1; }
 		    public int getColumnCount() {return nbhours; }
@@ -150,7 +135,7 @@ public class TimeTableTable {
 			tableColumn.setMaxWidth(columsize * nbhoursslice);
 			tableColumn.setMinWidth(columsize * nbhoursslice);
 			tableColumn.setPreferredWidth(columsize * nbhoursslice);
-			tableColumn.setHeaderValue(hourstitle[j].toString());
+			tableColumn.setHeaderValue(TimeTableTable.hourstitle[j].toString());
 			tableColumn.setCellRenderer(new DefaultTableCellRenderer());
 			tableColumnModelDetail.addColumn(tableColumn);
 			tableColumn.setCellRenderer(new TableCellRenderer(){
@@ -168,9 +153,9 @@ public class TimeTableTable {
 		timetable[0].setColumnModel(tableColumnModelDetail);
 		
 		
-		for (int i = 1; i < nbday + 1; ++ i){
+		for (int i = 1; i < 7 + 1; ++ i){
 			timetable[i] = new JTable();
-			
+			timetable[i].setBorder(BorderFactory.createBevelBorder(1));
 			timetable[i].setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			timetable[i].setColumnSelectionAllowed(true);
 			timetable[i].setRowSelectionAllowed(false);
@@ -194,19 +179,16 @@ public class TimeTableTable {
 			nbRow = coursRow.length;
 			final int finalNbRow = nbRow;
 			final int [] finalSizeRow = coursRow;
-//System.out.println("Jour " + i + " nombre : " + finalNbRow);
+
 			timetable[i].setModel(new TimeTableTableModel(finalSizeRow,nbRow,cours));
 			 tableColumnModelDetail = new DefaultTableColumnModel();
-//System.out.print(" " + nbRow);
-			 int size = 0;
 			 
 			for (int j = 0,colind = 0; j < nbRow; ++j ){
 				while (sizeRow[colind] == 0) colind++;
-//System.out.print(" " + j + ":" + sizeRow[j] + ":" + sizeRow[colind]+ ":" + columsize);
 				int columsizecalc = columsize * (sizeRow[colind]);
 				if (sizeRow[colind] > 1)
 					columsizecalc = columsize * (sizeRow[colind] + 1);
-				size += columsizecalc;
+				
 				TableColumn tableColumn = new TableColumn(j);
 				tableColumn.setMaxWidth(columsizecalc);
 				tableColumn.setMinWidth(columsizecalc);
@@ -215,63 +197,31 @@ public class TimeTableTable {
 				
 				
 				
-				tableColumn.setCellRenderer(new TableCellRenderer(){
-
-					public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
-						tag.removeAll();
-						tag.setBackground(new Color(255, 255, 255));
-						tag.setIcon(null);
-						tag.setText(null);
-						if (arg1 instanceof Course){
-							//tag.setIcon(Images.getImageIcon("formation"));
-							tag.setText(((Course)arg1).text);
-							tag.setBackground(new Color(((Course)arg1).colorR, ((Course)arg1).colorG, ((Course)arg1).colorB));
-							tag.setForeground(new Color(0, 0, 0));
-
-						}
-						if (arg2 || arg3){
-							tag.setBackground(new Color(183, 207, 225));
-							tag.setForeground(new Color(255, 255, 255));
-						}
-						// TODO Auto-generated method stub
-						int type = 0;
-				        if (MainFrame.fontbold) type += Font.BOLD;
-				        if (MainFrame.fontitalic) type += Font.ITALIC;
-				        if (MainFrame.fontunderline) {
-				    		RTFEditorKit rtfEK = new RTFEditorKit(); 
-				    		MutableAttributeSet attr = rtfEK.getInputAttributes(); 
-				    		StyleConstants.FontConstants.setUnderline(attr,MainFrame.fontunderline);
-				    		//tag..setCharacterAttributes(attr, true); 
-				    		//tag.add(jtp);
-				        }
-						tag.setFont(new Font(MainFrame.font,type,MainFrame.fontsize));
-						return tag;
-					}
-					
-				});
+				tableColumn.setCellRenderer(new TimeTableCellRenderer());
 				tableColumnModelDetail.addColumn(tableColumn);
 				}
-//System.out.println("size " + size + " nb Row " + nbRow);
+
 			tableColumnModelDetail.setColumnSelectionAllowed(true);
 			timetable[i].setColumnModel(tableColumnModelDetail);
 			timetable[i].setPreferredScrollableViewportSize(new Dimension(800,600));
 		}
 
-		GridLayout glayout = new GridLayout(nbday + 1, 2);
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
-       glayout.setVgap(0);
-       glayout.setHgap(0);
 		pane  = new JPanel(gridbag);
+		
 		pane.setPreferredSize(new Dimension(columsize*(nbhours + 1)*nbhoursslice + 50 ,tableheigth));
 		
 		taglist.clear();
+		
+		cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
+		for (int i = 0; i < 7 + 1; ++ i){
 
-		for (int i = 0; i < nbday + 1; ++ i){
-
-			JButton jb = new JButton(daytitles[i]);
-			daytags.add(jb);
+			JButton jb = new JButton(daytitles[i] + " " + cal.get(Calendar.DAY_OF_MONTH) +"/"+(cal.get(Calendar.MONTH)+1));
+			if (i != 0)
+			cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + 1);
+			else jb.setText("");
 			taglist.add(jb);
 			if (i != 0){
 			jb.setMaximumSize(new Dimension(120,10));
@@ -279,7 +229,6 @@ public class TimeTableTable {
 			jb.setPreferredSize(new Dimension(120,10));
 			}
 			c.fill = GridBagConstraints.BOTH;
-			//c.gridwidth = GridBagConstraints.REMAINDER; 
 			c.gridwidth = GridBagConstraints.RELATIVE ;
 			if (i == 0) c.weighty = 0.0;
 	        else
@@ -301,13 +250,13 @@ public class TimeTableTable {
 			pane.add(timetable[i]);
 
 		}	
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
-		for (int i = 1; i < taglist.size(); ++i){	
-			((JButton)taglist.get(i)).setText(daytitles[i] + " " + cal.get(Calendar.DAY_OF_MONTH) +"/"+
-					(cal.get(Calendar.MONTH)+1));
-			cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + 1);
-		}
+
+		 if (7 >  nbday){
+		 	for (int i = 7 ; i > this.nbday; --i){
+		 		((JButton)taglist.get(i)).setVisible(false);
+		 		timetable[i].setVisible(false); 		
+		 		}
+		 }
 	}
 	
 	public JPanel getPane() {
@@ -316,21 +265,23 @@ public class TimeTableTable {
 
 	private int []computeTimeSlice (int day, int [] coursRow,int [] sizeRow, int nbRow, Object [] cours){
 	
-		GregorianCalendar gc = new GregorianCalendar(Locale.FRENCH);
+		int nbRowSave;
 		
+		int daycmp;
+		int deb;
 		try{
 		if (cours != null){
-			int nbRowSave = nbRow;
+			nbRowSave = nbRow;
 			for (int i = 0; i < cours.length; ++i){
 				CourseDto coursdto = (CourseDto) ((Course)cours[i]).getDto();
-				gc.setTimeInMillis(coursdto.getStartDate().getTime());
+				cal.setTimeInMillis(coursdto.getStartDate().getTime());
 //System.out.println(gc.get(Calendar.WEEK_OF_YEAR) +"=="+ Grid.calendar.get(Calendar.WEEK_OF_YEAR)+ "&&"+ gc.get(Calendar.DAY_OF_WEEK) +"=="+ (day+1));
-				int daycmp = gc.get(Calendar.DAY_OF_WEEK); 
+				daycmp = cal.get(Calendar.DAY_OF_WEEK); 
 				daycmp -= 1;
 				if (daycmp == 0) daycmp = 7;
 //System.out.println(gc.get(Calendar.HOUR_OF_DAY)+">="+ Grid.gridBgHour);
-				if (gc.get(Calendar.HOUR_OF_DAY) >= Grid.gridBgHour && gc.get(Calendar.WEEK_OF_YEAR) == Grid.calendar.get(Calendar.WEEK_OF_YEAR) && daycmp == ((day))){
-					int deb = -1;
+				if (cal.get(Calendar.HOUR_OF_DAY) >= Grid.gridBgHour && cal.get(Calendar.WEEK_OF_YEAR) == Grid.calendar.get(Calendar.WEEK_OF_YEAR) && daycmp == ((day))){
+					deb = -1;
 					for (int j = 0; j < nbhours; ++j){
 						for (int k = 0; k < nbhoursslice; ++k){
 								if (j*nbhoursslice + k >= ((Course)cours[i]).getBgHour()*nbhoursslice + ((Course)cours[i]).getBgMin() && 
@@ -392,20 +343,122 @@ public class TimeTableTable {
 		}
 	}
 	
+
 	private class TimeTableMouseListenere extends MouseAdapter {
 		
 		JTable [] table;
 		int index;
+		int rowdeb = -1;
 
 		
 		public TimeTableMouseListenere (JTable [] table, int index ){
 		 this.table = table;	
 		 this.index = index;
 		}
+		
+
+		public void mousePressed (MouseEvent me ){
+			if ( SwingUtilities.isRightMouseButton( me ) ){
+				int x = me.getX();
+	             int y = me.getY(); 
+	             rowdeb = table[index].columnAtPoint(me.getPoint());
+				//System.out.println("tu clic du droit la?");
+			}
+		}
+		public void mouseReleased (MouseEvent me ) {
+			
+			if ( SwingUtilities.isRightMouseButton( me ) ){
+				int x = me.getX();
+	            int y = me.getY(); 
+	            int row = table[index].columnAtPoint(me.getPoint());
+				if (row == -1) return;
+				for (int i = 0; i < table.length; ++i){
+					if (i != index){
+					table[i].removeColumnSelectionInterval(0, table[i].getColumnCount()-1);
+					table[i].setRowSelectionInterval(0,0);
+					}
+				}
+	            if (rowdeb != -1){
+
+	            	if (rowdeb != row)
+	            	table[index].setColumnSelectionInterval(rowdeb,row-1);
+	            	else
+	            	table[index].setColumnSelectionInterval(rowdeb,row);
+	            	//
+	            
+	            
+	            Object clickedref = table[index].getValueAt(0,row);
+				
+				
+	             //Create the popup menu.
+	             JPopupMenu popup = new JPopupMenu();
+	             TableColumnModel model =  table[index].getColumnModel();
+
+	             int realrow = 0;
+	             for (int i = 0; i < model.getColumnCount(); ++i){
+	             	if (i == row) break;
+	             	realrow += model.getColumn(i).getPreferredWidth()/columsize;
+	             	
+	             	
+	             }
+	             int realrowdeb = 0;
+	             for (int i = 0; i < model.getColumnCount(); ++i){
+	             	if (i == rowdeb) break;
+	             	realrowdeb += model.getColumn(i).getPreferredWidth()/columsize;
+	             }
+	             if (realrow < realrowdeb) {
+	             	int tmp = realrow;
+	             	realrow = realrowdeb;
+	             	realrowdeb = tmp;
+	             }
+	            // System.out.print(realrow + " ");
+	             //properties item
+	             Object [] refsplus = new Object [refs.length + 7];
+	             refsplus[0] = refs[0];
+	             refsplus[1] =  TimeTableTable.this.me;
+	             refsplus[2] = new Integer(Grid.gridBgHour + realrowdeb/Grid.gridSlice);
+	             refsplus[3] = clickedref;
+	             refsplus[4] = new Integer((realrowdeb%Grid.gridSlice) * (60/Grid.gridSlice));
+	             refsplus[5] = new Integer(index);
+	             refsplus[6] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
+	             refsplus[7] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
+	             
+	             
+	 			if (clickedref instanceof Course){
+	 				MainFrame.setSelectedCourse(clickedref);
+	 				MainFrame.setModelSelectedCourse(this);
+				}
+	 			else {
+	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
+	 				InstancesActions.getAction("ActionCopy",null).setEnabled(false);
+	 				ActionPaste action = (ActionPaste)InstancesActions.getAction("ActionPaste",null);
+	 				action.setEnabled(true);
+	 				action.setRefs(refsplus);
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseAdd",refsplus));
+	 				popup.add(new JSeparator());
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPrint",refs));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionExport",refs));
+	 				popup.add(new JSeparator());
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPaste",refsplus));
+	 				popup.add(new JSeparator());
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionGridConfig",refs));
+	 				popup.add(new JSeparator());
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionInvertSelect",refs));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionSelectAll",refs));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionUnselect",refs));
+	 				popup.show( table[index], me.getX(), me.getY() );
+	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionCreateSubject"));
+	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionModifyFormation"));
+				}
+	 			rowdeb = -1;
+	            }
+	         }
+		}
 	       public void mouseClicked( MouseEvent me ) {
+	       	
 	        if ( SwingUtilities.isLeftMouseButton( me ) ) {
 	             int x = me.getX();
-	             int y = me.getY();
+	             int y = me.getY(); 
 	             int row = table[index].columnAtPoint(me.getPoint());
 	             					
 				if (row == -1) return;
@@ -415,6 +468,21 @@ public class TimeTableTable {
 	            
 				table[index].setRowSelectionInterval(0,0);
 	             table[index].setColumnSelectionInterval(row,row);
+	             
+	             Object clickedref = table[index].getValueAt(0,row);
+	             if (clickedref instanceof Course){
+	 				InstancesActions.getAction("ActionCut",null).setEnabled(true);
+	 				InstancesActions.getAction("ActionCopy",null).setEnabled(true);
+	 				InstancesActions.getAction("ActionPaste",null).setEnabled(false);
+	 				MainFrame.setSelectedCourse(clickedref);
+	 				MainFrame.setModelSelectedCourse(this);
+					
+				}
+	 			else {
+	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
+	 				InstancesActions.getAction("ActionCopy",null).setEnabled(false);
+	 				InstancesActions.getAction("ActionPaste",null).setEnabled(true);
+				}
 	        }
 	          if ( SwingUtilities.isRightMouseButton( me ) ) {
 	             int x = me.getX();
@@ -426,34 +494,50 @@ public class TimeTableTable {
 					
 				if (row == -1) return;
 				for (int i = 0; i < table.length; ++i){
+					if (i != index){
 					table[i].removeColumnSelectionInterval(0, table[i].getColumnCount()-1);
+					table[i].setRowSelectionInterval(0,0);
+					}
 				}
 	            
-				table[index].setRowSelectionInterval(0,0);
-	             table[index].setColumnSelectionInterval(row,row);
+				//table[index].setRowSelectionInterval(0,0);
+	            table[index].setColumnSelectionInterval(row,row);
 
 				Object clickedref = table[index].getValueAt(0,row);
 				
 				
 	             //Create the popup menu.
 	             JPopupMenu popup = new JPopupMenu();
-	             
-	             
-	             
+	             TableColumnModel model =  table[index].getColumnModel();
+	             System.out.println();
+	             int realrow = 0;
+	             for (int i = 0; i < model.getColumnCount(); ++i){
+	             	if (i == row) break;
+	             	realrow += model.getColumn(i).getPreferredWidth()/columsize;
+	             	
+	             	
+	             }
+	            // System.out.print(realrow + " ");
 	             //properties item
-	             Object [] refsplus = new Object [refs.length + 3];
+	             Object [] refsplus = new Object [refs.length + 7];
 	             refsplus[0] = refs[0];
 	             refsplus[1] =  TimeTableTable.this.me;
-	             refsplus[2] = new Integer(Grid.gridBgHour);
+	             refsplus[2] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
 	             refsplus[3] = clickedref;
-	             
-	             
+	             refsplus[4] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
+	             refsplus[5] = new Integer(index);
+	             refsplus[6] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
+	             refsplus[7] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
 	             
 	 			if (clickedref instanceof Course){
-	 				
+	 				MainFrame.setSelectedCourse(clickedref);
+	 				MainFrame.setModelSelectedCourse(this);
+	 				InstancesActions.getAction("ActionCut",null).setEnabled(true);
+	 				InstancesActions.getAction("ActionCopy",null).setEnabled(true);
+	 				InstancesActions.getAction("ActionPaste",null).setEnabled(false);
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCut",refs));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCopy",refs));
-	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPaste",refs));
+	 				
 	 				popup.add(new JSeparator());
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionDelete",refsplus));
 	 				popup.add(new JSeparator());
@@ -464,11 +548,17 @@ public class TimeTableTable {
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseUncancel",refs));
 				}
 	 			else {
-	 				
+	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
+	 				InstancesActions.getAction("ActionCopy",null).setEnabled(false);
+	 				ActionPaste action = (ActionPaste)InstancesActions.getAction("ActionPaste",null);
+	 				action.setEnabled(true);
+	 				action.setRefs(refsplus);
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseAdd",refsplus));
 	 				popup.add(new JSeparator());
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPrint",refs));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionExport",refs));
+	 				popup.add(new JSeparator());
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPaste",refsplus));
 	 				popup.add(new JSeparator());
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionGridConfig",refs));
 	 				popup.add(new JSeparator());
@@ -522,15 +612,44 @@ public class TimeTableTable {
 	    public boolean isCellEditable(int row, int col)
 	        { return false; }
 	}
-			
+
 	public void changeSource(FormationElement cours){
+		 changeSource( bghour, endhour, nbday,nbhours, nbhoursslice,cours);
+	}
 	
+	public void changeSource(
+			final int bghour,
+			final int endhour,
+			final int nbday,
+			final int nbhours,
+			final int nbhoursslice,FormationElement cours){
+		this.cours = cours;
+		this.endhour = endhour;
+		this.bghour = bghour;
+		
+		this.nbhours = nbhours;
+		this.nbhoursslice = nbhoursslice;
 		try {
 		 TableColumnModel tableColumnModelDetail = new DefaultTableColumnModel();
 		 this.cours = cours;
 		 
+//System.out.println(this.nbday +">"+  nbday);
+		 if (this.nbday >  nbday){
+		 	for (; this.nbday > nbday; --this.nbday){
+		 		((JButton)taglist.get(this.nbday)).setVisible(false);
+		 		timetable[this.nbday].setVisible(false); 		
+		 		}
+		 }
+		 else if (this.nbday <  nbday){
+		 	for (; this.nbday < nbday; ++this.nbday){
+		 		((JButton)taglist.get(this.nbday+1)).setVisible(true);
+		 		timetable[this.nbday+1].setVisible(true);
+		 		}
+		 }
+		 pane.repaint();
+
 			final String []  daytitles = {"","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"};
-			GregorianCalendar cal = new GregorianCalendar();
+			//GregorianCalendar cal = new GregorianCalendar();
 			cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
 		for (int i = 1; i < taglist.size(); ++i){	
 			
@@ -539,14 +658,17 @@ public class TimeTableTable {
 		 cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + 1);
 		}
 		
+
 		for (int i = 1; i < nbday + 1; ++ i){	
+			
+		/*
 			timetable[i].setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			timetable[i].setColumnSelectionAllowed(true);
 			timetable[i].setRowSelectionAllowed(false);
-			
-
+			*/
+/*
 			timetable[i].addMouseListener(new TimeTableMouseListenere(timetable,i));
-		
+	*/	
 			int [] sizeRow = new int [nbhours*nbhoursslice];
 			int [] coursRow = new int [nbhours*nbhoursslice];
 			
@@ -562,18 +684,14 @@ public class TimeTableTable {
 			coursRow = computeTimeSlice(i,coursRow,sizeRow,nbRow,cours.getCourseList().toArray());
 			nbRow = coursRow.length;
 
-			final int finalNbRow = nbRow;
-			final int [] finalSizeRow = coursRow;
-//System.out.println("Jour " + i + " nombre : " + finalNbRow);
-			TimeTableTableModel tttm = new TimeTableTableModel(finalSizeRow,nbRow,cours);
+			TimeTableTableModel tttm = new TimeTableTableModel(coursRow,nbRow,cours);
 			timetable[i].setModel(tttm);
 			 tableColumnModelDetail = new DefaultTableColumnModel();
-//System.out.print(" " + nbRow);
+
 			 int size = 0;
 			 
 			for (int j = 0,colind = 0; j < nbRow; ++j ){
 				while (sizeRow[colind] == 0) colind++;
-//System.out.print(" " + j + ":" + sizeRow[j] + ":" + sizeRow[colind]+ ":" + columsize);
 				int columsizecalc = columsize * (sizeRow[colind]);
 				if (sizeRow[colind] > 1)
 					columsizecalc = columsize * (sizeRow[colind] + 1);
@@ -586,35 +704,7 @@ public class TimeTableTable {
 				
 				
 				
-				tableColumn.setCellRenderer(new TableCellRenderer(){
-
-					public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
-						tag.removeAll();
-						tag.setBackground(new Color(255, 255, 255));
-						tag.setIcon(null);
-						tag.setText(null);
-						if (arg1 instanceof Course){
-							//tag.setIcon(Images.getImageIcon("formation"));
-							tag.setText(((Course)arg1).text);
-							tag.setBackground(new Color(((Course)arg1).colorR, ((Course)arg1).colorG, ((Course)arg1).colorB));
-							tag.setForeground(new Color(0, 0, 0));
-
-						}
-						if (arg2 || arg3){
-							tag.setBackground(new Color(183, 207, 225));
-							tag.setForeground(new Color(255, 255, 255));
-						}
-						// TODO Auto-generated method stub
-						int type = 0;
-				        if (MainFrame.fontbold) type += Font.BOLD;
-				        if (MainFrame.fontitalic) type += Font.ITALIC;
-				        if (MainFrame.fontunderline) type += Font.CENTER_BASELINE;
-				        
-						tag.setFont(new Font(MainFrame.font,type,MainFrame.fontsize));
-						return tag;
-					}
-					
-				});
+				tableColumn.setCellRenderer(new TimeTableCellRenderer());
 				tableColumnModelDetail.addColumn(tableColumn);
 				}
 //System.out.println("size " + size + " nb Row " + nbRow);
@@ -634,10 +724,10 @@ public class TimeTableTable {
 		this.tableheigth = nbday * height/nbday;
 		this.columheigth = height/nbday + 10;
 		
-		int newcolumsize = size/58;
+		int newcolumsize = ((size/58) * 4) /Grid.gridSlice;
 		try {
-			for (int i = 1; i < daytags.size(); ++i){
-				JButton jb = (JButton)daytags.get(i);
+			for (int i = 1; i < taglist.size(); ++i){
+				JButton jb = (JButton)taglist.get(i);
 				jb.setSize(new Dimension(120,columheigth));
 				jb.setPreferredSize(new Dimension(120,columheigth-100));
 				jb.setMinimumSize(new Dimension(120,columheigth-100));
@@ -693,30 +783,7 @@ public class TimeTableTable {
 				tableColumn.setPreferredWidth(columsizecalc);
 				
 				
-				tableColumn.setCellRenderer(new TableCellRenderer(){
-
-					public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
-						tag.removeAll();
-						tag.setBackground(new Color(255, 255, 255));
-						tag.setIcon(null);
-						tag.setText(null);
-						if (arg1 instanceof Course){
-							//tag.setIcon(Images.getImageIcon("formation"));
-							tag.setText(((Course)arg1).text);
-							tag.setBackground(new Color(((Course)arg1).colorR, ((Course)arg1).colorG, ((Course)arg1).colorB));
-							tag.setForeground(new Color(0, 0, 0));
-
-						}
-						if (arg2 || arg3){
-							tag.setBackground(new Color(183, 207, 225));
-							tag.setForeground(new Color(255, 255, 255));
-						}
-						tag.setPreferredSize(new Dimension(columsizecalc, columheigth));
-						// TODO Auto-generated method stub
-						return tag;
-					}
-					
-				});
+				tableColumn.setCellRenderer(new TimeTableCellRenderer());
 				tableColumnModelDetail.addColumn(tableColumn);
 				}
 //System.out.println("size " + size + " nb Row " + nbRow);
@@ -736,4 +803,61 @@ public class TimeTableTable {
 	public FormationElement getSource(){
 		return cours;
 	}
+	
+	public class TimeTableCellRenderer implements TableCellRenderer{
+
+		public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
+			tag.removeAll();
+			tag.setBackground(new Color(255, 255, 255));
+			//tag.setIcon(null);
+			tag.setText(null);
+			if (arg1 instanceof Course){
+				Course cours = (Course)arg1;
+				//tag.setIcon(Images.getImageIcon("formation"));
+				tag.setText(((Course)arg1).getRepresentation());
+				if (CourseDetail.coursColor)
+				tag.setBackground(new Color(((Course)arg1).colorR, ((Course)arg1).colorG, ((Course)arg1).colorB));
+				tag.setForeground(new Color(0, 0, 0));
+				Style  style = null;
+				StyledDocument doc = tag.getStyledDocument();
+				
+				style = tag.addStyle("Style", null);
+				StyleConstants.setForeground(style, new Color(0, 0, 0));
+				StyleConstants.setFontFamily(style,MainFrame.font);
+				StyleConstants.setFontSize(style,MainFrame.fontsize);
+				StyleConstants.setAlignment(style,MainFrame.fontaling);
+		        if (MainFrame.fontbold){
+		        	StyleConstants.setBold(style, true);
+		        }
+		        if (MainFrame.fontitalic){
+		        	StyleConstants.setItalic(style, true);
+		        }
+		        if (MainFrame.fontunderline) {
+		        	
+			        StyleConstants.setUnderline(style, true);
+		        }
+		        doc.setCharacterAttributes(0,tag.getText().length() , tag.getStyle("Style"), true);
+		        doc.setParagraphAttributes(0,tag.getText().length() , tag.getStyle("Style"), true);
+
+			}
+			if (arg2 || arg3){
+				StyledDocument doc = tag.getStyledDocument();
+				Style  style = tag.addStyle("Style", null);
+				StyleConstants.setForeground(style, new Color(255, 255, 255));
+
+				tag.setBackground(new Color(183, 207, 225));
+				tag.setForeground(new Color(255, 255, 255));
+				doc.setCharacterAttributes(0,tag.getText().length() , tag.getStyle("Style"), true);
+			   
+			}
+			// TODO Auto-generated method stub
+			tag.setFont(new Font(MainFrame.font, 0, MainFrame.fontsize));
+			
+			
+			return tag;
+		}
+		
+	}
 }
+
+

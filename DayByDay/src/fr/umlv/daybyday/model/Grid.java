@@ -21,9 +21,9 @@ public class Grid {
 	public static int gridEndHour = 19;
 	public static int gridSlice = 4;
 	public static int gridNbDays = 7;
-	public static int gridbgDay = 7;
+	//public static int gridbgDay = 7;
 	public static int gridbgMonth = 1;
-	public static int gridendDay = 11;
+	//public static int gridendDay = 11;
 	public static int gridendMonth = 1;
 	public static GregorianCalendar calendar = new GregorianCalendar(Locale.FRENCH);
 	public static int sens = 0;

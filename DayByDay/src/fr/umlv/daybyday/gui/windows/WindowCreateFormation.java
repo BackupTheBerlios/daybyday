@@ -1,7 +1,5 @@
 package fr.umlv.daybyday.gui.windows;
 
-import java.awt.Container;
-
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -11,7 +9,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,13 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-
-import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
@@ -37,11 +31,7 @@ import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.gui.MainFrame;
-import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
-import fr.umlv.daybyday.model.Equipment;
 import fr.umlv.daybyday.model.Formation;
-import fr.umlv.daybyday.model.Room;
-import fr.umlv.daybyday.model.Teacher;
 
 
 /**
@@ -232,8 +222,8 @@ public class WindowCreateFormation extends WindowAbstract {
 		gridbag2.setConstraints(roomLabel, c2);
 		formationPanel.add(roomLabel);
 		
-		final JComboBox roomBox = new JComboBox((Object [])
-);
+		final JComboBox roomBox = new JComboBox((Object [])obj[3]);
+		
 		roomBox.setRenderer(new ComboBoxFormationElementRenderer());
 		gridbag2.setConstraints(roomBox, c2);
 		formationPanel.add(roomBox);

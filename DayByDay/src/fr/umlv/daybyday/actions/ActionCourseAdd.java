@@ -8,13 +8,10 @@ package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
-import javax.swing.table.DefaultTableModel;
 
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
 import fr.umlv.daybyday.gui.Images;
@@ -48,6 +45,15 @@ public class ActionCourseAdd extends AbstractAction {
 		TimeTableTable df = (TimeTableTable) refs[1];
 		
 		Object obj = mainframe.getSelectedObject();
+		
+		if (obj == null){
+			mainframe.showError("Veuiller choisir la formation ou une filière");
+			return;
+		}
+		if (obj instanceof Subject){
+			mainframe.showError("Veuiller choisir la formation ou une filière");
+			return;
+		}
 		try {
 			if (obj instanceof Section){
 				SectionDto dto = ((Section)obj).getDTO();
@@ -64,7 +70,12 @@ public class ActionCourseAdd extends AbstractAction {
 					MainFrame.myDaybyday.getAllEquipments().toArray(),
 					father, 
 					(Section)obj,
-					df
+					df,
+					refs[2],
+					refs[4],
+					refs[5],
+					refs[6],
+					refs[7]
 					});
 			}
 			if (obj instanceof Formation){
@@ -81,7 +92,12 @@ public class ActionCourseAdd extends AbstractAction {
 					MainFrame.myDaybyday.getAllEquipments().toArray(),
 					(Formation)obj, 
 					(Formation)obj,
-					df
+					df,
+					refs[2],
+					refs[4],
+					refs[5],
+					refs[6],
+					refs[7]
 					});
 			}
 			

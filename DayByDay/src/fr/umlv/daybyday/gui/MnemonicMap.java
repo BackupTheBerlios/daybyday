@@ -243,6 +243,23 @@ public class MnemonicMap {
 		maskmap.put("ActionFontUnderline",new Integer(ActionEvent.CTRL_MASK));	
 		tooltipmap.put("ActionFontUnderline","Souligné");
 		
+		mnemomap.put("ActionFontAlignRight",new Integer(KeyEvent.VK_U));
+		maskmap.put("ActionFontAlignRight",new Integer(ActionEvent.CTRL_MASK));	
+		tooltipmap.put("ActionFontAlignRight","Aligner à droite");
+		
+		mnemomap.put("ActionFontAlignLeft",new Integer(KeyEvent.VK_U));
+		maskmap.put("ActionFontAlignLeft",new Integer(ActionEvent.CTRL_MASK));	
+		tooltipmap.put("ActionFontAlignLeft","Aligner à gauche");
+		
+		mnemomap.put("ActionFontAlignCenter",new Integer(KeyEvent.VK_U));
+		maskmap.put("ActionFontAlignCenter",new Integer(ActionEvent.CTRL_MASK));	
+		tooltipmap.put("ActionFontAlignCenter","Aligner au centre");
+		
+		mnemomap.put("ActionFontAlignJustify",new Integer(KeyEvent.VK_U));
+		maskmap.put("ActionFontAlignJustify",new Integer(ActionEvent.CTRL_MASK));	
+		tooltipmap.put("ActionFontAlignJustify","Justifié");
+		
+		
 		
 	}
 	public static int getMnemonic(String mnemo){

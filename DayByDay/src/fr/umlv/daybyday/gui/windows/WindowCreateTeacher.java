@@ -2,8 +2,6 @@
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
-
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,13 +9,11 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -25,17 +21,7 @@ import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
-import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
-import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
-import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
-import fr.umlv.daybyday.gui.DBDColor;
 import fr.umlv.daybyday.gui.MainFrame;
-import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
-import fr.umlv.daybyday.model.FormationElement;
-import fr.umlv.daybyday.model.FormationTreeModel;
 
 
 /**
@@ -47,7 +33,6 @@ import fr.umlv.daybyday.model.FormationTreeModel;
 public class WindowCreateTeacher extends WindowAbstract {
 
 	
-
 	
 	/**
 	 * This method builds the windows witch permit to

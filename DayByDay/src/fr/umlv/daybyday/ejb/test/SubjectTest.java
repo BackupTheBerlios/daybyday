@@ -1,14 +1,15 @@
 package fr.umlv.daybyday.ejb.test;
 
-import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
-import fr.umlv.daybyday.ejb.facade.DaybydayHome;
-import fr.umlv.daybyday.ejb.facade.Daybyday;
-import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
-import fr.umlv.daybyday.ejb.timetable.*;
-import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import java.util.Iterator;
-import fr.umlv.daybyday.ejb.timetable.subject.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
+import fr.umlv.daybyday.ejb.timetable.subject.SubjectPK;
+import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 
 public class SubjectTest {
     public static void main(String[] args) {

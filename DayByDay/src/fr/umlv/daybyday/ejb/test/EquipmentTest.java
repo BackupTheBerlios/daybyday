@@ -1,13 +1,15 @@
 package fr.umlv.daybyday.ejb.test;
 
-import fr.umlv.daybyday.ejb.facade.*;
-
-import fr.umlv.daybyday.ejb.resource.equipment.*;
-import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
-import fr.umlv.daybyday.ejb.timetable.course.*;
-import java.util.Iterator;
-import fr.umlv.daybyday.ejb.resource.teacher.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
+import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
+import fr.umlv.daybyday.ejb.resource.equipment.EquipmentPK;
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 
 public class EquipmentTest {
     public static void main(String[] args) {

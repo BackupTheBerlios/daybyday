@@ -25,12 +25,13 @@ public class ActionGridDetailCreate extends AbstractAction {
 	
 	public ActionGridDetailCreate(Object [] refs) {
 		super("Création",Images.getImageIcon("makeperso"));
+		this.refs = refs;
 	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		Windows.createWindow("WindowDetailsCourse",null);
+		Windows.createWindow("WindowDetailsCourse",refs);
 	}
 }

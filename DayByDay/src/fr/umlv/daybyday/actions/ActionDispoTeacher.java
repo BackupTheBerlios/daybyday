@@ -6,7 +6,6 @@
  */
 package fr.umlv.daybyday.actions;
 
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;

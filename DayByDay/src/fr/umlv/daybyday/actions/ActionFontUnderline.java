@@ -9,10 +9,6 @@ package fr.umlv.daybyday.actions;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.text.MutableAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.rtf.RTFEditorKit;
 
 import fr.umlv.daybyday.gui.Images;
 import fr.umlv.daybyday.gui.MainFrame;

@@ -1,15 +1,15 @@
 package fr.umlv.daybyday.ejb.test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import fr.umlv.daybyday.ejb.*;
-import fr.umlv.daybyday.ejb.timetable.formation.*;
-import fr.umlv.daybyday.ejb.timetable.section.*;
-
-import fr.umlv.daybyday.ejb.util.exception.*;
-import fr.umlv.daybyday.ejb.facade.*;
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
+import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
 
 public class FormationTest {
     public static void main(String[] args) {

@@ -7,7 +7,6 @@
 package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.AbstractAction;
@@ -15,7 +14,6 @@ import javax.swing.JLabel;
 
 import fr.umlv.daybyday.gui.Images;
 import fr.umlv.daybyday.gui.TimeTableTable;
-import fr.umlv.daybyday.gui.Windows;
 import fr.umlv.daybyday.model.Grid;
 
 /**

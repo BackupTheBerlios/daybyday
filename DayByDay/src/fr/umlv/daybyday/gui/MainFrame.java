@@ -6,44 +6,57 @@
  */
 package fr.umlv.daybyday.gui;
 
-import javax.ejb.CreateException;
-import javax.naming.NamingException;
-import javax.swing.*;
-
-
-
-import fr.umlv.daybyday.actions.InstancesActions;
-
-import fr.umlv.daybyday.model.Course;
-import fr.umlv.daybyday.model.Equipment;
-import fr.umlv.daybyday.model.Grid;
-import fr.umlv.daybyday.model.Room;
-import fr.umlv.daybyday.model.Section;
-import fr.umlv.daybyday.model.Formation;
-import fr.umlv.daybyday.model.FormationElement;
-import fr.umlv.daybyday.model.Subject;
-import fr.umlv.daybyday.model.Teacher;
-
-import fr.umlv.daybyday.ejb.facade.Daybyday;
-import fr.umlv.daybyday.ejb.facade.DaybydayHome;
-import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
-import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
-import fr.umlv.daybyday.gui.MenuBarFactory;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import javax.ejb.CreateException;
+import javax.naming.NamingException;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
+import javax.swing.text.StyleConstants;
+
+import fr.umlv.daybyday.actions.InstancesActions;
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
+import fr.umlv.daybyday.model.Equipment;
+import fr.umlv.daybyday.model.Formation;
+import fr.umlv.daybyday.model.FormationElement;
+import fr.umlv.daybyday.model.Grid;
+import fr.umlv.daybyday.model.Room;
+import fr.umlv.daybyday.model.Teacher;
 
 /**
  * @author Marc
@@ -66,10 +79,15 @@ public class MainFrame {
 	private MainTaskBar taskbar;
 	private ArrayList selectedTable;
 	private ArrayList treesrc;
+	
 	private Object selectedObject;
 	private Object selectedModelObject;
+
+	private static Object selectedCourse;
+	private static Object selectedModelCourse;
 	
 	public static String font = "Arial";
+	public static int fontaling =  StyleConstants.ALIGN_CENTER;
 	public static int fontsize = 12;
 	public static boolean fontbold = false;
 	public static boolean fontitalic = false;
@@ -77,6 +95,7 @@ public class MainFrame {
 	
 	public static DaybydayHome DaybydayHome;
 	public static Daybyday myDaybyday;
+	
 	
 	public MainFrame() throws NamingException, RemoteException, CreateException {
 		
@@ -278,7 +297,14 @@ public class MainFrame {
 		menuBar.add(menu);
 		
 		menu = new JMenu("Affichage");
-		actionlist.clear(); actionlist.add("ActionFontBold"); actionlist.add("ActionFontItalic");actionlist.add("ActionFontUnderline");
+		actionlist.clear(); 
+		actionlist.add("ActionFontBold"); 
+		actionlist.add("ActionFontItalic");
+		actionlist.add("ActionFontUnderline");
+		actionlist.add("ActionFontAlignRight");
+		actionlist.add("ActionFontAlignCenter");
+		actionlist.add("ActionFontAlignLeft");
+		actionlist.add("ActionFontAlignJustify");
 		menu.add(MenuBarFactory.CreateMultiMenu ("Style", "close", actionlist, refs));
 		actionlist.clear(); actionlist.add("ActionToolBarShowHide"); actionlist.add("ActionToolBarConfig");
 		menu.add(MenuBarFactory.CreateMultiMenu ("Barre d'outil", "close", actionlist, refs));
@@ -326,7 +352,7 @@ public class MainFrame {
 		
 		JSplitPane tmp = createFormationTabbePane(form);
 		tabbepanelist.put(form.getName(),tmp);
-		tabbepanelistname.add(form.getName());
+		
 		  tabepane.addTab(form.getName(),tmp);
 		 
 	}
@@ -432,6 +458,9 @@ public class MainFrame {
 		c.gridwidth = GridBagConstraints.RELATIVE; 
 
 		TimeTableTable tttt = new TimeTableTable(Grid.gridBgHour,Grid.gridEndHour,Grid.gridNbDays, Grid.gridEndHour - Grid.gridBgHour, Grid.gridSlice, form, refs);
+		
+		tabbepanelistname.add(tttt);
+		
 		JPanel ttt = tttt.getPane();
 		selectedTable.add(tttt);
 		JPanel rightpaneall = new JPanel(new BorderLayout());
@@ -570,6 +599,12 @@ public class MainFrame {
 		toolBar.add(createToolBarButton("ActionFontBold",refs));
 		toolBar.add(createToolBarButton("ActionFontItalic",refs));
 		toolBar.add(createToolBarButton("ActionFontUnderline",refs));
+		toolBar.add(new JToolBar.Separator());
+		toolBar.add(createToolBarButton("ActionFontAlignLeft",refs));
+		toolBar.add(createToolBarButton("ActionFontAlignCenter",refs));
+		toolBar.add(createToolBarButton("ActionFontAlignRight",refs));
+		toolBar.add(createToolBarButton("ActionFontAlignJustify",refs));
+		
 		return toolBar;
 	}
 	
@@ -620,6 +655,14 @@ public class MainFrame {
 			    Images.getImageIcon("logo 190X129"));
 
 	}
+	public void showError (String message){
+		JOptionPane.showMessageDialog(frame,
+				message,
+			    "Erreur",
+			    JOptionPane.ERROR_MESSAGE,
+			    Images.getImageIcon("logo 190X129"));
+
+	}
 	public void showApropos (){
 		JOptionPane.showMessageDialog(frame,
 			    "      Day by Day - 2004/2005 \n Université de Marne la Vallée\n\nEquipe DaYbYDaY : \n\n" +
@@ -638,12 +681,6 @@ public class MainFrame {
 		frame.setEnabled(state);
 	}
 	
-
-	
-	
-	/**
-	 * 
-	 */
 	public void reLog() {
 		removeAllTabbePane();
 		setEnable (false);
@@ -660,30 +697,43 @@ public class MainFrame {
 	}
 	public void setModelSelectedObject (Object ref){
 		selectedModelObject = ref;
-	}
-	
+	}	
 	public Object getSelectedObject (){
 		return selectedObject;
 	}
-	
 	public Object getModelSelectedObject (){
 		return selectedModelObject;
 	}
 
-	/**
-	 * @return
-	 */
+	public static void setSelectedCourse (Object ref){
+		selectedCourse = ref;
+	}
+	public static void setModelSelectedCourse (Object ref){
+		selectedModelCourse = ref;
+	}
+	public static Object getSelectedCourse (){
+		return selectedCourse;
+	}
+	public static Object getModelSelectedCourse (){
+		return selectedModelCourse;
+	}
+	
 	public String userName() {
-		// TODO Auto-generated method stub
 		return "VERRIERE";
 	}
 
-	/**
-	 * @return
-	 */
+
 	public String userFirstname() {
-		// TODO Auto-generated method stub
 		return "Victor";
 	}
 	
+	
+	public void refreshAllTimeTable(){
+		for (int i = 0; i < tabbepanelistname.size(); ++i) {
+			TimeTableTable t = (TimeTableTable) tabbepanelistname.get(i);
+			t.changeSource(Grid.gridBgHour,Grid.gridEndHour,Grid.gridNbDays, Grid.gridEndHour - Grid.gridBgHour, Grid.gridSlice,t.getSource());
+			t.changeSize(frame.getSize().width,frame.getSize().height - (100 + 40 + 40 + 20 + 30));
+		}
+		
+	}
 }

@@ -9,7 +9,6 @@ package fr.umlv.daybyday.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
@@ -26,11 +25,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import fr.umlv.daybyday.model.Equipment;
-import fr.umlv.daybyday.model.Room;
-import fr.umlv.daybyday.model.Section;
 import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.FormationTreeModel;
+import fr.umlv.daybyday.model.Room;
+import fr.umlv.daybyday.model.Section;
 import fr.umlv.daybyday.model.Subject;
 import fr.umlv.daybyday.model.Teacher;
 

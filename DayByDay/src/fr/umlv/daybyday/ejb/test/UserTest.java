@@ -1,8 +1,10 @@
 package fr.umlv.daybyday.ejb.test;
 
-import fr.umlv.daybyday.ejb.*;
-import fr.umlv.daybyday.ejb.facade.*;
-import fr.umlv.daybyday.ejb.admin.user.*;
+import fr.umlv.daybyday.ejb.admin.user.UserDto;
+import fr.umlv.daybyday.ejb.admin.user.UserPK;
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
 
 public class UserTest {
 

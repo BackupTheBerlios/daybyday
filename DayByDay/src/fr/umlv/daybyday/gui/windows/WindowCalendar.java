@@ -1,18 +1,12 @@
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
-
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
 

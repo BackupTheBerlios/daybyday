@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,8 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.jacorb.ir.gui.typesystem.ModelBuilder;
-
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
@@ -26,7 +23,6 @@ import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.Equipment;
 import fr.umlv.daybyday.model.Formation;
-import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Room;
 import fr.umlv.daybyday.model.Teacher;
 
@@ -55,7 +51,7 @@ public class WindowOpenFormation extends WindowAbstract {
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
-		initWindow(frame,"Ouverture d'une formation", 400, 180);
+		initWindow(frame,"Ouvrir...", 300, 100);
 		
 		c.weightx = 1; 
 		c.weighty = 1; 

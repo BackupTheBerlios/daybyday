@@ -1,10 +1,14 @@
 package fr.umlv.daybyday.ejb.test;
 
-import fr.umlv.daybyday.ejb.facade.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import fr.umlv.daybyday.ejb.resource.teacher.*;
-import java.util.*;
-import fr.umlv.daybyday.ejb.timetable.course.*;
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
+import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 
 public class TeacherTest {
     public static void main(String[] args) {

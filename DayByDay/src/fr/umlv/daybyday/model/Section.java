@@ -13,8 +13,6 @@ import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;

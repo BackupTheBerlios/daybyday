@@ -11,19 +11,15 @@ package fr.umlv.daybyday;
 
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import javax.ejb.CreateException;
 import javax.naming.NamingException;
 import javax.swing.UIManager;
-
-import fr.umlv.daybyday.gui.*;
-import fr.umlv.daybyday.model.Course;
-import fr.umlv.daybyday.model.Grid;
-import fr.umlv.daybyday.model.Section;
-import fr.umlv.daybyday.model.Formation;
-import fr.umlv.daybyday.model.Subject;
 import javax.swing.plaf.FontUIResource;
+
+import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.gui.Windows;
+import fr.umlv.daybyday.model.Grid;
 
 
  
@@ -44,7 +40,6 @@ public class DaYbYDaY {
 		//UIManager.put("Button.font", new javax.swing.plaf.FontUIResource("Serif",Font.ITALIC,12));
 		MainFrame mainframe = new MainFrame();
 		Grid.initCalendar();
-		
 		mainframe.setEnable(false);
 		Object [] obj = new Object [] {mainframe};
 		Windows.createWindow("WindowLogin",obj);

@@ -6,7 +6,8 @@
  */
 package fr.umlv.daybyday.model;
 
-import com.sun.jmx.snmp.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 
@@ -105,5 +106,63 @@ public class Course {
 	}
 	public Object getDto(){
 		return dto;
+	}
+	
+	public String getRepresentation(){
+		String tag = "";
+		
+		if (CourseDetail.subjectType)
+			tag += dto.getSubjectType();
+		
+			if (CourseDetail.subjectName)
+				tag += " " + dto.getSubjectName();
+		
+			if(CourseDetail.subjectGroupe )
+				tag += " " +dto.getGroupeName();
+		
+		
+		if(CourseDetail.formId ){
+			tag += "\n" +dto.getFormationName();
+			if(CourseDetail.formInfo )
+				tag += " " +dto.getDescription();
+		}
+		
+		if(CourseDetail.teacherName ){
+			if(CourseDetail.teacherFirstname )
+			tag += "\n" +dto.getTeacherFirstname().charAt(0)+"." ;
+		
+			tag += " " +dto.getTeacherName() ;
+		
+			if(CourseDetail.teacherOffice );
+		}
+		
+		if(CourseDetail.equipmentName ){
+			tag += "\n" +dto.getEquipmentName();
+			if(CourseDetail.equipmentDesc );
+		}
+
+		if(CourseDetail.roomName ){
+			tag += "\n" +dto.getRoomName();
+			if(CourseDetail.roomInfo );
+		}
+		if(CourseDetail.coursPeriode ){
+			GregorianCalendar cal = new GregorianCalendar();
+			cal.setTimeInMillis(dto.getStartDate().getTime());
+			tag += 	"\n" +  cal.get(Calendar.DAY_OF_MONTH)+"/"+  (cal.get(Calendar.MONTH)+1);
+			cal.setTimeInMillis(dto.getEndDate().getTime());
+			tag +=  "-" +  cal.get(Calendar.DAY_OF_MONTH)+"/"+  (cal.get(Calendar.MONTH) + 1);
+
+		}
+		
+		if(CourseDetail.coursFrequence );
+		if(CourseDetail.coursHour ){
+			tag += "\n" + ((bghour < 10 ) ? "0" + bghour: ""+bghour)  +"h" 
+			+ ((bgminute < 10 ) ? "0" + bgminute: ""+bgminute)  + " - " + 
+			((endhour < 10 ) ? "0" + endhour: ""+endhour) +"h" + 
+			((endminute < 10 ) ? "0" + endminute: ""+endminute);
+		}
+
+		return tag;
+		
 	}
 }

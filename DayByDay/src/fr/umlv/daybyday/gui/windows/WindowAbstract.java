@@ -1,7 +1,5 @@
 package fr.umlv.daybyday.gui.windows;
 
-import  fr.umlv.daybyday.gui.DBDColor;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -12,27 +10,23 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 
-import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
+import fr.umlv.daybyday.gui.DBDColor;
 import fr.umlv.daybyday.gui.icone.DBDIcon;
 
 /**
@@ -493,132 +487,7 @@ public abstract class WindowAbstract {
 		return panel;
 	}
 
-	/**
-	 * This method creates the panel of the details elements 
-	 * of a course.
-	 *  
-	 * @param title the title of the panel
-	 * 
-	 * @return the new panel created.
-	 */
-	  public static JPanel createPanelDetail(String title){
-		JPanel panel = new JPanel(null);
-		panel.setBorder(BorderFactory.createTitledBorder(" " + title + " : "));
-		
-		GridBagLayout gridbag2 = new GridBagLayout();
-		GridBagConstraints c2 = new GridBagConstraints();	
-		panel.setLayout(gridbag2);
-	
-		c2.weightx = 1;
-		c2.weighty = 1;
-		c2.insets =new Insets(5,5,5,5);
-		c2.gridwidth = 1; 
-		c2.fill = GridBagConstraints.CENTER;
-		c2.anchor = GridBagConstraints.LINE_START;
-		if(title.equals("Formation")){
-			JCheckBox name = new JCheckBox(" Intitulé ", true);		
-			gridbag2.setConstraints(name, c2);
-			panel.add(name);
-			 
-			JCheckBox info = new JCheckBox(" Information ", true);
-			gridbag2.setConstraints(info, c2);
-			panel.add(info);
-			
-			JLabel blank1 = new JLabel("                                       ");
-			gridbag2.setConstraints(blank1, c2);
-			panel.add(blank1);
-			JLabel blank2 = new JLabel();
-			gridbag2.setConstraints(blank2, c2);
-			panel.add(blank2);
-		}
-		
-		if(title.equals("Enseignant")){
-			JCheckBox name = new JCheckBox(" Nom ", true);
-			gridbag2.setConstraints(name, c2);
-			panel.add(name);
-	
-			JCheckBox firstname = new JCheckBox(" Prénom ", true);
-			gridbag2.setConstraints(firstname, c2);
-			panel.add(firstname);
-	
-			JCheckBox office = new JCheckBox(" Bureau ", true);
-			gridbag2.setConstraints(office, c2);
-			panel.add(office);
-			JLabel blank1 = new JLabel("                ");
-			gridbag2.setConstraints(blank1, c2);
-			panel.add(blank1);
-		}
-		
-		if(title.equals("Matériel")){
-			JCheckBox id = new JCheckBox(" Identifiant ", true);
-			gridbag2.setConstraints(id, c2);
-			panel.add(id);
-	
-			JCheckBox desc = new JCheckBox(" Description ", true);
-			gridbag2.setConstraints(desc, c2);
-			panel.add(desc);
-			
-			JLabel blank1 = new JLabel("                                       ");
-			gridbag2.setConstraints(blank1, c2);
-			panel.add(blank1);
-			JLabel blank2 = new JLabel("                     ");
-			gridbag2.setConstraints(blank2, c2);
-			panel.add(blank2);
-		}
-		
-		if(title.equals("Salle")){
-			JCheckBox id = new JCheckBox(" Identifiant ", true);
-			gridbag2.setConstraints(id, c2);
-			panel.add(id);
-	
-			JCheckBox desc = new JCheckBox(" Description ", true);
-			gridbag2.setConstraints(desc, c2);
-			panel.add(desc);
-			
-			JLabel blank1 = new JLabel("                                       ");
-			gridbag2.setConstraints(blank1, c2);
-			panel.add(blank1);
-			JLabel blank2 = new JLabel("                     ");
-			gridbag2.setConstraints(blank2, c2);
-			panel.add(blank2);
-		}
-		
-		if(title.equals("Matière")){
-			JCheckBox name = new JCheckBox(" Intitulé ", true);
-			gridbag2.setConstraints(name, c2);
-			panel.add(name);
-	
-			JCheckBox type = new JCheckBox(" Type ", true);
-			gridbag2.setConstraints(type , c2);
-			panel.add(type );
-	
-			JCheckBox grp = new JCheckBox(" Groupe ", true);
-			gridbag2.setConstraints(grp, c2);
-			panel.add(grp );
-			JLabel blank1 = new JLabel("                         ");
-			gridbag2.setConstraints(blank1, c2);
-			panel.add(blank1);			
-		}
-		
-		if(title.equals("Générale")){
-			JCheckBox color = new JCheckBox(" Couleur ", true);
-			gridbag2.setConstraints(color, c2);
-			panel.add(color);
-			
-			JCheckBox period = new JCheckBox(" Période ", true);
-			gridbag2.setConstraints(period, c2);
-			panel.add(period);
-			
-			JCheckBox frq= new JCheckBox(" Fréquence ", true);
-			gridbag2.setConstraints(frq, c2);
-			panel.add(frq );
-			
-			JCheckBox hour = new JCheckBox(" Horaire ", true);
-			gridbag2.setConstraints(hour, c2);
-			panel.add(hour);			
-		}
-		return panel;
-	}
+
 
 
 
@@ -697,67 +566,7 @@ public abstract class WindowAbstract {
 		return panel;				
 	}
 
-	/**
-	 * This method creates the panel witch permits to
-	 * choose an interval hours (all hours, all the 10 minutes, ...) 
-	 * 
-	 * @return the new panel created
-	 */
-	  public static JPanel createPanelInterval(){
-		JPanel panel = new JPanel(null);
-		panel.setBorder(BorderFactory.createTitledBorder(" Intervalle : "));
-		GridBagLayout gridbag2 = new GridBagLayout();
-		GridBagConstraints c2 = new GridBagConstraints();
-		panel.setLayout(gridbag2);
-		
-		ArrayList days = new ArrayList();
-		days.add("Lundi");
-		days.add( "Mardi");
-		days.add( "Mercredi");
-		days.add( "Jeudi");
-		days.add( "Vendredi");
-		days.add( "Samedi");
-		days.add( "Dimanche");
-		
-		
-		c2.weightx = 1; 
-		c2.weighty = 1; 
-		c2.gridwidth = 1; 
-		
-		c2.insets =new Insets(0,5,0,5);
-		c2.anchor = GridBagConstraints.LINE_END;
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		
-		JLabel du = new JLabel(" Du : ");
-		gridbag2.setConstraints(du, c2);
-		panel.add(du);
-		
-		JComboBox duCombo = new JComboBox(days.toArray());
-		gridbag2.setConstraints(duCombo, c2);
-		panel.add(duCombo);
-		
-		JLabel auLabel = new JLabel(" Au : ");
-		gridbag2.setConstraints(auLabel, c2);
-		panel.add(auLabel);
-		
-		JComboBox auCombo = new JComboBox(days.toArray());
-		gridbag2.setConstraints(auCombo, c2);
-		panel.add(auCombo);
-		
-		JLabel tailleLabel = new JLabel(" Taille : ");
-		gridbag2.setConstraints(tailleLabel, c2);
-		panel.add(tailleLabel);
-		
-		JTextField ptField = new JTextField("    ");
-		gridbag2.setConstraints(ptField, c2);
-		panel.add(ptField);
-		
-		JLabel ptLabel =new JLabel("pt");
-		gridbag2.setConstraints(ptLabel, c2);
-		panel.add(ptLabel);
-				
-		return panel;
-	}
+	
 
 	/**
 	 * This method create a panel knowing the 

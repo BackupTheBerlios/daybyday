@@ -7,11 +7,11 @@
 package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.Windows;
 
 /**
@@ -26,13 +26,14 @@ public class ActionGridConfig extends AbstractAction {
 	
 	public ActionGridConfig(Object [] refs) {
 		super("Grille",Images.getImageIcon("grille"));
+		this.refs = refs;
 	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		
-		Windows.createWindow("WindowConfigTable",new Object[] {new ArrayList()});
+		MainFrame mainframe = (MainFrame) refs[0];
+		Windows.createWindow("WindowConfigTable",refs);
 	}
 }

@@ -8,7 +8,6 @@ package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 

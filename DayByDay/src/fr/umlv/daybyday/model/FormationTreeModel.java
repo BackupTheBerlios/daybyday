@@ -6,10 +6,8 @@
  */
 package fr.umlv.daybyday.model;
 
-import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreePath;
 
 
 /**

@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
-import fr.umlv.daybyday.gui.Windows;
 
 /**
  * @author Marc

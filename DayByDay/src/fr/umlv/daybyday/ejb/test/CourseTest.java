@@ -1,15 +1,15 @@
 package fr.umlv.daybyday.ejb.test;
 
-import fr.umlv.daybyday.ejb.facade.*;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-//import fr.umlv.daybyday.ejb.util.exception.*;
+import fr.umlv.daybyday.ejb.facade.Daybyday;
+import fr.umlv.daybyday.ejb.facade.DaybydayHome;
 import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
-import fr.umlv.daybyday.ejb.timetable.course.*;
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
-
-import java.sql.*;
-import java.util.*;
 
 
 public class CourseTest {
