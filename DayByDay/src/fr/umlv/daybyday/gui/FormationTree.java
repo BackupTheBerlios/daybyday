@@ -13,7 +13,17 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Hashtable;
 
+import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
+import javax.jms.TopicSubscriber;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +42,7 @@ import fr.umlv.daybyday.model.Room;
 import fr.umlv.daybyday.model.Section;
 import fr.umlv.daybyday.model.Subject;
 import fr.umlv.daybyday.model.Teacher;
+import fr.umlv.daybyday.test.jms.listeners.CourseFormationListener;
 
 
 /**
@@ -81,6 +92,8 @@ public class FormationTree {
 		return pane;
 	}
 	
+	
+    
     /** MouseListener for jtree */
     public class FormationTreeMouseListenere extends MouseAdapter {
        public void mouseClicked( MouseEvent me ) {

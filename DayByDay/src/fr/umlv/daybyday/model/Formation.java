@@ -9,9 +9,20 @@ package fr.umlv.daybyday.model;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Hashtable;
 
+import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
+import javax.jms.TopicSubscriber;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.swing.tree.TreeNode;
 
+import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
@@ -23,6 +34,8 @@ import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.test.ejb.DaybydayHomeCache;
+import fr.umlv.daybyday.test.jms.listeners.CourseFormationListener;
 
 /**
  * @author Marc
@@ -379,5 +392,8 @@ public class Formation implements FormationElement{
 	public void upDateDto (SectionDto dto){
 		getElementNombre();
 	}
+	
+	
+	
 	
 }

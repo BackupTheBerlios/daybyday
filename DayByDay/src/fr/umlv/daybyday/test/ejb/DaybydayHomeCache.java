@@ -1,16 +1,12 @@
-package fr.umlv.daybyday.ejb.facade;
+package fr.umlv.daybyday.test.ejb;
 
 
 
-//import fr.umlv.daybyday.ejb.facade.daybyday.*;
+import fr.umlv.daybyday.ejb.facade.daybyday.*;
 import javax.ejb.*;
 import javax.rmi.*;
 import java.util.*;
 import javax.naming.*;
-
-import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
-
-
 
 public class DaybydayHomeCache {
 

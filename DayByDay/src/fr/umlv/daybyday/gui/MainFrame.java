@@ -52,7 +52,7 @@ import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
 //import fr.umlv.daybyday.ejb.facade.Daybyday;
 //import fr.umlv.daybyday.ejb.facade.DaybydayHome;
-import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
+import fr.umlv.daybyday.test.ejb.*;
 import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
 import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
 import fr.umlv.daybyday.model.Equipment;

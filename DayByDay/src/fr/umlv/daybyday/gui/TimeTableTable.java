@@ -21,7 +21,17 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
+import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
+import javax.jms.TopicSubscriber;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
@@ -47,10 +57,12 @@ import fr.umlv.daybyday.actions.ActionCourseAdd;
 import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.model.Course;
 import fr.umlv.daybyday.model.CourseDetail;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Grid;
+import fr.umlv.daybyday.test.jms.listeners.CourseFormationListener;
 
 
 
@@ -258,6 +270,7 @@ public class TimeTableTable {
 		 		timetable[i].setVisible(false); 		
 		 		}
 		 }
+		 listenToCourses();
 	}
 	
 	public JPanel getPane() {
@@ -591,6 +604,9 @@ public class TimeTableTable {
 	        { return false; }
 	}
 
+	public void refresh(){
+		changeSource(cours);
+	}
 	public void changeSource(FormationElement cours){
 		 changeSource( bghour, endhour, nbday,nbhours, nbhoursslice,cours);
 	}
@@ -844,6 +860,39 @@ public class TimeTableTable {
 		}
 		
 	}
+
+	 public void listenToCourses(){
+        try{
+            Context jndiContext = getInitialContext();
+            TopicConnectionFactory factory = (TopicConnectionFactory)
+                                             jndiContext.lookup(
+                    "ConnectionFactory");
+            Topic topic = (Topic) jndiContext.lookup(
+                    "topic/CourseTopic");
+            TopicConnection connect = factory.createTopicConnection();
+            TopicSession session = connect.createTopicSession(false,
+                    Session.AUTO_ACKNOWLEDGE);
+            TopicSubscriber subscriber = session.createSubscriber(topic);
+            subscriber.setMessageListener(new CourseFormationListener(
+                    (FormationDto)cours.getDto(), this, MainFrame.myDaybyday));
+            connect.start();
+            System.out.println(
+                    "Attend l'arrivee de messages sur topic/CourseTopic...");
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+
+        }
+    }
+
+    public static Context getInitialContext() throws NamingException {
+        Hashtable environment = new Hashtable();
+        environment.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+        environment.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
+        environment.put(Context.PROVIDER_URL, "jnp://localhost:1099");
+        return new InitialContext(environment);
+    }
+
 }
 
 
