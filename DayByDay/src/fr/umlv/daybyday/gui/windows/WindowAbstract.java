@@ -1128,7 +1128,7 @@ public abstract class WindowAbstract {
 	 * 
 	 * @return the new panel created
 	 */
-	  public static JPanel createPanelType() {
+	  public static JPanel createPanelType(int val11, int val12, int val21, int val22, int val31, int val32) {
 		JPanel typePanel = new JPanel(null);
 		
 		GridBagLayout gridbag2 = new GridBagLayout();
@@ -1143,7 +1143,7 @@ public abstract class WindowAbstract {
 		
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;		
-		JPanel coursePanel = createPanelTypeSubject(" Cours : ");
+		JPanel coursePanel = createPanelTypeSubject(" Cours : ",val11, val12);
 		gridbag2.setConstraints(coursePanel, c2);
 		typePanel.add(coursePanel);
 		
@@ -1154,7 +1154,7 @@ public abstract class WindowAbstract {
 	
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;		
-		JPanel tdPanel = createPanelTypeSubject(" TD : ");
+		JPanel tdPanel = createPanelTypeSubject(" TD : ",val21, val22);
 		gridbag2.setConstraints(tdPanel, c2);
 		typePanel.add(tdPanel);
 		
@@ -1165,7 +1165,7 @@ public abstract class WindowAbstract {
 		
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;		
-		JPanel tpPanel = createPanelTypeSubject(" TP : ");
+		JPanel tpPanel = createPanelTypeSubject(" TP : ",val31, val32);
 		gridbag2.setConstraints(tpPanel, c2);
 		typePanel.add(tpPanel);
 				
@@ -1245,7 +1245,7 @@ public abstract class WindowAbstract {
 	 * 
 	 * @return the new panel created
 	 */
-	  public static JPanel createPanelTypeSubject(String type){
+	  public static JPanel createPanelTypeSubject(String type, int val1, int val2){
 		JPanel typePanel = new JPanel(null);
 		typePanel.setBorder(BorderFactory.createTitledBorder(type));
 	
@@ -1267,7 +1267,7 @@ public abstract class WindowAbstract {
 		
 		c2.gridwidth = 1; 
 		c2.fill = GridBagConstraints.HORIZONTAL;
-		JTextField groupeText = new JTextField("");
+		JTextField groupeText = new JTextField(""+val1);
 		gridbag2.setConstraints(groupeText, c2);
 		typePanel.add(groupeText);
 		
@@ -1280,7 +1280,7 @@ public abstract class WindowAbstract {
 		
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;
-		JTextField hourText = new JTextField();
+		JTextField hourText = new JTextField(""+val2);
 		gridbag2.setConstraints(hourText, c2);
 		typePanel.add(hourText);
 		

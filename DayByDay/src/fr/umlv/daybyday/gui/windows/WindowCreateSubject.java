@@ -151,7 +151,7 @@ public class WindowCreateSubject extends WindowAbstract {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;		
 		
-		JPanel typePanel = createPanelType();
+		JPanel typePanel = createPanelType(0,0,0,0,0,0);
 		gridbag.setConstraints(typePanel, c);
 		contentPane.add(typePanel);
 		

@@ -54,11 +54,14 @@ public class WindowModifyFormation extends WindowAbstract {
 	public static void createWindow(JFrame frame,Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
 		
+		Formation form = (Formation)mainframe.getSelectedObject();
+		FormationDto oldformdto = (FormationDto)form.getDto();
+		
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
-		initWindow(frame,"Nouvelle formation", 430, 350);
+		initWindow(frame,"Modifier formation", 430, 350);
 		c.weightx = 1; 
 		c.weighty = 1; 
 		c.gridwidth = 1; 
@@ -72,7 +75,7 @@ public class WindowModifyFormation extends WindowAbstract {
 	
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		final JTextField nameTextField = new JTextField();
+		final JTextField nameTextField = new JTextField(oldformdto.getName());
 		gridbag.setConstraints(nameTextField, c);
 		contentPane.add(nameTextField);
 	
@@ -136,7 +139,7 @@ public class WindowModifyFormation extends WindowAbstract {
 		
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;
-		final JTextField nameTextField2 = new JTextField();
+		final JTextField nameTextField2 = new JTextField(oldformdto.getName());
 		gridbag2.setConstraints(nameTextField2, c2);
 		formationPanel.add(nameTextField2);
 		
@@ -148,7 +151,7 @@ public class WindowModifyFormation extends WindowAbstract {
 		
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;
-		final JTextField yearTextField = new JTextField();
+		final JTextField yearTextField = new JTextField(oldformdto.getFormationYear());
 		gridbag2.setConstraints(yearTextField, c2);
 		formationPanel.add(yearTextField);
 		
@@ -165,7 +168,7 @@ public class WindowModifyFormation extends WindowAbstract {
 		c2.gridwidth = GridBagConstraints.REMAINDER;
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		
-		final JTextArea infoList= new JTextArea("\n\n");		
+		final JTextArea infoList= new JTextArea(oldformdto.getDescription());		
 		JScrollPane infoScrollpane = new JScrollPane(infoList);		
 		gridbag2.setConstraints(infoScrollpane, c2);
 		formationPanel.add(infoScrollpane);
@@ -182,6 +185,18 @@ public class WindowModifyFormation extends WindowAbstract {
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		
 		final JComboBox responsableBox = new JComboBox((Object [])obj[2]);
+
+		//TODO faire un truc plus prope
+		for (int i = 0; i < responsableBox.getItemCount(); ++i){
+			TeacherDto teachdto = (TeacherDto)responsableBox.getItemAt(i);
+			if (teachdto.getFirstname().compareTo(oldformdto.getTeacherFirstname()) == 0 &&
+					teachdto.getName().compareTo(oldformdto.getTeacherName()) == 0 ){
+				responsableBox.setSelectedIndex(i);
+				break;
+			}
+				
+		}
+		
 		responsableBox.setRenderer(new ListCellRenderer(){
 
 			public Component getListCellRendererComponent(JList arg0, Object arg1, int arg2, boolean arg3, boolean arg4) {
