@@ -1,9 +1,3 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -16,15 +10,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * @author eemond
+ * @author Emond Emmanuelle, Marc meynier
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * This class creates the window which permit to open the timetable
+ * of a section. 
  */
 public class WindowOpenSection extends WindowAbstract {
 
 	
-
+	/**
+	 * This method creates the window which permit to open the timetable
+	 * of a section. 
+	 * 
+	 * @param frame The frame of the window
+	 * @param obj an object table which contains in position 0 
+	 * the main frame
+	 */
 	public static void createWindow(JFrame frame, Object[] obj){
 		
 		Container contentPane = frame.getContentPane();

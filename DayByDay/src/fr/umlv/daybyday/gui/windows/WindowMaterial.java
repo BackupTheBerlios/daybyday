@@ -1,3 +1,127 @@
+package fr.umlv.daybyday.gui.windows;
+
+import java.awt.Container;
+
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import fr.umlv.daybyday.gui.DBDColor;
+import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
+
+/**
+ * @author Emond Emmanuelle, Marc meynier
+ *
+ * This class creates the window which permit to create the equipment window. 
+ */
+public class WindowMaterial extends WindowAbstract {
+
+	/**
+	 * This method builds the window which permit to create the equipment window. 
+	 * 
+	 * @param frame The frmae of the window
+	 * @param obj an object table which contains in position 0 
+	 * the main frame
+	 */
+	public static void createWindow(JFrame frame,Object [] obj){
+		createWindow(frame);
+	}
+	
+	/**
+	 * This method builds the window which permit to create the equipment window. 
+	 * 
+	 * @param frame The frmae of the window
+	 * @param obj an object table which contains in position 0 
+	 * the main frame
+	 */
+	public static void createWindow(JFrame frame){
+		initWindow(frame,"Nouveau matériel", 400, 250);
+		
+		Container contentPane = frame.getContentPane();
+		GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		contentPane.setLayout(gridbag);
+		
+		// Réference 
+		c.weightx = 1; 
+		c.weighty = 1; 
+		c.gridwidth = 1; 
+		c.insets =new Insets(5,20,5,20);
+		c.anchor = GridBagConstraints.LINE_START;
+		c.fill = GridBagConstraints.CENTER;
+		
+		// identifiant
+		JLabel idLabel = new JLabel("  Identifiant : ");
+		gridbag.setConstraints(idLabel, c);
+		contentPane.add(idLabel);
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		JTextField idTextField = new JTextField();
+		gridbag.setConstraints(idTextField, c);
+		contentPane.add(idTextField);;
+		
+		//building 
+		c.gridwidth = 1; 
+		c.fill = GridBagConstraints.CENTER;
+		
+		JLabel buildingLabel = new JLabel("  Batiment : ");
+		gridbag.setConstraints(buildingLabel, c);
+		contentPane.add(buildingLabel);
+	
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		JTextField batimentTextField = new JTextField();
+		gridbag.setConstraints(batimentTextField, c);
+		contentPane.add(batimentTextField);
+		
+		// Site 
+		c.gridwidth = 1; 
+		c.fill = GridBagConstraints.CENTER;
+		
+		JLabel siteLabel = new JLabel("  Site : ");
+		gridbag.setConstraints(siteLabel, c);
+		contentPane.add(siteLabel);
+	
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		JTextField siteTextField = new JTextField();
+		gridbag.setConstraints(siteTextField, c);
+		contentPane.add(siteTextField);
+		
+		c.gridwidth = 1; 
+		c.fill = GridBagConstraints.CENTER;
+		JLabel infoLabel = new JLabel("  Informations : ");
+		gridbag.setConstraints(infoLabel, c);
+		contentPane.add(infoLabel);
+	
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		JTextArea infoList= new JTextArea("\n\n");
+		
+		JScrollPane infoScrollpane = new JScrollPane(infoList);
+		gridbag.setConstraints(infoScrollpane, c);
+		contentPane.add(infoScrollpane);
+	
+		// Add button OK and Annuler
+		addButtonValidation(contentPane, c, gridbag );
+	}
+
+	
+}
+=======
 /*
  * Created on 28 févr. 2005
  *
@@ -36,17 +160,26 @@ import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.gui.DBDColor;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to 
+ * create an equipment
  */
 public class WindowMaterial extends WindowAbstract {
 
 	public final static int EQUIP = 0;
 	public final static int ROOM = 1;
 	
+	/**
+	 * This method creates the window which permits to 
+	 * create an equipment
+	 * 
+	 * @param frame the frame of the window
+	 * @param obj. In position 0, the mainframe,
+	 * in position 1 the type, 
+	 */
 	public static void createWindow(final JFrame frame,Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
 		final Integer type = (Integer)obj[1]; 
@@ -203,3 +336,4 @@ public class WindowMaterial extends WindowAbstract {
 
 	
 }
+

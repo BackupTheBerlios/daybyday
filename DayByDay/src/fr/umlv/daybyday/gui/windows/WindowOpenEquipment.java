@@ -1,9 +1,3 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -16,21 +10,29 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * @author eemond
+ * @author Emond Emmanuelle, Marc meynier
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * This class creates the window which permit to open the timetable
+ * of equipment. 
  */
 public class WindowOpenEquipment extends WindowAbstract{
 
-
+	
+	/**
+	 * This method builds the window which permit to open the timetable
+	 * of equipment. 
+	 * 
+	 * @param frame The frame of the window
+	 * @param obj an object table which contains in position 0 
+	 * the main frame
+	 */
 	public static void createWindow(JFrame frame, Object[] obj){
 		
 		Container contentPane = frame.getContentPane();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
-		initWindow(frame,"Ouverture d'un matèriel", 400, 350);
+		initWindow(frame,"Ouverture d'un matériel", 400, 350);
 		
 		c.weightx = 1; 
 		c.weighty = 1; 
