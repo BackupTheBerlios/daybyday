@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -19,11 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to manage 
+ * the avaibility teacher.
  */
 public class WindowAvailabilityTeacher extends WindowAbstract {
 
@@ -31,13 +27,12 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 	 * This method builds the window to permit to adjust
 	 * the teacher availability.  
 	 * 
-	 * @param contentPane the container of the windws
-	 * @param ens the list oh the teacher
+	 * @param frame the frame of the window 
+	 * @param obj the object
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){
 		initWindow(frame,"Gestion des disponibilités d'un enseignant", 550, 650);
 		Container contentPane = frame.getContentPane();
-		//TODO changer ArrayList en Teacher
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
@@ -70,6 +65,4 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		// Add buttons OK and Annuler
 		addButtonValidation(contentPane, c, gridbag );
 	}
-
-	
 }

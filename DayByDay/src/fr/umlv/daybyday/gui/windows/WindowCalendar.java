@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package fr.umlv.daybyday.gui.windows;
 
 import java.awt.Container;
@@ -21,18 +15,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
+
+
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class create the window which permits to manage
+ * the calendar
  */
 public class WindowCalendar extends WindowAbstract {
 
 	/**
 	 * This method builds the window calendar.  
 	 * 
-	 * @param contentPane The container of the JFrame
+	 * @param frame the frame of the window
 	 * @param obj the object 
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){

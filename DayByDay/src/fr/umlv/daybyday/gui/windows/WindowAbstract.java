@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package fr.umlv.daybyday.gui.windows;
 
 import  fr.umlv.daybyday.gui.DBDColor;
@@ -42,10 +36,9 @@ import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
 import fr.umlv.daybyday.gui.icone.DBDIcon;
 
 /**
- * @author Marc
+ * @author Emmanuelle Emond et Marc Meynier
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * This class in an abstract window factory
  */
 public abstract class WindowAbstract {
 
@@ -60,7 +53,6 @@ public abstract class WindowAbstract {
 		frame.setTitle(name);
 		frame.setSize(width, height);
 		centerWindow(frame);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	
@@ -132,7 +124,6 @@ public abstract class WindowAbstract {
 			c2.gridwidth = 1;
 			c2.fill = GridBagConstraints.CENTER;
 			JButton delete = new JButton("Supprimer");
-			//delete.setBackground(DBDColor.getColor("DARK_GRAY"));
 			gridbag2.setConstraints(delete, c2);
 			panel.add(delete);
 			
@@ -165,7 +156,6 @@ public abstract class WindowAbstract {
 		Box line1 = new Box(BoxLayout.X_AXIS);
 		
 		JButton north = new JButton(DBDIcon.HAUT_FLECHE);
-		//north.setBackground(DBDColor.getColor("DARK_GRAY"));
 		line1.add(north);
 		
 		// Line 2
@@ -174,13 +164,11 @@ public abstract class WindowAbstract {
 		line2.add(Box.createHorizontalGlue());
 		
 		JButton west = new JButton(DBDIcon.GAUCHE_FLECHE);
-		//west.setBackground(DBDColor.getColor("DARK_GRAY"));
 		line2.add(west);
 		
 		line2.add(Box.createHorizontalGlue());
 		
 		JButton east = new JButton(DBDIcon.DROITE_FLECHE);
-		//east.setBackground(DBDColor.getColor("DARK_GRAY"));	
 		line2.add(east);
 		line2.add(Box.createHorizontalGlue());
 		
@@ -188,7 +176,6 @@ public abstract class WindowAbstract {
 		Box line3 = new Box(BoxLayout.X_AXIS);
 	
 		JButton south = new JButton(DBDIcon.BAS_FLECHE);
-		//south.setBackground(DBDColor.getColor("DARK_GRAY"));
 		line3.add(south);
 				
 		panel.add(line1);
@@ -384,13 +371,11 @@ public abstract class WindowAbstract {
 		panel.setLayout(new BorderLayout());
 		
 		JButton less = new JButton("-");
-		//less.setBackground(DBDColor.getColor("DARK_GRAY"));
 		panel.add(less , BorderLayout.WEST);
 		
 		panel.add(new JTextField(" "),BorderLayout.CENTER);
 		
 		JButton more = new JButton("+");
-		//more.setBackground(DBDColor.getColor("DARK_GRAY"));
 		panel.add(more ,BorderLayout.EAST);
 	
 		return panel;
@@ -438,7 +423,6 @@ public abstract class WindowAbstract {
 			c2.gridwidth = 1;
 			c2.fill = GridBagConstraints.CENTER;
 			JButton delete = new JButton("Supprimer");
-			//delete.setBackground(DBDColor.getColor("DARK_GRAY"));
 			gridbag2.setConstraints(delete, c2);
 			panel.add(delete);
 			
