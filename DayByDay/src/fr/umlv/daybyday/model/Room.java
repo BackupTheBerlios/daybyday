@@ -14,6 +14,7 @@ import javax.swing.tree.TreeNode;
 
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomPK;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.gui.MainFrame;
@@ -32,6 +33,8 @@ public class Room implements FormationElement {
 	RoomDto roomdto;
 	
 	String name;
+	String area;
+	String building;
 	
 	public Room (String name){
 		
@@ -52,7 +55,10 @@ public class Room implements FormationElement {
 	public Room(RoomDto dto) {
 		roomdto = dto;
 		name = dto.getName();
-		ArrayList courslist = new ArrayList();
+		building = dto.getBuilding();
+		area = dto.getArea();
+		
+		this.courslist = new ArrayList();
 		ArrayList courslisttmp = null;
 		try {
 			courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomPK(dto.getName(),dto.getBuilding(),dto.getArea()));
@@ -64,12 +70,16 @@ public class Room implements FormationElement {
 	}
 
 	public ArrayList getCourseList(){
-		ArrayList courslist = new ArrayList();
 		ArrayList courslisttmp = null;
 		try {
-			courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
-			for (int i = 0; i < courslisttmp.size(); ++i)
-				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
+			RoomDto newdto =  MainFrame.myDaybyday.getRoom(new RoomPK(name,building,area));
+			if (newdto.getVersion().longValue() != roomdto.getVersion().longValue()){
+				roomdto = newdto;
+				courslist = new ArrayList();
+				courslisttmp = MainFrame.myDaybyday.getCoursesOfRoom(new RoomPK(roomdto.getName(),roomdto.getBuilding(),roomdto.getArea()));
+				for (int i = 0; i < courslisttmp.size(); ++i)
+					courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
+			}
 		} catch (RemoteException e2) {
 
 		}	
