@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.Windows;
 
 /**
@@ -34,6 +35,7 @@ public class ActionAdmin extends AbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
+		MainFrame mainframe = (MainFrame) refs[0];
 		
 		Windows.createWindow("WindowAdministration",refs);
 	}

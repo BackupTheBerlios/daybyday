@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.w3c.dom.UserDataHandler;
+
+import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.gui.MainFrame;
 
 
@@ -29,9 +32,13 @@ public class WindowAdministration extends WindowAbstract{
 	 * @param obj the object
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){
+		try{
 		final MainFrame mainframe = (MainFrame) obj[0];
 		initWindow(frame,"Panneau Administrateur", 430, 450, mainframe.getFrameX(), mainframe.getFrameY());
-		Container contentPane = frame.getContentPane();
+		
+		UserDto userdto = mainframe.getUser();
+
+			Container contentPane = frame.getContentPane();
 		
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -50,7 +57,7 @@ public class WindowAdministration extends WindowAbstract{
 		contentPane.add(id);
 		
 		c.anchor = GridBagConstraints.LINE_START;
-		JTextField loginTextField = new JTextField();
+		JTextField loginTextField = new JTextField(userdto.getName());
 		gridbag.setConstraints(loginTextField, c);
 		contentPane.add(loginTextField);
 
@@ -61,7 +68,7 @@ public class WindowAdministration extends WindowAbstract{
 	
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.LINE_START;
-		JPasswordField passewordField = new JPasswordField();
+		JPasswordField passewordField = new JPasswordField(userdto.getFirstname());
 		gridbag.setConstraints(passewordField, c);
 		contentPane.add(passewordField);
 		
@@ -85,5 +92,8 @@ public class WindowAdministration extends WindowAbstract{
 		// Add buttons Ok and Annuler
 		addButtonValidation(contentPane, c, gridbag );	
 		frame.setVisible(true);
+		}catch(Exception e){
+			System.out.println("ohoh" + obj[0] + " "+ e);
+		}
 	}
 }

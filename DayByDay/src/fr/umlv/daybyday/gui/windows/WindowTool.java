@@ -11,6 +11,7 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,7 +36,10 @@ public class WindowTool extends WindowAbstract {
 		final MainFrame mainframe = (MainFrame) obj[0];
 		initWindow(frame,"Barre d'outils", 430, 180, mainframe.getFrameX(), mainframe.getFrameY());
 		Container contentPane = frame.getContentPane();
-
+		
+		ArrayList tmp = new ArrayList(); tmp.add("0");
+		Object [] obj2 = new Object[] {tmp,tmp,tmp,tmp };
+		
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		contentPane.setLayout(gridbag);
@@ -48,7 +52,7 @@ public class WindowTool extends WindowAbstract {
 		c.anchor = GridBagConstraints.LINE_END;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		JPanel command = createPanelId(obj, " Commandes : ");	
+		JPanel command = createPanelId(obj2 , " Commandes : ");	
 		gridbag.setConstraints(command, c);
 		contentPane.add(command);
 		
@@ -58,7 +62,7 @@ public class WindowTool extends WindowAbstract {
 		contentPane.add(buttonArrow);
 		
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		JPanel tools = createPanelId(obj, " Barre d'outils : ");	
+		JPanel tools = createPanelId(obj2, " Barre d'outils : ");	
 		gridbag.setConstraints(tools, c);
 		contentPane.add(tools);
 		

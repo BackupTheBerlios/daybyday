@@ -26,14 +26,14 @@ public class ActionToolBarConfig extends AbstractAction {
 	
 	public ActionToolBarConfig(Object [] refs) {
 		super("Configurer",Images.getImageIcon("config2"));
+		this.refs = refs;
 	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		ArrayList tmp = new ArrayList(); tmp.add("0");
-		Object [] obj = new Object[] {tmp,tmp,tmp,tmp };
-		Windows.createWindow("WindowTool",obj);
+		
+		Windows.createWindow("WindowTool",refs);
 	}
 }
