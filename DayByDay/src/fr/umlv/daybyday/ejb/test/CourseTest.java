@@ -29,7 +29,7 @@ public class CourseTest {
           // myCourseDto.setStartDate(endDate);
            SectionDto sec = myDaybyday.getSection(new SectionPK("reseau","DESS CRI","2004"));
            
-           CourseDto myCourseDto = new CourseDto("Admin reseaux","reseau","DESS CRI","2004","cours",startDate,endDate,"groupe1","Chabert","Samuel","2B114","copernic","mlv","retro1","copernic","mlv","cours de réseau",new Integer (250),new Boolean(true));
+           CourseDto myCourseDto = new CourseDto("GENIE LOGICIEL","GENERALE","DESS CRI","2004","cours",startDate,endDate,"groupe1","Chabert","Samuel","2B114","copernic","mlv","retro1","copernic","mlv","cours de réseau",new Integer (250),new Boolean(true));
           myDaybyday.createCourse(myCourseDto);
 
            //Récupération d'un cours existant

@@ -8,6 +8,7 @@ package fr.umlv.daybyday.model;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * @author Marc
@@ -24,11 +25,16 @@ public class Grid {
 	public static int gridbgMonth = 1;
 	public static int gridendDay = 11;
 	public static int gridendMonth = 1;
-	public static GregorianCalendar calendar = new GregorianCalendar();
+	public static GregorianCalendar calendar = new GregorianCalendar(Locale.FRENCH);
 	public static int sens = 0;
 
 	public static void  changeWeek (int inc){
 		int tmp = calendar.get(Calendar.WEEK_OF_YEAR);
 		calendar.set(Calendar.WEEK_OF_YEAR, tmp + inc);
+	}
+	public static void initCalendar(){ 
+		System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
+		calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - (calendar.get(Calendar.DAY_OF_WEEK) - 2) );
+		System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
 	}
 }

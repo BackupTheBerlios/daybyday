@@ -113,9 +113,12 @@ public class Formation implements FormationElement{
 		ArrayList courslisttmp = null;
 		try {
 			SectionDto newdto =  MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",name,year));
-			if (sectionDto.getVersion().intValue() != newdto.getVersion().intValue()){
+			FormationDto newfdto =  MainFrame.myDaybyday.getFormation(new FormationPK(name,year));
+			if (sectionDto.getVersion().intValue() != newdto.getVersion().intValue() || 
+					formationdto.getVersion().intValue() != newfdto.getVersion().intValue()){
 				courslist =  new ArrayList();
 				sectionDto = newdto;
+				formationdto = newfdto;
 				courslist = new ArrayList();
 				courslisttmp = MainFrame.myDaybyday.getCoursesOfSection(new SectionPK("GENERALE",name,year));
 				for (int i = 0; i < courslisttmp.size(); ++i)
@@ -323,6 +326,10 @@ public class Formation implements FormationElement{
 	public FormationElement getFather() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void upDateDto (SectionDto dto){
+		getElementNombre();
 	}
 	
 }

@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.table.DefaultTableModel;
 
+import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
+import fr.umlv.daybyday.ejb.timetable.formation.FormationPK;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
 import fr.umlv.daybyday.gui.Images;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.TimeTableTable;
@@ -53,7 +56,7 @@ public class ActionCourseAdd extends AbstractAction {
 					father = ((Section)obj).getFather();
 				}
 				
-			Windows.createWindow("WindowCreateCourse",new Object[]{
+					Windows.createWindow("WindowCreateCourse",new Object[]{
 					refs[0],
 					MainFrame.myDaybyday.getSubjectsOfSection(dto.getSectionPK()).toArray(),
 					MainFrame.myDaybyday.getAllTeachers().toArray(),
@@ -61,6 +64,23 @@ public class ActionCourseAdd extends AbstractAction {
 					MainFrame.myDaybyday.getAllEquipments().toArray(),
 					father, 
 					(Section)obj,
+					df
+					});
+			}
+			if (obj instanceof Formation){
+				System.out.println("C'est un formation");
+				FormationDto dto = ((FormationDto)((Formation)obj).getDto());
+				SectionDto defaultsec = MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",dto.getName(),dto.getFormationYear()));
+
+				
+					Windows.createWindow("WindowCreateCourse",new Object[]{
+					refs[0],
+					MainFrame.myDaybyday.getSubjectsOfSection(defaultsec.getSectionPK()).toArray(),
+					MainFrame.myDaybyday.getAllTeachers().toArray(),
+					MainFrame.myDaybyday.getAllRooms().toArray(),
+					MainFrame.myDaybyday.getAllEquipments().toArray(),
+					(Formation)obj, 
+					(Formation)obj,
 					df
 					});
 			}

@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/JBoss/server/default/deploy/roster.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/log4j.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/concurrent.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/gnu-regexp.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jacorb.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jbossall-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jboss-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jboss-common-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jbosscx-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jbossha-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jboss-iiop-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jboss-j2ee.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jboss-jaas.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jbossmq-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jboss-net-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jboss-system-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jcert.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jmx-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jmx-connector-client-factory.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jmx-ejb-connector-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jmx-rmi-connector-client.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jsse.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/xdoclet-module-jboss-net.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jnet.jar"/>
+	<classpathentry kind="lib" path="C:/JBoss/client/jnp-client.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

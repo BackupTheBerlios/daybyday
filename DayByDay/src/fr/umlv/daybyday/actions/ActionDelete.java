@@ -7,13 +7,19 @@
 package fr.umlv.daybyday.actions;
 
 import java.awt.event.ActionEvent;
+import java.rmi.RemoteException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
+import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
+import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.Images;
 import fr.umlv.daybyday.gui.MainFrame;
+import fr.umlv.daybyday.gui.TimeTableTable;
 import fr.umlv.daybyday.model.Course;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.FormationTreeModel;
@@ -72,7 +78,37 @@ public class ActionDelete extends AbstractAction {
 			
 			}
 		}
-		
+		if (refs.length == 4){
+			Object obj = mainframe.getSelectedObject();
+			if (obj instanceof Section){
+				Object cours = refs[3];
+				if (cours instanceof Course){
+					try {
+						TimeTableTable df = (TimeTableTable) refs[1];
+						MainFrame.myDaybyday.removeCourse(((CourseDto)(((Course)cours).getDto())).getCoursePK());
+						
+						SectionDto dto = ((Section)obj).getDTO();
+						FormationElement father = ((Section)obj).getFather();
+						df.changeSource(new Section(dto,father));
+						MainFrame.myDaybyday.updateSection(dto);
+						final Section section   = (Section)obj;
+						section.upDateDto(MainFrame.myDaybyday.getSection(section.getDTO().getSectionPK()));
+						
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (WriteDeniedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (StaleUpdateException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				System.out.println("je supprimerai le cous" + cours);
+				//tree = new FormationTreeModel((FormationElement)tree.getRoot());	
+			}
+		}
 
 	}
 }

@@ -50,6 +50,7 @@ import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionPK;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
@@ -63,6 +64,7 @@ import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.TimeTableTable;
 import fr.umlv.daybyday.gui.calendar.DBDCalendarPanel;
 import fr.umlv.daybyday.model.Formation;
+import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Section;
 /**
  * @author Marc
@@ -84,7 +86,7 @@ public class WindowCreateCourse extends WindowAbstract {
 	{		
 		final MainFrame mainframe = (MainFrame) obj[0];
 		final Formation formation = (Formation) obj[5];
-		final Section section   = (Section) obj[6];
+		final FormationElement section   = (FormationElement) obj[6];
 		final TimeTableTable df   = (TimeTableTable) obj[7];
 		
 		initWindow(frame,"Nouveau cours", 930, 450);
@@ -391,10 +393,15 @@ public class WindowCreateCourse extends WindowAbstract {
 		           Timestamp startDate = toTimeStamp(2005, bgmonth-1,bgday,bghour,bgmin,00);
 		           Timestamp endDate = toTimeStamp(2005, endmonth-1,endday,endhour,endmin,00);
 		         
-				
+		           String sectionname ;
+		           if (section instanceof Formation)
+		           		sectionname = "GENERALE";
+		           else
+		           		sectionname = section.getName();
+		           		
 				CourseDto newdto = new CourseDto(
 						obj.getName(),
-						section.getName(),
+						sectionname,
 						formation.getName(),
 						formation.getYear(),
 						"cours",
@@ -415,27 +422,37 @@ public class WindowCreateCourse extends WindowAbstract {
 						);
 				
 				
-				
-				
-				
 					MainFrame.myDaybyday.createCourse(newdto);
 					//section.getDTO().setVersion(new Long(section.getDTO().getVersion().longValue()+1));
-					MainFrame.myDaybyday.updateSection(section.getDTO());
+					if (section instanceof Section){
+						MainFrame.myDaybyday.updateSection(((Section)section).getDTO());
 					
-					section.upDateDto(MainFrame.myDaybyday.getSection(section.getDTO().getSectionPK()));
-					//mainframe.addFormationTabbePane(new Formation(newdto));
-					framefinal.dispose();
-					df.changeSource(new Section(section.getDTO(),section.getFather()));
+						((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionPK()));
+						//mainframe.addFormationTabbePane(new Formation(newdto));
+						framefinal.dispose();
+						df.changeSource(new Section(((Section)section).getDTO(),section.getFather()));
+					}
+					if (section instanceof Formation){
+						try{
+							MainFrame.myDaybyday.updateFormation((FormationDto) ((Formation)section).getDto());
+						}catch (RemoteException e) {
+							e.printStackTrace();
+							mainframe.showError(frame,e.toString());
+						} 
+						((Formation)section).getCourseList();
+						((Formation)section).upDateDto(null);
+						framefinal.dispose();
+						df.changeSource((Formation)section);
+					}
+					
 				}catch (java.lang.NumberFormatException e){
 					mainframe.showError(frame,"Champs manquant(s) ou mal renseigné(s)");
 					
 				}
 				catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainframe.showError(frame,e.toString());
 				} catch (ConstraintException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainframe.showError(frame,e.toString());
 				} catch (ResourceUnavailableException e) {
 					mainframe.showError(frame,"Ressource(s) indisponible(s)");
 				} catch (CourseConfusionException e) {
@@ -443,16 +460,13 @@ public class WindowCreateCourse extends WindowAbstract {
 				} catch (TimeslotException e) {
 					mainframe.showError(frame,"La date de début est supérieure à la date de fin");
 				} catch (CreateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainframe.showError(frame,e.toString());
 				} catch (FinderException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainframe.showError(frame,e.toString());
 				} catch (StaleUpdateException e) {
 					mainframe.showError(frame,"Problème de version " + e);
 				} catch (WriteDeniedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainframe.showError(frame,e.toString());
 				}
 
 				

@@ -23,6 +23,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 import javax.swing.DefaultListSelectionModel;
@@ -82,6 +83,7 @@ public class TimeTableTable {
 	private Object[] refs;
 	private ArrayList daytags;
 	private final JButton tag = new JButton();
+	private final ArrayList taglist = new ArrayList();
 	private final TimeTableTable me = this;
 	
 	private FormationElement cours;
@@ -264,11 +266,13 @@ public class TimeTableTable {
 		pane  = new JPanel(gridbag);
 		pane.setPreferredSize(new Dimension(columsize*(nbhours + 1)*nbhoursslice + 50 ,tableheigth));
 		
+		taglist.clear();
+
 		for (int i = 0; i < nbday + 1; ++ i){
 
 			JButton jb = new JButton(daytitles[i]);
 			daytags.add(jb);
-
+			taglist.add(jb);
 			if (i != 0){
 			jb.setMaximumSize(new Dimension(120,10));
 			jb.setMinimumSize(new Dimension(120,10));
@@ -305,7 +309,7 @@ public class TimeTableTable {
 
 	private int []computeTimeSlice (int day, int [] coursRow,int [] sizeRow, int nbRow, Object [] cours){
 	
-		GregorianCalendar gc = new GregorianCalendar();
+		GregorianCalendar gc = new GregorianCalendar(Locale.FRENCH);
 		
 		try{
 		if (cours != null){
@@ -313,8 +317,11 @@ public class TimeTableTable {
 			for (int i = 0; i < cours.length; ++i){
 				CourseDto coursdto = (CourseDto) ((Course)cours[i]).getDto();
 				gc.setTimeInMillis(coursdto.getStartDate().getTime());
-				System.out.println(gc.get(Calendar.WEEK_OF_YEAR) +"=="+ Grid.calendar.get(Calendar.WEEK_OF_YEAR)+ "&&"+ gc.get(Calendar.DAY_OF_WEEK) +"=="+ day);
-				if (gc.get(Calendar.WEEK_OF_YEAR) == Grid.calendar.get(Calendar.WEEK_OF_YEAR) && gc.get(Calendar.DAY_OF_WEEK) == day){
+//System.out.println(gc.get(Calendar.WEEK_OF_YEAR) +"=="+ Grid.calendar.get(Calendar.WEEK_OF_YEAR)+ "&&"+ gc.get(Calendar.DAY_OF_WEEK) +"=="+ (day+1));
+				int daycmp = gc.get(Calendar.DAY_OF_WEEK); 
+				daycmp -= 1;
+				if (daycmp == 0) daycmp = 7;
+				if (gc.get(Calendar.WEEK_OF_YEAR) == Grid.calendar.get(Calendar.WEEK_OF_YEAR) && daycmp == ((day))){
 					int deb = -1;
 					for (int j = 0; j < nbhours; ++j){
 						for (int k = 0; k < nbhoursslice; ++k){
@@ -426,10 +433,12 @@ public class TimeTableTable {
 	             
 	             
 	             //properties item
-	             Object [] refsplus = new Object [refs.length + 2];
+	             Object [] refsplus = new Object [refs.length + 3];
 	             refsplus[0] = refs[0];
 	             refsplus[1] =  TimeTableTable.this.me;
 	             refsplus[2] = new Integer(Grid.gridBgHour);
+	             refsplus[3] = clickedref;
+	             
 	             
 	             
 	 			if (clickedref instanceof Course){
@@ -438,7 +447,7 @@ public class TimeTableTable {
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCopy",refs));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPaste",refs));
 	 				popup.add(new JSeparator());
-	 				popup.add( MenuBarFactory.CreateMenuItem("ActionDelete",refs));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionDelete",refsplus));
 	 				popup.add(new JSeparator());
 	 				
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseMove",refs));
@@ -511,6 +520,17 @@ public class TimeTableTable {
 		try {
 		 TableColumnModel tableColumnModelDetail = new DefaultTableColumnModel();
 		 this.cours = cours;
+		 
+			final String []  daytitles = {"","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"};
+			GregorianCalendar cal = new GregorianCalendar();
+			cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
+		for (int i = 1; i < taglist.size(); ++i){	
+			
+		 ((JButton)taglist.get(i)).setText(daytitles[i] + " " + cal.get(Calendar.DAY_OF_MONTH) +"/"+
+						(cal.get(Calendar.MONTH)+1));
+		 cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + 1);
+		}
+		
 		for (int i = 1; i < nbday + 1; ++ i){	
 			timetable[i].setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			timetable[i].setColumnSelectionAllowed(true);

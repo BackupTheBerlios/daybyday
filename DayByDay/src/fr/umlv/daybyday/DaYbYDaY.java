@@ -19,6 +19,7 @@ import javax.swing.UIManager;
 
 import fr.umlv.daybyday.gui.*;
 import fr.umlv.daybyday.model.Course;
+import fr.umlv.daybyday.model.Grid;
 import fr.umlv.daybyday.model.Section;
 import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.Subject;
@@ -42,7 +43,7 @@ public class DaYbYDaY {
 		UIManager.put("Button.font", new javax.swing.plaf.FontUIResource("Arial",0,12)); 
 		//UIManager.put("Button.font", new javax.swing.plaf.FontUIResource("Serif",Font.ITALIC,12));
 		MainFrame mainframe = new MainFrame();
-		
+		Grid.initCalendar();
 		
 		mainframe.setEnable(false);
 		Object [] obj = new Object [] {mainframe};
