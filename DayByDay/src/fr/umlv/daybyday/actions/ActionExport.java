@@ -57,10 +57,10 @@ public class ActionExport extends AbstractAction {
 	 */
 
 	
-//	Creation of the Root Element
-	static Element racine = new Element("EDT");
-	//On crée un nouveau Document JDOM basé sur la racine que l'on vient de créer
-	static org.jdom.Document document = new Document(racine);
+	//Creation of the Root Element
+	static Element root = new Element("EDT");
+	//Creation of a new JDom Document with the root Element just created
+	static org.jdom.Document document = new Document(root);
 	
 
 /**
@@ -70,105 +70,95 @@ public class ActionExport extends AbstractAction {
 	{
 	   try
 	   {
-	      //On utilise ici un affichage classique avec getPrettyFormat()
-	      XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-	      sortie.output(document, System.out);
+	      XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
+	      out.output(document, System.out);
 	   }
 	   catch (java.io.IOException e){}
 	}
 
 /**
+ * Method which allows to save the JDom document in a XML file
  * 
- * @param file
+ * @param file String
  */
-	static void enregistre(String file)
+	static void save(String file)
 	{
 	   try
 	   {
-	      //On utilise ici un affichage classique avec getPrettyFormat()
-	      XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-	      //Remarquez qu'il suffit simplement de créer une instance de FileOutputStream
-	      //avec en argument le nom du fichier pour effectuer la sérialisation.
-	      sortie.output(document, new FileOutputStream(file));
-	      //System.out.println("Enregistrement du fichier "+ file +" termine!" );
+	   	  //store the date with the getPrettyFormat Format 
+	      XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
+	      //We simply create an FileOutput instance with the XML file name
+	      //to store the XML date of the JDom document
+	      out.output(document, new FileOutputStream(file));
 	   }
 	   catch (java.io.IOException e){}
 	}
 	
-		
+
 	/**
-	 * Create an element with the parameter String and add it to the Element given in parameter and add the value 
+	 * Create an element with the parameter String and add it to the Element given in parameter and add the value
+	 * 
+	 * @param name String
+	 * @param elem Element
+	 * @param childelem String 
 	 */
-	static void AddElementWithText(String name, Element elem, String balise)
+	static void AddElementWithText(String name, Element elem, String childelem)
 	{
-		Element bal = new Element(balise);
-		bal.setText(name);
-		elem.addContent(bal);
+		Element child = new Element(childelem);
+		child.setText(name);
+		elem.addContent(child);
 	}
 		
 		
 
 	/**
 	 * Create an element with the parameter String and add it to the Element given in parameter
+	 * @param elem Element
+	 * @param childelem String 
 	 */
-	static void AddElement(Element elem, String balise)
+	static void AddElement(Element elem, String childelem)
 	{
-		Element bal = new Element(balise);
-		elem.addContent(bal);
+		Element child = new Element(childelem);
+		elem.addContent(child);
 	}
 	
-		
-	static void outputXSLT(String fichierXML, String fichierXSL, String fichierHTML)
+	
+/**
+ * Method which allows to create a HTML file thanks to a XSL stylesheet
+ * 
+ * @param XMLFile String
+ * @param XSLFile String
+ * @param HTMLFile String
+ */
+	static void outputXSLT(String XMLFile, String XSLFile, String HTMLFile)
 	{
 	   try
 	   {
-	      //On définit un transformer avec la source XSL
-	      //qui va permettre la transformation du XML vers le HTML
+	   	  //Creation of the transformer with a XSL source which will 
+	   	  // allows the transformation from XML to HTML
 	      TransformerFactory factory = TransformerFactory.newInstance();
-	      Transformer transformer = factory.newTransformer(new StreamSource(fichierXSL));
+	      Transformer transformer = factory.newTransformer(new StreamSource(XSLFile));
 	      
-	      //On transforme le fichier XML fourni en entree grace a notre transformer.
-	      //La méthoded transform() prend en argument le document d'entree associé au transformer
-	      //et un document JDOMResult, résultat de la transformation TraX
-	      transformer.transform(new StreamSource(fichierXML), new StreamResult(fichierHTML));
-	      
-	      System.out.println("Transformation XSL terminee!");
+	      //Transforms the XML file in a HTML file thanks to the transformer
+	      transformer.transform(new StreamSource(XMLFile), new StreamResult(HTMLFile));
 	   }
 	   catch(Exception e){
-	   	System.out.println("Probleme dans la transformation XSL :(");
+	   	System.out.println("Problem during the XSL transformation");
 	   }
 	}
 	
-	
-	static Element findSection(String sectionname, List al)
-	{
-		int index = 0;
-		int length = al.size();
-		System.out.println("taille="+length);
-		while (index < length)
-		{
-			Element tmp = (Element)al.get(index);
-			System.out.println("--> "+tmp.getAttributeValue("Name"));
-			if ( sectionname == tmp.getAttributeValue("Name"))
-			{
-				System.out.println("Une section a ete trouvee");
-				return tmp;
-			}
-			index++;
-			System.out.println("index++ dans findSection()");
-		}
-		System.out.println("on retourne NULL");
-		return null;
-	}
 	
 	
 	/**
-	 * Add a course to the Element "elemt" (which should be a CoursesElement) in the XML file
+	 * Add a course to the Element "elem" (which should be a Course Element) in the XML file
+	 * 
+	 * @param elem Element
+	 * @param datacourse CourseDto
 	 */
 	 
 	static void CreateCourse(Element elem, CourseDto datacourse)
 	{
-		   //On ajoute un attribut Type a un Cours
+		   //Add a CourseType Attribute
 		   Attribute course_type = new Attribute("CourseType", datacourse.getSubjectType());
 		   elem.setAttribute(course_type);
 		   
@@ -195,6 +185,8 @@ public class ActionExport extends AbstractAction {
 		   Attribute area = new Attribute("Area", datacourse.getRoomArea());
 		   room.setAttribute(area);
 		   
+		   //The date and hours informations are in a timestamp object
+		   //We must extract them from it
 		   GregorianCalendar gc = new GregorianCalendar();
 		   
 		   gc.setTimeInMillis(datacourse.getStartDate().getTime());
@@ -268,32 +260,28 @@ public class ActionExport extends AbstractAction {
 		
         Daybyday myDaybyday = MainFrame.myDaybyday;
 
-		// contains all the Formation informations
-        //FormationDto form = myDaybyday.getFormationOfSection(new SectionPK("reseau","DESS CRI","2004"));
-        
         Object object = mainFrame.getSelectedObject();
         
+        //contains all the Formation informations
         FormationDto form;
         
         if (object instanceof Formation)
         	form = (FormationDto) ((Formation) object).getDto();
         else return;
         
-        //Creation of the name and the year of the formation  
-	    String currentformationname = form.getName();
-	    String currentformationyear = form.getFormationYear();
+       //Creation of the name and the year of the formation  
+	   String currentformationname = form.getName();
+	   String currentformationyear = form.getFormationYear();
         
-		
 	   // Creation of a Formation Element that is added to the root Element
 	   Element formation = new Element("FORMATION");
-	   racine.addContent(formation);
+	   root.addContent(formation);
 	   
-	   	      
-	   //On crée un nouvel Attribut classe et on l'ajoute à la formation
-	   //grâce à la méthode setAttribute pour specifier le nom de la formation
+	   //Add a Name Attribute to the Formation Element
 	   Attribute name_formation = new Attribute("Name", currentformationname);
 	   formation.setAttribute(name_formation);
-	   //On ajoute un attribut Year a une formation
+
+	   //Add a Year Attribute to the Formation Element
 	   Attribute year_formation = new Attribute("Year", currentformationyear);
 	   formation.setAttribute(year_formation);
 
@@ -315,7 +303,6 @@ public class ActionExport extends AbstractAction {
         {
             sec = (SectionDto)sectionList.get(i);
             
-            //
     	    String currentsection = sec.getName();
     	    
             System.out.println(currentsection);
@@ -333,7 +320,6 @@ public class ActionExport extends AbstractAction {
 			try {
 				courseList = myDaybyday.getCoursesOfSection(sec.getSectionPK());
 			} catch (RemoteException e2) {
-				// TODO Auto-generated catch block
 				e2.printStackTrace();
 				return;
 			}
@@ -349,7 +335,6 @@ public class ActionExport extends AbstractAction {
             {
                 sectioncourse = (CourseDto)courseList.get(j);
 
-               
  			   //Creation of a Course Element that will contain all the information of a course
  			   Element course = new Element("COURSE");
  			   courses.addContent(course);
@@ -360,13 +345,9 @@ public class ActionExport extends AbstractAction {
             }
         }
 	       
-	    
-       
-	   
 	   
 	   //display();
-	   enregistre(filechouser.getSelectedFile()+"");
-	   //System.out.println("Debut de la transformation XSLT...\n");
+	   save(filechouser.getSelectedFile()+"");
 	   //outputXSLT("Exercice1.xml", "xml2html.xsl", "Resultat.htm");
 	   
 	}

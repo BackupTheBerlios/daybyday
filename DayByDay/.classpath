@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="C:/JBoss/client/jnet.jar"/>
 	<classpathentry kind="lib" path="C:/JBoss/client/jnp-client.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/eclipse/workspace/DayByDay/src/Ressource/jdom.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/Axman1/Mes documents/DESS/Eclipse/eclipse/eclipse/jdom.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
