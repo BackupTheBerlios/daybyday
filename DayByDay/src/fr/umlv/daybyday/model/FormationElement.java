@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 import javax.swing.tree.TreeNode;
 
-import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-
 /**
  * @author Marc
  *

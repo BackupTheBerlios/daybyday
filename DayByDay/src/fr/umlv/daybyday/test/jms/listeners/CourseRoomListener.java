@@ -8,54 +8,49 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
 import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.TimeTableTable;
 
-public class CourseTeacherListener implements MessageListener {
+public class CourseRoomListener implements MessageListener {
 
-    TeacherDto teacherDto;
+	RoomDto roomDto;
     Daybyday daybyday;
-    TimeTableTable teacherView;
+    TimeTableTable roomView;
 
-    public CourseTeacherListener(TeacherDto teacherDto, TimeTableTable teacherView,  Daybyday daybyday) {
-        this.teacherDto = teacherDto;
+    public CourseRoomListener(RoomDto roomDto, TimeTableTable table,  Daybyday daybyday) {
+        this.roomDto = roomDto;
         this.daybyday = daybyday;
-        this.teacherView = teacherView;
+        this.roomView = table;
     }
+    
     public void onMessage(Message message) {
         ObjectMessage objecMessage = (ObjectMessage)message;
         try {
-        	
         	CourseDto courseDto = (CourseDto) objecMessage.getObject();
-
-               
-            ArrayList teachers = new ArrayList();
+        	
+			ArrayList rooms =null;
 			try {
-				teachers = MainFrame.myDaybyday.getTeachersOfCourse(courseDto.getCourseId());
+				rooms = MainFrame.myDaybyday.getRoomsOfCourse(courseDto.getCourseId());
 				
-				for (int i=0;i< teachers.size();++i)
+				for (int i=0;i<rooms.size();i++)
 				{
-					TeacherDto teacher = (TeacherDto) teachers.get(i);
-					if (this.teacherDto.equals(teacher)){
-						teacherView.refresh();
+					RoomDto dto = (RoomDto) rooms.get(i);
+					if (this.roomDto.equals(dto)){
+						roomView.refresh();
 					}
 				}
-			}
-			catch (RemoteException e) {
+			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 			} catch (EntityNotFoundException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
-			}	
-			
-
-            
+			}
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
 
     }

@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
@@ -28,7 +27,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import fr.umlv.daybyday.gui.DBDColor;
-import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.gui.icone.DBDIcon;
 
 /**

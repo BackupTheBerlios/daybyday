@@ -12,10 +12,9 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
-import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomBusinessPK;
+import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 

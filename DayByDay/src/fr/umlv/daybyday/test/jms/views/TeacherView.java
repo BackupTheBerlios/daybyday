@@ -2,25 +2,22 @@ package fr.umlv.daybyday.test.jms.views;
 
 import java.util.Hashtable;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.naming.InitialContext;
-
-import fr.umlv.daybyday.test.ejb.DaybydayHomeCache;
-import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
-import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
-
-import fr.umlv.daybyday.ejb.resource.teacher.*;
-import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-
-import javax.jms.TopicConnectionFactory;
+import javax.jms.MessageListener;
 import javax.jms.Session;
-import javax.jms.TopicSession;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
-import javax.jms.*;
-import fr.umlv.daybyday.test.jms.listeners.CourseTeacherListener;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
+import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.test.ejb.DaybydayHomeCache;
 
 
 public class TeacherView {
@@ -33,13 +30,13 @@ public class TeacherView {
         listenToCourses();
     }
 
-
+/*
     public static void main(String [] args) throws Exception {
         init();
         TeacherDto teacherDto = daybyday.getTeacher(new TeacherBusinessPK("Forax", "Rémi"));
         new TeacherView(teacherDto);
     }
-
+*/
     public void addToView(CourseDto courseDto){
         System.out.println("Un nouveau cours vien d'être ajouté : " + courseDto.toString());
     }
@@ -50,7 +47,7 @@ public class TeacherView {
 
 
     public void listenToCourses(){
-        listenToTopic("topic/TeacherCourseTopic",new CourseTeacherListener(teacherDto, this, daybyday));
+    //    listenToTopic("topic/TeacherCourseTopic",new CourseTeacherListener(teacherDto, this, daybyday));
     }
 
     private void listenToTopic(String topicName, MessageListener messageListener){

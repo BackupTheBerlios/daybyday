@@ -19,8 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.admin.user.UserBusinessPK;
+import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;

@@ -50,9 +50,6 @@ import javax.swing.text.StyleConstants;
 import fr.umlv.daybyday.actions.ActionAdmin;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.admin.user.UserDto;
-//import fr.umlv.daybyday.ejb.facade.Daybyday;
-//import fr.umlv.daybyday.ejb.facade.DaybydayHome;
-import fr.umlv.daybyday.test.ejb.*;
 import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
 import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
 import fr.umlv.daybyday.model.Equipment;
@@ -61,6 +58,7 @@ import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Grid;
 import fr.umlv.daybyday.model.Room;
 import fr.umlv.daybyday.model.Teacher;
+import fr.umlv.daybyday.test.ejb.DaybydayHomeCache;
 
 /**
  * @author Marc

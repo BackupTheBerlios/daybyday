@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -32,13 +31,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
-import fr.umlv.daybyday.ejb.resource.room.RoomBusinessPK;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.timetable.course.CourseBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.ejb.util.exception.CourseConfusionException;

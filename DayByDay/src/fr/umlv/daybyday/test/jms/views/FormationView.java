@@ -1,23 +1,23 @@
 package fr.umlv.daybyday.test.jms.views;
 
-import fr.umlv.daybyday.ejb.timetable.course.*;
-import javax.jms.TopicConnectionFactory;
+import java.util.Hashtable;
+
+import javax.jms.JMSException;
 import javax.jms.Session;
-import javax.jms.TopicSession;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
-import javax.naming.Context;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
-import javax.naming.NamingException;
-import java.util.Hashtable;
+import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.jms.JMSException;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
+import javax.naming.NamingException;
+
 import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationBusinessPK;
 import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.test.ejb.DaybydayHomeCache;
-import fr.umlv.daybyday.test.jms.listeners.*;
 
 public class FormationView{
 
@@ -29,13 +29,13 @@ public class FormationView{
         listenToCourses();
       }
 
-      public static void main(String [] args) throws Exception {
+   /*   public static void main(String [] args) throws Exception {
           init();
           FormationDto formationDto = daybyday.getFormation(new FormationBusinessPK("DESS CRI", "2005"));
           new FormationView(formationDto);
       }
 
-
+*/
       public void addToView(CourseDto courseDto){
           System.out.println("Un nouveau cours vien d'être ajouté : " + courseDto.toString());
       }

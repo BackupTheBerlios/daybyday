@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 
+import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
@@ -34,6 +35,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.model.Equipment;
 import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
@@ -42,7 +45,8 @@ import fr.umlv.daybyday.model.Room;
 import fr.umlv.daybyday.model.Section;
 import fr.umlv.daybyday.model.Subject;
 import fr.umlv.daybyday.model.Teacher;
-import fr.umlv.daybyday.test.jms.listeners.CourseFormationListener;
+import fr.umlv.daybyday.test.jms.listeners.CourseFormationTreeListener;
+import fr.umlv.daybyday.test.jms.listeners.CourseSectionTreeListener;
 
 
 /**
@@ -61,6 +65,9 @@ public class FormationTree {
 	private JLabel timetabletabletitle;
 	private Object[] refs;
 	
+	MessageListener changerListerner;
+	 TopicSubscriber subscriber;
+	 
 	public FormationTree (FormationElement form, TimeTableTable table,JLabel timetabletabletitle,
 			final Object [] refs){
 		tree = new JTree();
@@ -87,11 +94,22 @@ public class FormationTree {
 		this.table = table;
 		this.refs = refs;
 		this.timetabletabletitle = timetabletabletitle;
+		
+        if (form instanceof Formation){
+            changerListerner= new CourseFormationTreeListener((FormationDto)form.getDto(), this, MainFrame.myDaybyday);
+         }
+         else if (form instanceof Section){
+            changerListerner = new CourseSectionTreeListener((SectionDto)form.getDto(), this, MainFrame.myDaybyday);
+         }
+		 listenToCourses();
 	}	
 	public JPanel getPane() {
 		return pane;
 	}
 	
+	public void refresh() {
+		
+	}
 	
     
     /** MouseListener for jtree */
@@ -293,4 +311,36 @@ public class FormationTree {
 			*/return tag;
 		}
 	}
+
+	 public void listenToCourses(){
+        try{
+            Context jndiContext = getInitialContext();
+            TopicConnectionFactory factory = (TopicConnectionFactory)
+                                             jndiContext.lookup(
+                    "ConnectionFactory");
+            Topic topic = (Topic) jndiContext.lookup(
+                    "topic/CourseTopic");
+            TopicConnection connect = factory.createTopicConnection();
+            TopicSession session = connect.createTopicSession(false,
+                    Session.AUTO_ACKNOWLEDGE);
+            subscriber = session.createSubscriber(topic);
+
+            subscriber.setMessageListener(changerListerner);
+            connect.start();
+            System.out.println(
+                    "Attend l'arrivee de messages sur topic/CourseTopic...");
+        }
+        catch(Exception ex){
+            //ex.printStackTrace();
+
+        }
+    }
+
+    public static Context getInitialContext() throws NamingException {
+        Hashtable environment = new Hashtable();
+        environment.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+        environment.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
+        environment.put(Context.PROVIDER_URL, "jnp://localhost:1099");
+        return new InitialContext(environment);
+    }
 }

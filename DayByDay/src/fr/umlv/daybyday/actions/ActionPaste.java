@@ -13,13 +13,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;

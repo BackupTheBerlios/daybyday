@@ -12,10 +12,9 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
@@ -280,5 +279,26 @@ public class Teacher implements FormationElement {
 		return null;
 	}
 	
-	public void upDateDto (Object dto){}
+	public void upDateDto (Object dto){
+		try {
+
+				teacherDto = (TeacherDto)dto;
+				matiere = new ArrayList();
+				ArrayList matieretmp = MainFrame.myDaybyday.getSubjectsOfTeacher(new TeacherBusinessPK(teacherDto.getName(),teacherDto.getFirstname()));
+				for (int i = 0; i < matieretmp.size(); ++i)
+					matiere.add(new Subject((SubjectDto)matieretmp.get(i),this)); 
+				courslist = new ArrayList();
+				ArrayList courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherBusinessPK(teacherDto.getName(),teacherDto.getFirstname()));
+				for (int i = 0; i < courslisttmp.size(); ++i)
+					courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
+				
+			
+			
+	} catch (RemoteException e1) {
+
+	} catch (EntityNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
 }

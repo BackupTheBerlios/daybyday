@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
-
 import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.Equipment;

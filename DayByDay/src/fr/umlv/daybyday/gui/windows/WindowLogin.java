@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import fr.umlv.daybyday.ejb.admin.user.UserBusinessPK;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**

@@ -24,12 +24,9 @@ import javax.swing.ListCellRenderer;
 
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
-import fr.umlv.daybyday.ejb.resource.room.RoomBusinessPK;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
 import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.Formation;

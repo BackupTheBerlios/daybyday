@@ -18,7 +18,6 @@ import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
 import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
-//import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
 import fr.umlv.daybyday.gui.MainFrame;
 
@@ -213,6 +212,12 @@ public class Course {
 			ArrayList rooms =null;
 			try {
 				rooms = MainFrame.myDaybyday.getEquipmentsOfCourse(dto.getCourseId());
+				for (int i=0;i<rooms.size();i++)
+				{
+					EquipmentDto equipment = (EquipmentDto)rooms.get(i);
+					tag += "\n" +equipment.getName();
+					if(CourseDetail.equipmentDesc );
+				}
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -220,31 +225,27 @@ public class Course {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			for (int i=0;i<rooms.size();i++)
-			{
-				EquipmentDto equipment = (EquipmentDto)rooms.get(i);
-				tag += "\n" +equipment.getName();
-				if(CourseDetail.equipmentDesc );
-			}
+
 		}
 
 		if(CourseDetail.roomName ){
 			ArrayList rooms =null;
 			try {
 				rooms = MainFrame.myDaybyday.getRoomsOfCourse(dto.getCourseId());
+				for (int i=0;i<rooms.size();i++)
+				{
+					RoomDto room = (RoomDto)rooms.get(i);
+					tag += "\n" +room.getName();
+					if(CourseDetail.roomInfo );
+				}
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (EntityNotFoundException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
-			for (int i=0;i<rooms.size();i++)
-			{
-				RoomDto room = (RoomDto)rooms.get(i);
-				tag += "\n" +room.getName();
-				if(CourseDetail.roomInfo );
-			}
+
 		}
 		
 		if(CourseDetail.coursPeriode ){
@@ -268,5 +269,9 @@ public class Course {
 
 		return tag;
 		
+	}
+	
+	public ArrayList getTeachersList() throws RemoteException, EntityNotFoundException{
+		return MainFrame.myDaybyday.getRoomsOfCourse(dto.getCourseId());
 	}
 }

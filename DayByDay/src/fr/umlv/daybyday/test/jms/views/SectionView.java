@@ -1,24 +1,23 @@
 package fr.umlv.daybyday.test.jms.views;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import fr.umlv.daybyday.test.ejb.DaybydayHomeCache;
-import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
 import java.util.Hashtable;
-import javax.naming.InitialContext;
-import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
-import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import javax.jms.TopicConnectionFactory;
-import javax.jms.Session;
-import javax.jms.TopicSession;
-import javax.jms.Topic;
+
 import javax.jms.MessageListener;
+import javax.jms.Session;
+import javax.jms.Topic;
 import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
-import fr.umlv.daybyday.ejb.resource.teacher.TeacherBusinessPK;
-import fr.umlv.daybyday.test.jms.listeners.CourseSectionListener;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import fr.umlv.daybyday.ejb.facade.daybyday.Daybyday;
+import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
+import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
+import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
+import fr.umlv.daybyday.test.ejb.DaybydayHomeCache;
 
 public class SectionView {
 
@@ -29,12 +28,12 @@ public class SectionView {
         listenToCourses();
     }
 
-    public static void main(String [] args) throws Exception {
+ /*   public static void main(String [] args) throws Exception {
         init();
         TeacherDto teacherDto = daybyday.getTeacher(new TeacherBusinessPK("Forax", "Rémi"));
         new TeacherView(teacherDto);
     }
-
+*/
     public void addToView(CourseDto courseDto){
         System.out.println("Un nouveau cours vien d'être ajouté : " + courseDto.toString());
     }

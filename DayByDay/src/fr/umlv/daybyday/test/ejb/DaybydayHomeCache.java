@@ -2,11 +2,15 @@ package fr.umlv.daybyday.test.ejb;
 
 
 
-import fr.umlv.daybyday.ejb.facade.daybyday.*;
-import javax.ejb.*;
-import javax.rmi.*;
-import java.util.*;
-import javax.naming.*;
+import java.util.Hashtable;
+
+import javax.ejb.EJBHome;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.rmi.PortableRemoteObject;
+
+import fr.umlv.daybyday.ejb.facade.daybyday.DaybydayHome;
 
 public class DaybydayHomeCache {
 

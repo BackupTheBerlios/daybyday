@@ -58,6 +58,7 @@ import javax.swing.text.StyledDocument;
 import fr.umlv.daybyday.actions.ActionCourseAdd;
 import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
@@ -67,8 +68,10 @@ import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Grid;
 import fr.umlv.daybyday.model.Section;
+import fr.umlv.daybyday.model.Teacher;
 import fr.umlv.daybyday.test.jms.listeners.CourseFormationListener;
 import fr.umlv.daybyday.test.jms.listeners.CourseSectionListener;
+import fr.umlv.daybyday.test.jms.listeners.CourseTeacherListener;
 
 
 
@@ -284,6 +287,9 @@ public class TimeTableTable {
          }
          else if (cours instanceof Section){
             changerListerner = new CourseSectionListener((SectionDto)cours.getDto(), this, MainFrame.myDaybyday);
+         }
+         else if (cours instanceof Teacher){
+            changerListerner = new CourseTeacherListener((TeacherDto)cours.getDto(), this, MainFrame.myDaybyday);
          }
 		 listenToCourses();
 	}
@@ -732,6 +738,9 @@ public class TimeTableTable {
          }
          else if (cours instanceof Section){
             changerListerner = new CourseSectionListener((SectionDto)cours.getDto(), this, MainFrame.myDaybyday);
+         }
+         else if (cours instanceof Teacher){
+            changerListerner = new CourseTeacherListener((TeacherDto)cours.getDto(), this, MainFrame.myDaybyday);
          }
         try {
 			subscriber.setMessageListener(changerListerner);
