@@ -386,47 +386,47 @@ public abstract class WindowAbstract {
 	 */
 	  public static JPanel createPanelCurrentAccount(Object[] obj){
 		JPanel panel = new JPanel(null);
-		GridBagLayout gridbag2 = new GridBagLayout();
-		GridBagConstraints c2 = new GridBagConstraints();
-		panel.setLayout(gridbag2);
+		GridBagLayout gridbag5 = new GridBagLayout();
+		GridBagConstraints c5 = new GridBagConstraints();
+		panel.setLayout(gridbag5);
 		
-		c2.weightx = 1; 
-		c2.weighty = 1; 
-		c2.gridwidth = 1; 
+		c5.weightx = 1; 
+		c5.weighty = 1; 
+		c5.gridwidth = 1; 
 		
-		c2.insets =new Insets(2,5,2,5);
-		c2.anchor = GridBagConstraints.LINE_START;
-		c2.fill = GridBagConstraints.HORIZONTAL;
+		c5.insets =new Insets(5,5,5,5);
+		c5.anchor = GridBagConstraints.LINE_START;
+		c5.fill = GridBagConstraints.HORIZONTAL;
 		
 		//TODO Faire une bouble le nombre d'utilisateur
 		for(int i=0; i< obj.length; i++ ){
 			
-			c2.gridwidth = 4; 
-			c2.fill = GridBagConstraints.HORIZONTAL;
+			c5.gridwidth = 4; 
+			c5.fill = GridBagConstraints.HORIZONTAL;
 			JLabel id = new JLabel("  Identifiant");
 			id.setBorder(BorderFactory.createLineBorder(DBDColor.getColor("DARK_GRAY")));
-			gridbag2.setConstraints(id, c2);
+			gridbag5.setConstraints(id, c5);
 			panel.add(id);
 			
-			c2.gridwidth = 4;
+			c5.gridwidth = 4;
 			JLabel login = new JLabel("    Mot de passe");
 			login.setBorder(BorderFactory.createLineBorder(DBDColor.getColor("DARK_GRAY")));
-			gridbag2.setConstraints(login, c2);
+			gridbag5.setConstraints(login, c5);
 			panel.add(login);
 			
-			c2.gridwidth = 1;
-			c2.fill = GridBagConstraints.CENTER;
+			c5.gridwidth = 1;
+			c5.fill = GridBagConstraints.CENTER;
 			JButton delete = new JButton("Supprimer");
-			gridbag2.setConstraints(delete, c2);
+			gridbag5.setConstraints(delete, c5);
 			panel.add(delete);
 			
 			JCheckBox uBox = new JCheckBox("U", true);
-			gridbag2.setConstraints(uBox, c2);
+			gridbag5.setConstraints(uBox, c5);
 			panel.add(uBox);
 			
-			c2.gridwidth = GridBagConstraints.REMAINDER;
+			c5.gridwidth = GridBagConstraints.REMAINDER;
 			JCheckBox adBox = new JCheckBox("AD", true);
-			gridbag2.setConstraints(adBox, c2);
+			gridbag5.setConstraints(adBox, c5);
 			panel.add(adBox);
 		}		
 		return panel;
@@ -603,46 +603,46 @@ public abstract class WindowAbstract {
 		JPanel panel = new JPanel(null);
 		panel.setBorder(BorderFactory.createTitledBorder(" Nouveau : "));
 	
-		GridBagLayout gridbag2 = new GridBagLayout();
-		GridBagConstraints c2 = new GridBagConstraints();
-		panel.setLayout(gridbag2);
+		GridBagLayout gridbag7 = new GridBagLayout();
+		GridBagConstraints c7 = new GridBagConstraints();
+		panel.setLayout(gridbag7);
 		
-		c2.weightx = 1; 
-		c2.weighty = 1; 
-		c2.gridwidth = 1; 
+		c7.weightx = 1; 
+		c7.weighty = 1; 
+		c7.gridwidth = 1; 
 		
-		c2.insets =new Insets(0,5,0,5);
-		c2.anchor = GridBagConstraints.LINE_START;
-		c2.fill = GridBagConstraints.HORIZONTAL;
+		c7.insets =new Insets(0,5,0,5);
+		c7.anchor = GridBagConstraints.LINE_START;
+		c7.fill = GridBagConstraints.HORIZONTAL;
 		
 		JLabel id = new JLabel("Identifant :");
-		gridbag2.setConstraints(id, c2);
+		gridbag7.setConstraints(id, c7);
 		panel.add(id);
 		
-		c2.gridwidth = 10;		
+		c7.gridwidth = 10;		
 		JTextField loginTextField = new JTextField();
-		gridbag2.setConstraints(loginTextField, c2);
+		gridbag7.setConstraints(loginTextField, c7);
 		panel.add(loginTextField);
 	
-		c2.gridwidth = 1; 
-		c2.anchor = GridBagConstraints.LINE_END;
+		c7.gridwidth = 1; 
+		c7.anchor = GridBagConstraints.LINE_END;
 		JLabel password = new JLabel("Mot de passe :");
-		gridbag2.setConstraints(password , c2);
+		gridbag7.setConstraints(password , c7);
 		panel.add(password );
 	
 		
-		c2.anchor = GridBagConstraints.LINE_START;
-		c2.gridwidth = 10;
+		c7.anchor = GridBagConstraints.LINE_START;
+		c7.gridwidth = 10;
 		JPasswordField passewordField = new JPasswordField();
-		gridbag2.setConstraints(passewordField, c2);
+		gridbag7.setConstraints(passewordField, c7);
 		panel.add(passewordField);
 		
-		c2.gridwidth = GridBagConstraints.REMAINDER;
-		c2.fill = GridBagConstraints.CENTER;
-		c2.anchor = GridBagConstraints.LINE_END;
+		c7.gridwidth = GridBagConstraints.REMAINDER;
+		c7.fill = GridBagConstraints.CENTER;
+		c7.anchor = GridBagConstraints.LINE_END;
 		JButton add = new JButton(" Ajouter ");
 		//add.setBackground(DBDColor.getColor("DARK_GRAY"));
-		gridbag2.setConstraints(add, c2);
+		gridbag7.setConstraints(add, c7);
 		panel.add(add);
 		
 		return panel;

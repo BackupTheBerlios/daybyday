@@ -1,6 +1,5 @@
 package fr.umlv.daybyday.gui.windows;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -30,22 +29,10 @@ import fr.umlv.daybyday.ejb.constraint.teacher.TeacherConstraintDto;
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
-import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
-import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
-import fr.umlv.daybyday.ejb.timetable.subject.SubjectDto;
-import fr.umlv.daybyday.ejb.util.exception.ConstraintException;
-import fr.umlv.daybyday.ejb.util.exception.CourseConfusionException;
-import fr.umlv.daybyday.ejb.util.exception.CreationException;
 import fr.umlv.daybyday.ejb.util.exception.EntityNotFoundException;
-import fr.umlv.daybyday.ejb.util.exception.ResourceUnavailableException;
-import fr.umlv.daybyday.ejb.util.exception.StaleUpdateException;
-import fr.umlv.daybyday.ejb.util.exception.TimeslotException;
 import fr.umlv.daybyday.ejb.util.exception.WriteDeniedException;
 import fr.umlv.daybyday.gui.DBDColor;
 import fr.umlv.daybyday.gui.MainFrame;
-import fr.umlv.daybyday.model.Formation;
-import fr.umlv.daybyday.model.Grid;
-import fr.umlv.daybyday.model.Section;
 
 /**
  * @author Emmanuelle Emond et Marc Meynier
