@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
+import fr.umlv.daybyday.gui.Windows;
+import fr.umlv.daybyday.gui.windows.WindowAvailabilityTeacher;
 
 /**
  * @author Marc
@@ -24,12 +26,17 @@ public class ActionDispoStuf extends AbstractAction {
 	
 	public ActionDispoStuf(Object [] refs) {
 		super("Matériel",Images.getImageIcon("materiel"));
+		this.refs = refs;
 	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
+		Object [] refsplus = new Object [2];
+		refsplus[0] = refs [0];
+		refsplus[1] = new Integer(WindowAvailabilityTeacher.EQUIP);
+		Windows.createWindow("WindowAvailabilityTeacher",refsplus);
 		
 	}
 }

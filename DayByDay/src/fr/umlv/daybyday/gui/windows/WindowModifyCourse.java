@@ -485,7 +485,7 @@ public class WindowModifyCourse extends WindowAbstract {
 			c3.gridwidth = 13;
 
 			final JComboBox respCombo = new JComboBox((Object[]) obj[2]);
-			ArrayList teacherList = cours.getTeachersList();//MainFrame.myDaybyday.getTeachersOfCourse(oldcourse.getCourseId());
+			ArrayList teacherList = MainFrame.myDaybyday.getTeachersOfCourse(oldcourse.getCourseId());
 			if (teacherList.size()>0){
 				TeacherDto oldResp =  (TeacherDto)teacherList.get(0);
 				Object[] respList =  (Object[]) obj[2];
@@ -696,7 +696,7 @@ public class WindowModifyCourse extends WindowAbstract {
 								);
 						
 							oldcourse.setColor(new Integer(colorf));
-
+							//MainFrame.myDaybyday.add
 							oldcourse.setDescription(infoList.getText());
 							oldcourse.setEndDate(endDate);
 							oldcourse.setGroupeName((String)groupelist.getSelectedItem());
@@ -846,6 +846,7 @@ public class WindowModifyCourse extends WindowAbstract {
 		frame.setVisible(true);
 		//addButtonValidation(contentPane, c, gridbag );
 		}catch (Exception e){
+			e.printStackTrace();
 			mainframe.showError(frame,"Ajoutez d'abord des matières à la filière ou à la formation" + e);
 			frame.dispose();
 		}

@@ -12,6 +12,7 @@ import javax.swing.AbstractAction;
 
 import fr.umlv.daybyday.gui.Images;
 import fr.umlv.daybyday.gui.Windows;
+import fr.umlv.daybyday.gui.windows.WindowAvailabilityTeacher;
 
 /**
  * @author Marc
@@ -33,6 +34,9 @@ public class ActionDispoTeacher extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		
-		Windows.createWindow("WindowAvailabilityTeacher",refs);
+		Object [] refsplus = new Object [2];
+		refsplus[0] = refs [0];
+		refsplus[1] = new Integer(WindowAvailabilityTeacher.TEACHER);
+		Windows.createWindow("WindowAvailabilityTeacher",refsplus);
 	}
 }
