@@ -48,6 +48,7 @@ import org.jboss.net.axis.SetClassLoaderHandler;
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
 import fr.umlv.daybyday.ejb.resource.room.RoomDto;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
+import fr.umlv.daybyday.ejb.resource.teacher.TeacherPK;
 import fr.umlv.daybyday.ejb.timetable.course.CourseDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionDto;
@@ -444,6 +445,9 @@ public class WindowCreateCourse extends WindowAbstract {
 						framefinal.dispose();
 						df.changeSource((Formation)section);
 					}
+					
+					TeacherDto resp = MainFrame.myDaybyday.getTeacher(new TeacherPK(obj2.getName(),obj2.getFirstname()));
+					MainFrame.myDaybyday.updateTeacher(resp);
 					
 				}catch (java.lang.NumberFormatException e){
 					mainframe.showError(frame,"Champs manquant(s) ou mal renseigné(s)");
