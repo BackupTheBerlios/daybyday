@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import fr.umlv.daybyday.ejb.admin.user.UserPK;
 import fr.umlv.daybyday.gui.MainFrame;
 
 /**
@@ -89,7 +90,8 @@ public class WindowLogin extends WindowAbstract {
 
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					//MainFrame.myDaybyday.getUser(new UserPK(loginTextField.getText(), new String(passewordField.getPassword())));
+					
+					mainframe.setUser(MainFrame.myDaybyday.getUser(new UserPK(loginTextField.getText(), new String(passewordField.getPassword()))));
 					mainframe.setEnable(true);
 					framefinal.dispose();
 				} catch (Exception e) {

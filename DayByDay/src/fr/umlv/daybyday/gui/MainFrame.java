@@ -48,6 +48,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.StyleConstants;
 
 import fr.umlv.daybyday.actions.InstancesActions;
+import fr.umlv.daybyday.ejb.admin.user.UserDto;
 import fr.umlv.daybyday.ejb.facade.Daybyday;
 import fr.umlv.daybyday.ejb.facade.DaybydayHome;
 import fr.umlv.daybyday.ejb.facade.DaybydayHomeCache;
@@ -85,6 +86,8 @@ public class MainFrame {
 
 	private static Object selectedCourse;
 	private static Object selectedModelCourse;
+	
+	private static UserDto user;
 	
 	public static String font = "Arial";
 	public static int fontaling =  StyleConstants.ALIGN_CENTER;
@@ -308,7 +311,7 @@ public class MainFrame {
 		menu.add(MenuBarFactory.CreateMultiMenu ("Style", "close", actionlist, refs));
 		actionlist.clear(); actionlist.add("ActionToolBarShowHide"); actionlist.add("ActionToolBarConfig");
 		menu.add(MenuBarFactory.CreateMultiMenu ("Barre d'outil", "close", actionlist, refs));
-		actionlist.clear(); actionlist.add("ActionGridDetailPerso");  actionlist.add("ActionGridDetailStudent");  actionlist.add("ActionGridDetailTeacher");  actionlist.add("ActionGridDetailCreate");
+		actionlist.clear(); /*actionlist.add("ActionGridDetailPerso");*/  actionlist.add("ActionGridDetailStudent");  actionlist.add("ActionGridDetailTeacher");  actionlist.add("ActionGridDetailCreate");
 		menu.add(MenuBarFactory.CreateMultiMenu ("Détail", "close", actionlist, refs));
 		actionlist.clear(); actionlist.add("ActionGridVisualWeek");  actionlist.add("ActionGridVisualMultiWeek");
 		menu.add(MenuBarFactory.CreateMultiMenu ("Visualisation", "close", actionlist, refs));
@@ -330,14 +333,14 @@ public class MainFrame {
 		menu.add(MenuBarFactory.CreateMultiMenu ("Disponibilités", "dispo", actionlist, refs));
 		menuBar.add(menu);
 		
-		menu = new JMenu("Administrer");
-		menu.add(MenuBarFactory.CreateMenuItem ("ActionAdmin", refs));
-		//TODO
-		menuBar.add(menu);
+		//if (MainFrame.user.getProfile().compareTo("admin") == 0){
+			menu = new JMenu("Administrer");
+			menu.add(MenuBarFactory.CreateMenuItem ("ActionAdmin", refs));
+			menuBar.add(menu);
+		//}
 		
 		menu = new JMenu("Aide");
 		menu.add(MenuBarFactory.CreateMenuItem ("ActionHelp", refs));
-		//TODO
 		menuBar.add(menu);
 		
 		return menuBar;
@@ -718,13 +721,13 @@ public class MainFrame {
 		return selectedModelCourse;
 	}
 	
-	public String userName() {
-		return "VERRIERE";
+	public void setUser(UserDto user) {
+		MainFrame.user = user;
 	}
 
 
-	public String userFirstname() {
-		return "Victor";
+	public UserDto getUser() {
+		return MainFrame.user;
 	}
 	
 	
