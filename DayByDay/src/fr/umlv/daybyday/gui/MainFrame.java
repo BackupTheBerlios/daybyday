@@ -42,6 +42,7 @@ import java.awt.event.MouseListener;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -469,6 +470,10 @@ public class MainFrame {
 		leftpane.add(ft.getPane(), BorderLayout.CENTER);
 		
 		JLabel semaine = new JLabel();
+		semaine.setText(	Grid.calendar.get(Calendar.DAY_OF_MONTH)+"/"+
+				(Grid.calendar.get(Calendar.MONTH)+1) + " "+
+				Grid.calendar.get(Calendar.WEEK_OF_YEAR) + " "+
+				Grid.calendar.get(Calendar.YEAR) );
 		Object [] week = new Object [refs.length + 2];
 		week[0] = refs[0];
 		week[1] = semaine;
@@ -526,11 +531,9 @@ public class MainFrame {
 		fontcombo.addItem(allfont[i].getFontName());
 
 		final JComboBox fontsizecombo = new JComboBox();
-		fontsizecombo.addItem("8");
-		fontsizecombo.addItem("10");
-		fontsizecombo.addItem("12");
-		fontsizecombo.addItem("14");
-		fontsizecombo.addItem("16");
+		for (int i = 8; i < 42 ; ++i)
+		fontsizecombo.addItem(""+i);
+
 		fontsizecombo.setSelectedIndex(2);
 
 		fontsizecombo.addActionListener(new ActionListener () {
@@ -577,7 +580,6 @@ public class MainFrame {
 	}
 	
 	public void removeAllTabbePane (){
-		System.out.println(tabepane.getTabCount());
 		int size = tabepane.getTabCount();
 		for (int i = 0; i < size; ++i ){
 		tabepane.removeTabAt(0);

@@ -52,7 +52,6 @@ public class Windows extends WindowAbstract{
 			m.invoke(null,new Object[] { frame, obj });
 			//(null).newInstance(null);
 		} catch (ClassNotFoundException e) {
-			System.out.println("fr.umlv.daybyday.gui.windows" + identifier);
 			throw new InternalError("Request for a wrong class.");
 		} catch (IllegalAccessException e) {
 			throw new InternalError("Illegal access.");

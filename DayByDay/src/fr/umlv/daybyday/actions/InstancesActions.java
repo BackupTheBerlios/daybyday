@@ -42,7 +42,7 @@ public class InstancesActions {
 							new Object[] { refs });
 			//(null).newInstance(null);
 		} catch (ClassNotFoundException e) {
-			System.out.println("fr.umlv.gxplor.actions." + strActionClass);
+			
 			throw new InternalError("Request for a wrong class.");
 		} catch (InstantiationException e) {
 			throw new InternalError("Cannot instanciate action.");

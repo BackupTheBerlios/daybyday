@@ -102,7 +102,7 @@ public class ActionDelete extends AbstractAction {
 						e1.printStackTrace();
 					}
 				}
-				System.out.println("je supprimerai le cous" + cours);
+				
 				//tree = new FormationTreeModel((FormationElement)tree.getRoot());	
 			}
 		}

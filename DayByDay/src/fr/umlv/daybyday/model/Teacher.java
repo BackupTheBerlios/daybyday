@@ -124,7 +124,7 @@ public class Teacher implements FormationElement {
 		} catch (RemoteException e1) {
 
 		}
-		System.out.println(matiere.size());
+
 		// TODO Auto-generated method stub
 		return matiere.size();
 	}

@@ -33,8 +33,8 @@ public class Grid {
 		calendar.set(Calendar.WEEK_OF_YEAR, tmp + inc);
 	}
 	public static void initCalendar(){ 
-		System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
+		//System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
 		calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - (calendar.get(Calendar.DAY_OF_WEEK) - 2) );
-		System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
+		//System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
 	}
 }

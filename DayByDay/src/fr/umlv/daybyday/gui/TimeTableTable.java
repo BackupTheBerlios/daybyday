@@ -164,7 +164,7 @@ public class TimeTableTable {
 			});
 			
 			}
-//System.out.println("");
+
 		timetable[0].setColumnModel(tableColumnModelDetail);
 		
 		
@@ -301,6 +301,13 @@ public class TimeTableTable {
 			pane.add(timetable[i]);
 
 		}	
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTimeInMillis(Grid.calendar.getTimeInMillis());
+		for (int i = 1; i < taglist.size(); ++i){	
+			((JButton)taglist.get(i)).setText(daytitles[i] + " " + cal.get(Calendar.DAY_OF_MONTH) +"/"+
+					(cal.get(Calendar.MONTH)+1));
+			cal.set(Calendar.DAY_OF_YEAR,cal.get(Calendar.DAY_OF_YEAR) + 1);
+		}
 	}
 	
 	public JPanel getPane() {
@@ -321,7 +328,8 @@ public class TimeTableTable {
 				int daycmp = gc.get(Calendar.DAY_OF_WEEK); 
 				daycmp -= 1;
 				if (daycmp == 0) daycmp = 7;
-				if (gc.get(Calendar.WEEK_OF_YEAR) == Grid.calendar.get(Calendar.WEEK_OF_YEAR) && daycmp == ((day))){
+//System.out.println(gc.get(Calendar.HOUR_OF_DAY)+">="+ Grid.gridBgHour);
+				if (gc.get(Calendar.HOUR_OF_DAY) >= Grid.gridBgHour && gc.get(Calendar.WEEK_OF_YEAR) == Grid.calendar.get(Calendar.WEEK_OF_YEAR) && daycmp == ((day))){
 					int deb = -1;
 					for (int j = 0; j < nbhours; ++j){
 						for (int k = 0; k < nbhoursslice; ++k){

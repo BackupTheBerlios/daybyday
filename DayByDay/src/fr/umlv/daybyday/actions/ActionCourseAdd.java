@@ -68,7 +68,7 @@ public class ActionCourseAdd extends AbstractAction {
 					});
 			}
 			if (obj instanceof Formation){
-				System.out.println("C'est un formation");
+
 				FormationDto dto = ((FormationDto)((Formation)obj).getDto());
 				SectionDto defaultsec = MainFrame.myDaybyday.getSection(new SectionPK("GENERALE",dto.getName(),dto.getFormationYear()));
 

@@ -150,7 +150,7 @@ public class WindowMaterial extends WindowAbstract {
 						framefinal.dispose();
 				
 					} catch (RemoteException e) {
-						mainframe.showError(frame,e.toString());
+						mainframe.showError(frame,"Champs non renseigné ou salle déja exisante");
 					}
 			}
 			
@@ -174,9 +174,9 @@ public class WindowMaterial extends WindowAbstract {
 						framefinal.dispose();
 				
 					} catch (RemoteException e) {
-						mainframe.showError(frame,e.toString());
+						mainframe.showError(frame,"Champs non renseigné ou équipement déja exisant");
 					} catch (ConstraintException e) {
-						mainframe.showError(frame,e.toString());
+						mainframe.showError(frame,"Champs non renseigné ou équipement déja exisant");
 					}		
 			}
 			}

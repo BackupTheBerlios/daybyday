@@ -119,7 +119,6 @@ public class Section implements FormationElement{
 		
 		try {
 		SectionDto dto = MainFrame.myDaybyday.getSection(new SectionPK(sectionDto.getName(),sectionDto.getFormationName(),sectionDto.getFormationYear()));
-		System.out.println(sectionDto.getVersion().intValue() +"!="+ dto.getVersion().intValue());
 		if (sectionDto.getVersion().intValue() != dto.getVersion().intValue()){
 			sectionDto = dto;
 			try {

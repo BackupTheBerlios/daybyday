@@ -99,12 +99,11 @@ public class WindowLogin extends WindowAbstract {
 
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					//System.out.println();
 					MainFrame.myDaybyday.getUser(new UserPK(loginTextField.getText(), new String(passewordField.getPassword())));
 					mainframe.setEnable(true);
 					framefinal.dispose();
 				} catch (RemoteException e) {
-					mainframe.showError(frame,e.toString());
+					mainframe.showError(frame,"Utilisateur ou mot de passe incorrect");
 				}
 				
 			}

@@ -256,8 +256,7 @@ public class WindowCreateFormation extends WindowAbstract {
 				try {
 					roomBox.setSelectedItem(MainFrame.myDaybyday.getRoom(new RoomPK(dto.getRoomName(), dto.getRoomBuilding(), dto.getRoomArea())));
 				} catch (RemoteException e) {
-					System.out.println(dto.getRoomName()+""+ dto.getRoomBuilding()+" "+ dto.getRoomArea());
-				//	e.printStackTrace();
+					//	e.printStackTrace();
 				}
 				
 			}
