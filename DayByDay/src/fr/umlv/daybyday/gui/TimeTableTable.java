@@ -782,6 +782,11 @@ public class TimeTableTable {
 		return cours;
 	}
 	
+	public void reLoad(){
+		changeSource(cours);
+	}
+	
+	
 	public class TimeTableCellRenderer implements TableCellRenderer{
 
 		public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {

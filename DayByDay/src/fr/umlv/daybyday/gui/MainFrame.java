@@ -129,6 +129,7 @@ public class MainFrame {
         tabepane.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent me) {
+				((TimeTableTable)(tabbepanelistname.get(tabepane.getSelectedIndex()))).reLoad();
 	        	if ( SwingUtilities.isRightMouseButton( me ) ) {
 	                int x = me.getX();
 	                int y = me.getY();
@@ -640,6 +641,7 @@ public class MainFrame {
 	public void removeTabbePane (int i){
 		selectedTable.remove(i);
 		tabepane.removeTabAt(i);
+		tabbepanelistname.remove(i);
 	}
 	
 	public void removeAllTabbePane (){
@@ -647,6 +649,7 @@ public class MainFrame {
 		for (int i = 0; i < size; ++i ){
 		tabepane.removeTabAt(0);
 		selectedTable.remove(0);
+		tabbepanelistname.remove(0);
 		}
 	}
 	
@@ -656,6 +659,7 @@ public class MainFrame {
 		for (int i = 0; i < size; ++i )
 			if (i != index){ tabepane.removeTabAt(j);
 			selectedTable.remove(j);
+			tabbepanelistname.remove(j);
 			}
 			else j++;
 			

@@ -673,6 +673,11 @@ public class WindowCreateCourse extends WindowAbstract {
 						//mainframe.addFormationTabbePane(new Formation(newdto));
 						framefinal.dispose();
 						df.changeSource(new Section(((Section)section).getDTO(),section.getFather()));
+						((Section)section).upDateDto(MainFrame.myDaybyday.getSection(((Section)section).getDTO().getSectionPK()));
+						MainFrame.myDaybyday.updateTeacher(obj2);
+						MainFrame.myDaybyday.updateEquipment(obj3);
+						MainFrame.myDaybyday.updateRoom(obj4);
+						
 					}
 					if (section instanceof Formation){
 						try{
@@ -685,6 +690,9 @@ public class WindowCreateCourse extends WindowAbstract {
 						((Formation)section).upDateDto(null);
 						framefinal.dispose();
 						df.changeSource((Formation)section);
+						MainFrame.myDaybyday.updateTeacher(obj2);
+						MainFrame.myDaybyday.updateEquipment(obj3);
+						MainFrame.myDaybyday.updateRoom(obj4);
 					}
 					
 				}catch (java.lang.NumberFormatException e){

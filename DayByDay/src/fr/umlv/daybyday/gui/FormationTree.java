@@ -176,8 +176,15 @@ public class FormationTree {
  				popup.add( MenuBarFactory.CreateMenuItem("ActionModifyFormation",refs));
  				popup.add( MenuBarFactory.CreateMenuItem("ActionDelete",refs));
 			}
- 			
- 			
+ 			if (clickedref instanceof Teacher){
+ 				popup.add( MenuBarFactory.CreateMenuItem("ActionModifyFormation",refs));
+			}
+ 			if (clickedref instanceof Room){
+ 				popup.add( MenuBarFactory.CreateMenuItem("ActionModifyFormation",refs));
+			}
+ 			if (clickedref instanceof Equipment){
+ 				popup.add( MenuBarFactory.CreateMenuItem("ActionModifyFormation",refs));
+			}
  			
  			
  			

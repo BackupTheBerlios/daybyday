@@ -67,12 +67,12 @@ public class Teacher implements FormationElement {
 	public ArrayList getCourseList(){
 		
 		ArrayList courslisttmp = null;
-
+		
 		try {
 			TeacherDto newdto =  MainFrame.myDaybyday.getTeacher(new TeacherPK(name,firstname));
 			if (newdto.getVersion().longValue() != teacherDto.getVersion().longValue()){
 				teacherDto = newdto;
-				ArrayList courslist = new ArrayList();
+				courslist = new ArrayList();
 			courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherPK(teacherDto.getName(),teacherDto.getFirstname()));
 			for (int i = 0; i < courslisttmp.size(); ++i)
 				courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
@@ -113,13 +113,20 @@ public class Teacher implements FormationElement {
 	public int getElementNombre() {
 			try {
 				TeacherDto newdto =  MainFrame.myDaybyday.getTeacher(new TeacherPK(name,firstname));
+
 				if (newdto.getVersion().longValue() != teacherDto.getVersion().longValue()){
 					teacherDto = newdto;
 					matiere = new ArrayList();
 					ArrayList matieretmp = MainFrame.myDaybyday.getSubjectsOfTeacher(new TeacherPK(newdto.getName(),newdto.getFirstname()));
 					for (int i = 0; i < matieretmp.size(); ++i)
 						matiere.add(new Subject((SubjectDto)matieretmp.get(i),this)); 
+					courslist = new ArrayList();
+					ArrayList courslisttmp = MainFrame.myDaybyday.getCoursesOfTeacher(new TeacherPK(teacherDto.getName(),teacherDto.getFirstname()));
+					for (int i = 0; i < courslisttmp.size(); ++i)
+						courslist.add(new Course((CourseDto)courslisttmp.get(i))); 
 					}
+				
+				
 		} catch (RemoteException e1) {
 
 		}

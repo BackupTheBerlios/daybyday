@@ -65,14 +65,14 @@ public class ActionModifyFormation extends AbstractAction {
 				});
 			}
 			else if  (obj instanceof Teacher){
-				Windows.createWindow("WindowCreateTeacher",refs);
+				Windows.createWindow("WindowModifyTeacher",refs);
 				
 			}
 			else if  (obj instanceof Room){
-				
+				Windows.createWindow("WindowModifyMaterial",new Object[] {refs[0], new Integer(1)});
 			}
 			else if  (obj instanceof Equipment){
-				
+				Windows.createWindow("WindowModifyMaterial",new Object[] {refs[0], new Integer(0)});	
 			}
 			
 			
