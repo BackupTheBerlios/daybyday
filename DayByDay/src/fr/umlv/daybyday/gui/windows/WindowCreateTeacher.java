@@ -47,6 +47,7 @@ import fr.umlv.daybyday.model.FormationTreeModel;
 public class WindowCreateTeacher extends WindowAbstract {
 
 	
+
 	
 	/**
 	 * This method builds the windows witch permit to
