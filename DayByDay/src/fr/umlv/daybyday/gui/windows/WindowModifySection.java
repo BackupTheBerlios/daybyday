@@ -55,7 +55,7 @@ public class WindowModifySection extends WindowAbstract {
 			Container contentPane = frame.getContentPane();
 			initWindow(frame,"Modifier filière", 400, 250, mainframe.getFrameX(), mainframe.getFrameY());
 		Section sectionref = (Section)mainframe.getSelectedObject();
-		SectionDto oldsecdto = (SectionDto)sectionref.getDTO();
+		final SectionDto oldsecdto = (SectionDto)sectionref.getDTO();
 		
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -141,86 +141,55 @@ public class WindowModifySection extends WindowAbstract {
 		ok.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent arg0) {
+				try {
 				TeacherDto obj2 =  (TeacherDto)responsableBox.getSelectedItem();
 				Object ref = ((FormationElement)mainframe.getSelectedObject()).getDto();
 				
 				SectionDto newdto = null;
-				FormationDto formglo = null;
-				SectionDto father = null;
-				if (ref instanceof FormationDto){
-					FormationDto form = (FormationDto) ref;
-					formglo = form;
-					SectionDto sec= null;
-					try {
-						sec = MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENRALE",form.getFormationId()));
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (EntityNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					newdto = new SectionDto(nameTextField.getText(),
-							sec.getSectionId(),
-							form.getFormationId(),
-							obj2.getTeacherId(),
-							infoList.getText()
-							
-							);
-				}
-				if (ref instanceof SectionDto){
-						father = (SectionDto) ref;
-					try {
-						formglo = MainFrame.myDaybyday.getFormation(father.getFormationId());
-					} catch (RemoteException e1) {
 
-
-					} catch (EntityNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-					newdto = new SectionDto(nameTextField.getText(),
-							father.getSectionId(),
-							father.getFormationId(),
-							obj2.getTeacherId(),
-							infoList.getText()
-							
-							);
-				}
 				
-				try {
+				SectionDto father = MainFrame.myDaybyday.getSection(oldsecdto.getSectionId());
+				FormationDto formglo = MainFrame.myDaybyday.getFormation(oldsecdto.getFormationId());
+	
 				
-					MainFrame.myDaybyday.createSection(newdto);
+				
+					oldsecdto.setName(nameTextField.getText());
+					//oldsecdto.setSectionId(father.getSectionId());
+					//oldsecdto.setFormationId(father.getFormationId());
+					oldsecdto.setTeacherId(obj2.getTeacherId());
+					oldsecdto.setDescription(infoList.getText());
+					
+					MainFrame.myDaybyday.updateSection(oldsecdto);
 					Object obj = mainframe.getModelSelectedObject();
 					FormationTreeModel tree = (FormationTreeModel)obj;
 					
 					//SectionDto sectiondefault = new SectionDto("GENERALE",newdto.getName(),newdto.getFormationYear(),null,newdto.getTeacherName(),newdto.getTeacherFirstname(),"",new Boolean(true));
 					//MainFrame.myDaybyday.createSection(sectiondefault);
 					//mainframe.addFormationTabbePane(new Formation(newdto));
-					if (father != null){
+					/*if (father != null){
 						MainFrame.myDaybyday.updateSection(father);
 						//tree.nodesWereInserted((FormationElement)mainframe.getSelectedObject(),tree.);
-					}
+					}*/
 					MainFrame.myDaybyday.updateFormation(formglo);
 					FormationElement father2 = ((FormationElement)mainframe.getSelectedObject()).getFather();
 					while (father != null && father2.getFather() != null) father2 = father2.getFather();
+					
+					System.out.println(father + " " + father2);
 					if (father2 == null) tree.nodeStructureChanged((FormationElement)mainframe.getSelectedObject());
 					else tree.nodeStructureChanged(father2);
 					framefinal.dispose();
 				} catch (RemoteException e) {
 					mainframe.showError(frame,e.toString());
 				} catch (StaleUpdateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainframe.showError(frame,e.toString());
 				} catch (WriteDeniedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (CreationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (EntityNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainframe.showError(frame,e.toString());
+				} /*catch (CreationException e) {
+					mainframe.showError(frame,e.toString());
+				}*/ catch (EntityNotFoundException e) {
+					mainframe.showError(frame,e.toString());
+				} catch (ClassCastException e){
+					mainframe.showError(frame,e.toString());
 				}
 
 				

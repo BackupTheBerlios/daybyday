@@ -56,6 +56,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import fr.umlv.daybyday.actions.ActionCourseAdd;
+import fr.umlv.daybyday.actions.ActionCourseModify;
 import fr.umlv.daybyday.actions.ActionPaste;
 import fr.umlv.daybyday.actions.InstancesActions;
 import fr.umlv.daybyday.ejb.resource.equipment.EquipmentDto;
@@ -469,12 +470,26 @@ public class TimeTableTable {
 	             refsplus[5] = new Integer(index);
 	             refsplus[6] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
 	             refsplus[7] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
+
 	             
 	             
 	 			if (clickedref instanceof Course){
 	 				MainFrame.setSelectedCourse(clickedref);
 	 				MainFrame.setModelSelectedCourse(this);
 	 				InstancesActions.getAction("ActionCourseAdd",null).setEnabled(false);
+	 				
+	 				Object [] refsplusplus = new Object [refs.length + 8];
+	 				refsplusplus[0] = refs[0];
+	 				refsplusplus[1] =  TimeTableTable.this.me;
+	 				refsplusplus[2] = new Integer(Grid.gridBgHour + realrowdeb/Grid.gridSlice);
+	 				refsplusplus[3] = clickedref;
+	 				refsplusplus[4] = new Integer((realrowdeb%Grid.gridSlice) * (60/Grid.gridSlice));
+	 				refsplusplus[5] = new Integer(index);
+	 				refsplusplus[6] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
+	 				refsplusplus[7] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
+	 				refsplusplus[8] = clickedref;
+	 				ActionCourseModify action3 = (ActionCourseModify)InstancesActions.getAction("ActionCourseModify",null);action3.setEnabled(true);action3.setRefs(refsplusplus);
+	 				
 				}
 	 			else {
 	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
@@ -483,6 +498,8 @@ public class TimeTableTable {
 	 				action.setEnabled(true);
 	 				action.setRefs(refsplus);
 	 				ActionCourseAdd action2 = (ActionCourseAdd)InstancesActions.getAction("ActionCourseAdd",null);action2.setEnabled(true);action2.setRefs(refsplus);
+	 				//InstancesActions.getAction("ActionCourseAdd",null).setEnabled(false);
+	 				
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseAdd",refsplus));
 	 				popup.add(new JSeparator());
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionPrint",refs));
@@ -565,10 +582,10 @@ public class TimeTableTable {
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionDelete",refsplus));
 	 				popup.add(new JSeparator());
 	 				
-	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseMove",refs));
-	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseModify",refs));
-	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseCancel",refs));
-	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseUncancel",refs));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseMove",refsplus));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseModify",refsplus));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseCancel",refsplus));
+	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseUncancel",refsplus));
 				}
 	 			else {
 	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);

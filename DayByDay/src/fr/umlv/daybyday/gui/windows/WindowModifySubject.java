@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.umlv.daybyday.DaYbYDaY;
 import fr.umlv.daybyday.ejb.resource.teacher.TeacherDto;
 import fr.umlv.daybyday.ejb.timetable.formation.FormationDto;
 import fr.umlv.daybyday.ejb.timetable.section.SectionBusinessPK;
@@ -57,7 +58,7 @@ public class WindowModifySubject extends WindowAbstract {
 	public static void createWindow(final JFrame frame, Object [] obj){
 		final MainFrame mainframe = (MainFrame) obj[0];
 		Subject subref = (Subject)mainframe.getSelectedObject();
-		SubjectDto oldsubdto = (SubjectDto)subref.getDto();
+		final SubjectDto oldsubdto = (SubjectDto)subref.getDto();
 		try{
 		
 		int height = 360;
@@ -280,53 +281,42 @@ public class WindowModifySubject extends WindowAbstract {
 				try {
 				TeacherDto obj2 =  (TeacherDto)responsableBox.getSelectedItem();
 				Object ref = ((FormationElement)mainframe.getSelectedObject()).getDto();
-				
-				SubjectDto newdto = null;
-				FormationDto formglo = null;
-				SectionDto father = null;
-				if (ref instanceof FormationDto){
-					FormationDto form = (FormationDto) ref;
-					formglo = form;
-					SectionDto sec = MainFrame.myDaybyday.getSection(new SectionBusinessPK("GENRALE",form.getFormationId()));
-					newdto = new SubjectDto(nameTextField.getText(),
-							sec.getSectionId(),
-							obj2.getTeacherId(),
-							
-							new Integer(courshourText.getText()),
-							new Integer(TDhourText.getText()),
-							new Integer(TPhourText.getText()),
-							new Integer(coursgroupeText.getText()),
-							new Integer(TDgroupeText.getText()),
-							new Integer(TPgroupeText.getText()),
-							infoList.getText()
-							
-							);
-				}
-				if (ref instanceof SectionDto){
-						father = (SectionDto) ref;
-					
-						formglo = MainFrame.myDaybyday.getFormation(father.getFormationId());
-						SectionDto sec = MainFrame.myDaybyday.getSection(new SectionBusinessPK(father.getName(),father.getFormationId()));
-						newdto = new SubjectDto(nameTextField.getText(),
-							sec.getSectionId(),
-							
-							obj2.getTeacherId(),
-							
-							new Integer(courshourText.getText()),
-							new Integer(TPhourText.getText()),
-							new Integer(TDhourText.getText()),
-							new Integer(coursgroupeText.getText()),
-							new Integer(TPhourText.getText()),
-							new Integer(TDhourText.getText()),
-							infoList.getText()
-							
-							);
 
-				}
+				SectionDto father = MainFrame.myDaybyday.getSection(oldsubdto.getSectionId());
+				FormationDto formglo = MainFrame.myDaybyday.getFormation(father.getFormationId());
+	
+				
+			
 				
 				
 				
-					MainFrame.myDaybyday.createSubject(newdto);
+
+				
+				System.out.println(nameTextField.getText());
+				
+					oldsubdto.setDescription(infoList.getText());
+					oldsubdto.setName(nameTextField.getText());
+					
+					if (coursgroupeText != null){
+					oldsubdto.setNbCourseGroup(new Integer(coursgroupeText.getText()));
+					oldsubdto.setCourseHours(new Integer(courshourText.getText()));
+					}
+					if (TDhourText != null){
+					oldsubdto.setNbTdGroup(new Integer(TDhourText.getText()));
+					oldsubdto.setTdHours(new Integer(TDhourText.getText()));
+					}
+					if (TPhourText != null){
+					oldsubdto.setNbTpGroup(new Integer(TPhourText.getText()));
+					oldsubdto.setTpHours(new Integer(TPhourText.getText()));
+					}
+					
+					
+					
+					
+					oldsubdto.setTeacherId(obj2.getTeacherId());
+					
+					
+					MainFrame.myDaybyday.updateSubject(oldsubdto);
 					Object obj = mainframe.getModelSelectedObject();
 					FormationTreeModel tree = (FormationTreeModel)obj;
 							if (father != null){
@@ -351,10 +341,10 @@ public class WindowModifySubject extends WindowAbstract {
 				} catch (EntityNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (CreationException e) {
+				} /*catch (CreationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}			
+				}	*/		
 			}
 			
 		});

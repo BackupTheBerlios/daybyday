@@ -359,7 +359,7 @@ public class MainFrame {
 		InstancesActions.getAction("ActionCopy",null).setEnabled(false);
 		InstancesActions.getAction("ActionPaste",null).setEnabled(false);
 		InstancesActions.getAction("ActionCourseAdd",null).setEnabled(false);
-		InstancesActions.getAction("ActionCourseModify",null).setEnabled(false);
+		//InstancesActions.getAction("ActionCourseModify",null).setEnabled(false);
 		InstancesActions.getAction("ActionCourseMove",null).setEnabled(false);
 		InstancesActions.getAction("ActionCourseCancel",null).setEnabled(false);
 		InstancesActions.getAction("ActionCourseUncancel",null).setEnabled(false);
