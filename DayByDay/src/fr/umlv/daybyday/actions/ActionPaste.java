@@ -196,7 +196,7 @@ public class ActionPaste extends AbstractAction {
 				}
 				
 				ArrayList rooms = MainFrame.myDaybyday.getRoomsOfCourse(olddto.getCourseId());
-				for (int i = 0;i<teachers.size();i++)
+				for (int i = 0;i<rooms.size();i++)
 				{
 					RoomDto room = (RoomDto)rooms.get(i);
 					MainFrame.myDaybyday.addRoomToCourse(room.getRoomId(),newdto.getCourseId());
@@ -205,7 +205,7 @@ public class ActionPaste extends AbstractAction {
 				}
 				
 				ArrayList equipments = MainFrame.myDaybyday.getEquipmentsOfCourse(olddto.getCourseId());
-				for (int i = 0;i<teachers.size();i++)
+				for (int i = 0;i<equipments.size();i++)
 				{
 					EquipmentDto equipment = (EquipmentDto)equipments.get(i);
 					MainFrame.myDaybyday.addEquipmentToCourse(equipment.getEquipmentId(),newdto.getCourseId());

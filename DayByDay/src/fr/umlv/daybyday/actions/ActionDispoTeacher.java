@@ -25,12 +25,14 @@ public class ActionDispoTeacher extends AbstractAction {
 	
 	public ActionDispoTeacher(Object [] refs) {
 		super("Enseignant",Images.getImageIcon("enseignant"));
+		this.refs = refs;
 	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		Windows.createWindow("WindowAvailabilityTeacher",new Object[]{"tata","titi","toto"});
+		
+		Windows.createWindow("WindowAvailabilityTeacher",refs);
 	}
 }

@@ -39,7 +39,7 @@ public class ActionCourseUncancel extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		Course coursRef = (Course) refs [8];
 		CourseDto coursDtoRef = (CourseDto)coursRef.getDto();
-		coursDtoRef.setDescription(coursDtoRef.getDescription().substring(10));
+		coursDtoRef.setDescription(coursDtoRef.getDescription().substring(9));
 		try {
 			MainFrame.myDaybyday.updateCourse(coursDtoRef);
 		} catch (Exception e1) {

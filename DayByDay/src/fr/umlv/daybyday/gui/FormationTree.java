@@ -327,8 +327,8 @@ public class FormationTree {
 
             subscriber.setMessageListener(changerListerner);
             connect.start();
-            System.out.println(
-                    "Attend l'arrivee de messages sur topic/CourseTopic...");
+          //  System.out.println(
+          //          "Attend l'arrivee de messages sur topic/CourseTopic...");
         }
         catch(Exception ex){
             //ex.printStackTrace();

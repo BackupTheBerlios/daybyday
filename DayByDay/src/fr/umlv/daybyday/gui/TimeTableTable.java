@@ -495,7 +495,10 @@ public class TimeTableTable {
 	 				//System.out.println("########## " + ((CourseDto)((Course)clickedref).getDto()).getDescription());
 	 				if (((CourseDto)((Course)clickedref).getDto()).getDescription().indexOf("ANNULE") == -1){
 	 					ActionCourseCancel action4 = (ActionCourseCancel)InstancesActions.getAction("ActionCourseCancel",null);action4.setEnabled(true);action4.setRefs(refsplusplus);
-	 				}else{				
+	 					ActionCourseUncancel action5 = (ActionCourseUncancel)InstancesActions.getAction("ActionCourseUncancel",null);action5.setEnabled(false);action5.setRefs(refsplusplus);
+		 				
+	 				}else{
+	 					ActionCourseCancel action4 = (ActionCourseCancel)InstancesActions.getAction("ActionCourseCancel",null);action4.setEnabled(false);action4.setRefs(refsplusplus);					
 		 				ActionCourseUncancel action5 = (ActionCourseUncancel)InstancesActions.getAction("ActionCourseUncancel",null);action5.setEnabled(true);action5.setRefs(refsplusplus);
 	 				}
 	 				//popup.add( MenuBarFactory.CreateMenuItem("ActionCourseMove",refsplus));
@@ -508,6 +511,9 @@ public class TimeTableTable {
 	 				action.setEnabled(true);
 	 				action.setRefs(refsplus);
 	 				ActionCourseAdd action2 = (ActionCourseAdd)InstancesActions.getAction("ActionCourseAdd",null);action2.setEnabled(true);action2.setRefs(refsplus);
+	 				ActionCourseCancel action4 = (ActionCourseCancel)InstancesActions.getAction("ActionCourseCancel",null);action4.setEnabled(false);			
+	 				ActionCourseUncancel action5 = (ActionCourseUncancel)InstancesActions.getAction("ActionCourseUncancel",null);action5.setEnabled(false);
+ 				
 	 				//InstancesActions.getAction("ActionCourseAdd",null).setEnabled(false);
 	 				
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseAdd",refsplus));
@@ -592,6 +598,28 @@ public class TimeTableTable {
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionDelete",refsplus));
 	 				popup.add(new JSeparator());
 	 				
+	 				Object [] refsplusplus = new Object [refs.length + 8];
+	 				refsplusplus[0] = refs[0];
+		            refsplusplus[1] =  TimeTableTable.this.me;
+		            refsplusplus[2] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
+		            refsplusplus[3] = clickedref;
+		            refsplusplus[4] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
+		            refsplusplus[5] = new Integer(index);
+		            refsplusplus[6] = new Integer(Grid.gridBgHour + realrow/Grid.gridSlice);
+		            refsplusplus[7] = new Integer((realrow%Grid.gridSlice) * (60/Grid.gridSlice));
+	 				refsplusplus[8] = clickedref;
+	 				
+	 				ActionCourseModify action3 = (ActionCourseModify)InstancesActions.getAction("ActionCourseModify",null);action3.setEnabled(true);action3.setRefs(refsplusplus);
+	 				//System.out.println("########## " + ((CourseDto)((Course)clickedref).getDto()).getDescription());
+	 				if (((CourseDto)((Course)clickedref).getDto()).getDescription().indexOf("ANNULE") == -1){
+	 					ActionCourseCancel action4 = (ActionCourseCancel)InstancesActions.getAction("ActionCourseCancel",null);action4.setEnabled(true);action4.setRefs(refsplusplus);
+	 					ActionCourseUncancel action5 = (ActionCourseUncancel)InstancesActions.getAction("ActionCourseUncancel",null);action5.setEnabled(false);action5.setRefs(refsplusplus);
+		 				
+	 				}else{
+	 					ActionCourseCancel action4 = (ActionCourseCancel)InstancesActions.getAction("ActionCourseCancel",null);action4.setEnabled(false);action4.setRefs(refsplusplus);					
+		 				ActionCourseUncancel action5 = (ActionCourseUncancel)InstancesActions.getAction("ActionCourseUncancel",null);action5.setEnabled(true);action5.setRefs(refsplusplus);
+	 				}
+	 				
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseMove",refsplus));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseModify",refsplus));
 	 				popup.add( MenuBarFactory.CreateMenuItem("ActionCourseCancel",refsplus));
@@ -600,6 +628,9 @@ public class TimeTableTable {
 	 			else {
 	 				InstancesActions.getAction("ActionCut",null).setEnabled(false);
 	 				InstancesActions.getAction("ActionCopy",null).setEnabled(false);
+	 				InstancesActions.getAction("ActionCourseCancel",null).setEnabled(false);			
+	 				InstancesActions.getAction("ActionCourseUncancel",null).setEnabled(false);
+ 				
 	 				ActionPaste action = (ActionPaste)InstancesActions.getAction("ActionPaste",null);action.setEnabled(true);action.setRefs(refsplus);
 	 				ActionCourseAdd action2 = (ActionCourseAdd)InstancesActions.getAction("ActionCourseAdd",null);action2.setEnabled(true);action2.setRefs(refsplus);
 	 				
@@ -960,8 +991,8 @@ public class TimeTableTable {
 
             subscriber.setMessageListener(changerListerner);
             connect.start();
-            System.out.println(
-                    "Attend l'arrivee de messages sur topic/CourseTopic...");
+            //System.out.println(
+            //        "Attend l'arrivee de messages sur topic/CourseTopic...");
         }
         catch(Exception ex){
             //ex.printStackTrace();

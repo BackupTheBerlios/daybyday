@@ -28,6 +28,7 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 	 * @param obj the object
 	 */
 	public static void createWindow(JFrame frame, Object[] obj){
+		try {
 		final MainFrame mainframe = (MainFrame) obj[0];
 		initWindow(frame,"Gestion des disponibilités d'un enseignant", 550, 650, mainframe.getFrameX(), mainframe.getFrameY());
 		Container contentPane = frame.getContentPane();
@@ -63,5 +64,9 @@ public class WindowAvailabilityTeacher extends WindowAbstract {
 		// Add buttons OK and Annuler
 		addButtonValidation(contentPane, c, gridbag );
 		frame.setVisible(true);
+		}
+		catch (Exception e){
+			
+		}
 	}
 }
