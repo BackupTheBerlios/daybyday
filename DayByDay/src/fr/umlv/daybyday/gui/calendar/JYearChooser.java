@@ -20,11 +20,11 @@
  */
 package fr.umlv.daybyday.gui.calendar;
 
-import fr.umlv.daybyday.gui.calendar.components.JSpinField;
-
 import java.util.Calendar;
 
 import javax.swing.JFrame;
+
+import fr.umlv.daybyday.gui.calendar.components.JSpinField;
 
 
 /**

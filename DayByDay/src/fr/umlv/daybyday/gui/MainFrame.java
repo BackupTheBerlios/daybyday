@@ -58,8 +58,6 @@ import fr.umlv.daybyday.model.Formation;
 import fr.umlv.daybyday.model.FormationElement;
 import fr.umlv.daybyday.model.Grid;
 import fr.umlv.daybyday.model.Room;
-import fr.umlv.daybyday.model.Section;
-import fr.umlv.daybyday.model.Subject;
 import fr.umlv.daybyday.model.Teacher;
 
 /**

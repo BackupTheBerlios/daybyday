@@ -16,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 import fr.umlv.daybyday.gui.MainFrame;
 import fr.umlv.daybyday.model.CourseDetail;
 

@@ -10,7 +10,9 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.io.File;
 import java.util.HashMap;
-import javax.swing.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 
 /**
